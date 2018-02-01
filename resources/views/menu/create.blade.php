@@ -6,7 +6,7 @@
 		Add Menu
 	</div>
 	<div class="panel-body">
-		<form method="post" action="{{ route('menu.store', $profile->id) }}" enctype="form-data/multipart">
+		<form method="post" action="{{ route('menu.store', $user->id) }}" enctype="form-data/multipart">
 			{{ csrf_field() }}
 			<div class="form-group{{ $errors->has('code') ? ' has-error' : '' }}">
 				<input type="text" name="code" class="form-control" placeholder="Code" required autofocus>

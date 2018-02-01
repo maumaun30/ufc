@@ -87,24 +87,7 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            My Tabs
-                        </div>
-                        <div class="panel-body">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href="{{ route('home') }}">Dashboard</a></li>
-                                <li><a href="#">My Profile</a></li>
-                                <li><a href="{{ route('menu.index', Auth::user()->id) }}">Menus</a></li>
-                                <li><a href="{{ route('inventory.index', Auth::user()->id) }}">Inventory</a></li>
-                                <li><a href="#">Sales</a></li>
-                                <li><a href="#">Settings</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-9">
+                <div class="col-md-12">
                     @yield('content')
                 </div>
             </div>

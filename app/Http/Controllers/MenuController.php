@@ -4,20 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Menu;
-use App\Profile;
+use App\User;
 
 class MenuController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($profile_id)
+    public function index($user_id)
     {
-        $profile = Profile::find($profile_id);
+        $user = User::find($user_id);
         $menus = Menu::all();
-        return view('menu.index')->with('profile', $profile)->with('menus', $menus);
+        return view('menu.index')->with('user', $user)->with('menus', $menus);
     }
 
     /**
@@ -25,10 +28,10 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($profile_id)
+    public function create($user_id)
     {
-        $profile = Profile::find($profile_id);
-        return view('menu.create')->with('profile', $profile);
+        $user = User::find($user_id);
+        return view('menu.create')->with('user', $user);
     }
 
     /**
@@ -37,9 +40,9 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $profile_id)
+    public function store(Request $request, $user_id)
     {
-        $profile = Profile::find($profile_id);
+        $user = User::find($user_id);
 
         $this->validate($request, [
             'code' => 'required|max:10',
@@ -49,14 +52,14 @@ class MenuController extends Controller
         ]);
 
         $menu = new Menu;
+        $menu->user_id = $user->id;
         $menu->code = $request->code;
         $menu->name = $request->name;
-        $menu->profile_id = $profile->id;
         $menu->price = $request->price;
         $menu->description = $request->description;
         $menu->save();
 
-        return redirect()->route('menu.show', [$profile->id, $menu->id]);
+        return redirect()->route('menu.show', [$user->id, $menu->id]);
     }
 
     /**
@@ -65,11 +68,11 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($profile_id, $id)
+    public function show($user_id, $id)
     {
-        $profile = Profile::find($profile_id);
+        $user = User::find($user_id);
         $menu = Menu::find($id);
-        return view('menu.show', [$profile->id, $menu->id])->with('menu', $menu);
+        return view('menu.show', [$user->id, $menu->id])->with('menu', $menu);
     }
 
     /**
@@ -78,11 +81,11 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($profile_id, $id)
+    public function edit($user_id, $id)
     {
-        $profile = Profile::find($profile_id);
+        $user = User::find($user_id);
         $menu = Menu::find($id);
-        return view('menu.edit', [$profile->id, $menu->id])->with('menu', $menu)->with('profile', $profile);
+        return view('menu.edit', [$user->id, $menu->id])->with('menu', $menu)->with('user', $user);
     }
 
     /**
@@ -92,9 +95,9 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $profile_id, $id)
+    public function update(Request $request, $user_id, $id)
     {
-        $profile = Profile::find($profile_id);
+        $user = User::find($user_id);
         $menu = Menu::find($id);
 
         $this->validate($request, [
@@ -110,7 +113,7 @@ class MenuController extends Controller
         $menu->description = $request->description;
         $menu->update();
 
-        return redirect()->route('menu.show', [$profile->id, $menu->id]);
+        return redirect()->route('menu.show', [$user->id, $menu->id]);
     }
 
     /**
@@ -119,11 +122,11 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($profile_id, $id)
+    public function destroy($user_id, $id)
     {
-        $profile = Profile::find($profile_id);
+        $user = User::find($user_id);
         $menu = Menu::find($id)->delete();
 
-        return redirect()->route('profile.show', $profile->id);
+        return redirect()->route('menu.index', $user->id);
     }
 }

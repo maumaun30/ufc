@@ -10,7 +10,7 @@
 		Add Inventory
 	</div>
 	<div class="panel-body">
-		<form method="post" action="{{ route('inventory.store', $profile->id) }}" enctype="form-data/multipart">
+		<form method="post" action="{{ route('inventory.store', $user->id) }}" enctype="form-data/multipart">
 			{{ csrf_field() }}
 			<div class="form-group{{ $errors->has('inv_id') ? ' has-error' : '' }}">
 				<input type="text" name="inv_id" class="form-control" placeholder="Inventory ID" value="IN001" readonly required>

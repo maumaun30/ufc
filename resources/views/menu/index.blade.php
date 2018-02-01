@@ -10,7 +10,7 @@
 			<div class="col-md-12">
 				<div class="row mgb5">
 					<div class="col-md-12">
-						<a href="{{ route('menu.create',$profile->id) }}" class="btn btn-default btn-sm pull-right">Create</a>
+						<a href="{{ route('menu.create', $user->id) }}" class="btn btn-default btn-sm pull-right">Create</a>
 					</div>
 				</div>
 				<div class="table-responsive">
@@ -24,16 +24,16 @@
 							</tr>
 						</thead>
 						<tbody>
-							@foreach($profile->profileMenus as $menu)
+							@foreach($user->profileMenus as $menu)
 								<tr>
 									<td>{{ $menu->code }}</td>
 									<td>{{ $menu->name }}</td>
 									<td>{{ $menu->price }}</td>
 									<td>
 										<div class="btn-group">
-											<a href="{{ route('menu.show', [$profile->id, $menu->id]) }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i></a>
-											<a href="{{ route('menu.edit', [$profile->id, $menu->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
-											<button type="submit" class="btn btn-danger btn-sm menu-name-btn" data-toggle="modal" data-target="#delete" data-name="{{ $menu->name }}" data-url="{{ route('menu.destroy', [$profile->id, $menu->id]) }}"><i class="fa fa-trash"></i></button>
+											<a href="{{ route('menu.show', [$user->id, $menu->id]) }}" class="btn btn-default btn-sm"><i class="fa fa-eye"></i></a>
+											<a href="{{ route('menu.edit', [$user->id, $menu->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+											<button type="submit" class="btn btn-danger btn-sm menu-name-btn" data-toggle="modal" data-target="#delete" data-name="{{ $menu->name }}" data-url="{{ route('menu.destroy', [$user->id, $menu->id]) }}"><i class="fa fa-trash"></i></button>
 										</div>
 									</td>
 								</tr>

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Profile;
 use App\Inventory;
+use App\User;
 
 class InventoryController extends Controller
 {
@@ -13,12 +13,12 @@ class InventoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($profile_id)
+    public function index($user_id)
     {
-        $profile = Profile::find($profile_id);
+        $user = User::find($user_id);
         $inventories = Inventory::all();
 
-        return view('inventory.index')->with('profile', $profile)->with('inventories', $inventories);
+        return view('inventory.index')->with('user', $user)->with('inventories', $inventories);
     }
 
     /**
@@ -26,10 +26,10 @@ class InventoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($profile_id)
+    public function create($user_id)
     {
-        $profile = Profile::find($profile_id);
-        return view('inventory.create')->with('profile', $profile);
+        $user = User::find($user_id);
+        return view('inventory.create')->with('user', $user);
     }
 
     /**
@@ -38,9 +38,9 @@ class InventoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $profile_id)
+    public function store(Request $request, $user_id)
     {
-        $profile = Profile::find($profile_id);
+        $user = User::find($user_id);
 
         $this->validate($request,[
             'inv_id' => 'required|unique:inventories|max:255',
@@ -54,6 +54,7 @@ class InventoryController extends Controller
 
         $inventory = new Inventory;
         $inventory->inv_id = $request->inv_id;
+        $inventory->user_id = $user->id;
         $inventory->name = $request->name;
         $inventory->price = $request->price;
         $inventory->qty = $request->qty;
@@ -62,7 +63,7 @@ class InventoryController extends Controller
         $inventory->value = $request->value;
         $inventory->save();
 
-        return redirect()->route('inventory.show', [$profile->id, $inventory->id]);
+        return redirect()->route('inventory.show', [$user->id, $inventory->id]);
     }
 
     /**
@@ -71,11 +72,11 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($profile_id, $id)
+    public function show($user_id, $id)
     {
-        $profile = Profile::find($profile_id);
+        $user = User::find($user_id);
         $inventory = Inventory::find($id);
-        return view('inventory.show', [$profile->id, $inventory->id])->with('inventory', $inventory);
+        return view('inventory.show', [$user->id, $inventory->id])->with('inventory', $inventory);
     }
 
     /**

@@ -15,12 +15,14 @@ class CreateInventoriesTable extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('inv_id')->unique();
             $table->string('name');
             $table->integer('price');
             $table->integer('qty');
             $table->string('vom');
-            $table->date('date_reorder');
+            $table->string('date_reorder');
             $table->integer('value');
             $table->timestamps();
             $table->softDeletes();
