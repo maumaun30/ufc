@@ -14,6 +14,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <script src="https://use.fontawesome.com/45876f6f9c.js"></script>
+
+    @yield('styles')
 </head>
 <body>
     <div id="app">
@@ -92,11 +94,11 @@
                         </div>
                         <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked">
-                                <li {{{ (Request::is('profile/') ? 'class=active' : '') }}}><a href="{{ route('profile.index') }}">Profiles</a></li>
-                                <li {{{ (Request::is('profile/' . $profile->id . '/menu') ? 'class=active' : '') }}}><a href="{{ route('menu.index', $profile->id) }}">Menus</a></li>
-                                <li><a href="#">Tab 1</a></li>
-                                <li><a href="#">Tab 2</a></li>
-                                <li><a href="#">Tab 3</a></li>
+                                <li><a href="{{ route('profile.index') }}">Profiles</a></li>
+                                <li><a href="{{ route('menu.index', $profile->id) }}">Menus</a></li>
+                                <li><a href="{{ route('inventory.index', $profile->id) }}">Inventory</a></li>
+                                <li><a href="#">Sales</a></li>
+                                <li><a href="#">Settings</a></li>
                             </ul>
                         </div>
                     </div>

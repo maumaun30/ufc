@@ -19,6 +19,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('profile', 'ProfileController');
+
 Route::resource('profile/{profile_id}/menu', 'MenuController');
 
-Route::resource('profile', 'ProfileController');
+Route::resource('profile/{profile_id}/inventory', 'InventoryController');
