@@ -5,7 +5,8 @@
     <div class="panel-heading">Welcome</div>
 
     <div class="panel-body">
-        May I have your order please?
+        May I have your order please?<br>
+        <a href="{{ route('order.index') }}" class="btn btn-default">Order Now!</a>
     </div>
 </div>
 @endsection
