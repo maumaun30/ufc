@@ -6,7 +6,7 @@
 
     <div class="panel-body">
         May I have your order please?<br>
-        <a href="{{ route('order.index') }}" class="btn btn-default">Order Now!</a>
+        <a href="{{ route('create.cart') }}" class="btn btn-default">Order Now!</a>
     </div>
 </div>
 @endsection

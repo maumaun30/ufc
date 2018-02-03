@@ -5,18 +5,61 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Order;
 use App\Menu;
+use App\Cart;
+use Auth;
 
 class OrderController extends Controller
 {
+    public function createCartView(){
+        return view('order.create_cart');
+    }
+
+    public function createCartPost(Request $request){
+        $cart = new Cart; 
+        $cart->cx = $request->cx;
+        $cart->save();
+
+        return redirect()->route('order.index', $cart->id)->with('cart', $cart);
+    }
+
+    public function cartView($cart_id){
+        $cart = Cart::find($cart_id);
+
+        $total = $cart->cartItems->sum('price');
+
+        return view('order.cart')->with('cart', $cart)->with('total', $total);
+    }
+
+    public function placeOrder($cart_id){
+        $cart = Cart::find($cart_id);
+
+        // status 1 = in process
+        foreach($cart->cartItems as $item){
+            $item->status = 1;
+            $item->update();
+        }
+
+        return redirect()->route('receipt', $cart->id)->with('cart', $cart);
+    }
+
+    public function receipt($cart_id){
+        $cart = Cart::find($cart_id);
+        $total = $cart->cartItems->sum('price');
+
+        return view('order.receipt')->with('cart', $cart)->with('total', $total);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($cart_id)
     {
+        $cart = Cart::find($cart_id);
         $menus = Menu::all();
-        return view('order.index')->with('menus', $menus);
+
+        return view('order.index')->with('menus', $menus)->with('cart', $cart);
     }
 
     /**
@@ -35,9 +78,21 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $cart_id)
     {
-        //
+        $cart = Cart::find($cart_id);
+
+        $order = new Order;
+        $order->user_id = Auth::user()->id;
+        $order->cart_id = $cart->id;
+        $order->cx = $request->cx;
+        $order->item = $request->name;
+        $order->price = $request->price * $request->qty;
+        $order->qty = $request->qty;
+        $order->status = 0;
+        $order->save();
+
+        return redirect()->route('order.index', $cart->id)->with('cart', $cart);
     }
 
     /**

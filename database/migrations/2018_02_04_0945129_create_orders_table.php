@@ -17,12 +17,14 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('cart_id')->unsigned();
+            $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
             $table->string('cx');
             $table->string('item');
             $table->integer('price');
             $table->integer('qty');
-            $table->integer('total');
-            $table->longText('remarks');
+            $table->longText('remarks')->nullable();
+            $table->integer('status');
             $table->timestamps();
             $table->softDeletes();
         });
