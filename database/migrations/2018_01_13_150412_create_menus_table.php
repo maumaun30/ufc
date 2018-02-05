@@ -22,6 +22,7 @@ class CreateMenusTable extends Migration
             $table->integer('price');
             $table->longText('description');
             $table->string('image')->default('img/uploads/default.jpg');
+            $table->integer('featured')->default('0');
             $table->timestamps();
             $table->softDeletes();
         });

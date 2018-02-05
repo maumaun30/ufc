@@ -59,11 +59,12 @@ class MenuController extends Controller
         $menu->name = $request->name;
         $menu->price = $request->price;
         $menu->description = $request->description;
+        $menu->featured = $request->featured;
 
         if ($request->hasFile('image')) {
-            $fileName = 'img/uploads/' . time() . '.' . $request->file('image')->getClientOriginalExtension();
+            $fileName = time() . '.' . $request->file('image')->getClientOriginalExtension();
             Image::make($request->file('image'))->save(public_path('img/uploads/' . $fileName));
-            $menu->image = $fileName;
+            $menu->image = 'img/uploads/' . $fileName;
         }
 
         $menu->save();
@@ -81,7 +82,7 @@ class MenuController extends Controller
     {
         $user = User::find($user_id);
         $menu = Menu::find($id);
-        return view('menu.show', [$user->id, $menu->id])->with('menu', $menu);
+        return view('menu.show', [$user->id, $menu->id])->with('user', $user)->with('menu', $menu);
     }
 
     /**
@@ -113,7 +114,8 @@ class MenuController extends Controller
             'code' => 'required|max:10',
             'name' => 'required|max:255',
             'price' => 'required|integer',
-            'description' => 'required|max:10000'
+            'description' => 'required|max:10000',
+            'image' => 'image|mimes:jpeg,jpg,png,gif',
         ]);
 
         $menu->code = $request->code;
@@ -125,6 +127,35 @@ class MenuController extends Controller
         return redirect()->route('menu.show', [$user->id, $menu->id]);
     }
 
+    public function changeMenuPhoto(Request $request, $user_id, $id){
+        $user = User::find($user_id);
+        $menu = Menu::find($id);
+
+        if ($request->hasFile('image')) {
+            $fileName = time() . '.' . $request->file('image')->getClientOriginalExtension();
+            Image::make($request->file('image'))->save(public_path('img/uploads/' . $fileName));
+            $menu->image = 'img/uploads/' . $fileName;
+            $menu->update();
+        }
+
+        return redirect()->route('menu.show', [$user->id, $menu->id]);
+    }
+
+    public function changeFeatured($user_id, $id){
+        $user = User::find($user_id);
+        $menu = Menu::find($id);
+
+        if ($menu->featured == 1) {
+            $menu->featured = 0;
+        }
+        else {
+            $menu->featured = 1;
+        }
+
+        $menu->update();
+
+        return redirect()->route('menu.show', [$user->id, $menu->id]);
+    }
     /**
      * Remove the specified resource from storage.
      *

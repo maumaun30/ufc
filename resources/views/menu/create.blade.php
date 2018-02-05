@@ -49,6 +49,13 @@
                     </span>
                 @endif
             </div>
+            <div class="form-group">
+                <label>Featured</label>
+                <select name="featured" class="form-control">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
 			<button type="submit" class="btn btn-default btn-sm">Add</button>
 		</form>
 	</div>

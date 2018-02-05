@@ -39,4 +39,8 @@ Route::resource('{cart_id}/order', 'OrderController');
 
 Route::resource('profile/{user_id}/menu', 'MenuController');
 
+Route::patch('profile/{user_id}/menu/{id}/update_photo', 'MenuController@changeMenuPhoto')->name('change.menu.photo');
+
+Route::patch('profile/{user_id}/menu/{id}/change_featured', 'MenuController@changeFeatured')->name('change.featured');
+
 Route::resource('profile/{user_id}/inventory', 'InventoryController');
