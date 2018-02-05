@@ -6,7 +6,7 @@
 		Add Menu
 	</div>
 	<div class="panel-body">
-		<form method="post" action="{{ route('menu.store', $user->id) }}" enctype="form-data/multipart">
+		<form method="post" action="{{ route('menu.store', $user->id) }}" enctype="multipart/form-data">
 			{{ csrf_field() }}
 			<div class="form-group{{ $errors->has('code') ? ' has-error' : '' }}">
 				<input type="text" name="code" class="form-control" placeholder="Code" required autofocus>
@@ -37,6 +37,15 @@
 				@if ($errors->has('description'))
                     <span class="help-block">
                         <strong>{{ $errors->first('description') }}</strong>
+                    </span>
+                @endif
+            </div>
+            <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
+            	<label>Upload Photo</label>
+				<input type="file" name="image" class="form-control">
+				@if ($errors->has('image'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('image') }}</strong>
                     </span>
                 @endif
             </div>

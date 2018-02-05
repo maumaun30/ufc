@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
+@section('styles')
+<style type="text/css">
+	img{
+		height: 250px;
+		width: 250px;
+	}
+</style>
+@stop
+
 @section('content')
 <div class="panel panel-default">
 	<div class="panel-heading">
@@ -8,6 +17,9 @@
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-12">
+				<div class="form-group">
+					<img src="{{ asset($menu->image) }}" class="img-rounded img-thumbnail">								
+				</div>
 				<div class="form-group">
 					<label>Code: </label>
 					{{ $menu->code }}								

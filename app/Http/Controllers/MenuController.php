@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Menu;
 use App\User;
+use Image;
 
 class MenuController extends Controller
 {
@@ -48,7 +49,8 @@ class MenuController extends Controller
             'code' => 'required|max:10',
             'name' => 'required|max:255',
             'price' => 'required|integer',
-            'description' => 'required|max:10000'
+            'description' => 'required|max:10000',
+            'image' => 'image|mimes:jpeg,jpg,png,gif',
         ]);
 
         $menu = new Menu;
@@ -57,6 +59,13 @@ class MenuController extends Controller
         $menu->name = $request->name;
         $menu->price = $request->price;
         $menu->description = $request->description;
+
+        if ($request->hasFile('image')) {
+            $fileName = 'img/uploads/' . time() . '.' . $request->file('image')->getClientOriginalExtension();
+            Image::make($request->file('image'))->save(public_path('img/uploads/' . $fileName));
+            $menu->image = $fileName;
+        }
+
         $menu->save();
 
         return redirect()->route('menu.show', [$user->id, $menu->id]);

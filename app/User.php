@@ -34,4 +34,8 @@ class User extends Authenticatable
     public function profileInvs(){
         return $this->hasMany('App\Inventory');
     }
+
+    public function cartQueue(){
+        return $this->hasMany('App\Cart');
+    }
 }

@@ -8,7 +8,7 @@
 	<div class="panel-body">
 		<div class="row mgb5">
 			<div class="col-md-12">
-				<a href="{{ route('inventory.create', $user->id) }}" class="btn btn-default btn-sm pull-right">Create</a>
+				<a href="{{ route('inventory.create', $user->id) }}" class="btn btn-default btn-sm pull-right">Add</a>
 			</div>
 		</div>
 		<div class="table-responsive">
@@ -19,7 +19,8 @@
 						<th>Name</th>
 						<th>Unit Price</th>
 						<th>Quantity</th>
-						<th>VoM</th>
+						<th>UoM</th>
+						<th>Price</th>
 						<th>Date Reordered</th>
 						<th>Value</th>
 					</tr>

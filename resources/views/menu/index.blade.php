@@ -10,7 +10,7 @@
 			<div class="col-md-12">
 				<div class="row mgb5">
 					<div class="col-md-12">
-						<a href="{{ route('menu.create', $user->id) }}" class="btn btn-default btn-sm pull-right">Create</a>
+						<a href="{{ route('menu.create', $user->id) }}" class="btn btn-default btn-sm pull-right">Add</a>
 					</div>
 				</div>
 				<div class="table-responsive">

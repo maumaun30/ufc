@@ -95,11 +95,12 @@
                         <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked">
                                 <li><a href="{{ route('home') }}">Dashboard</a></li>
-                                <li><a href="#">My Profile</a></li>
+                                <li><a href="{{ route('current.orders', Auth::user()->id) }}">Current Orders</a></li>
+                                <li><a href="{{ route('profile', Auth::user()->id) }}">My Profile</a></li>
                                 <li><a href="{{ route('menu.index', Auth::user()->id) }}">Menus</a></li>
                                 <li><a href="{{ route('inventory.index', Auth::user()->id) }}">Inventory</a></li>
                                 <li><a href="#">Sales</a></li>
-                                <li><a href="#">Settings</a></li>
+                                <li><a href="{{ route('settings', Auth::user()->id) }}">Settings</a></li>
                             </ul>
                         </div>
                     </div>

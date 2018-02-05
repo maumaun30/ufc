@@ -17,6 +17,7 @@ class OrderController extends Controller
     public function createCartPost(Request $request){
         $cart = new Cart; 
         $cart->cx = $request->cx;
+        $cart->user_id = Auth::user()->id;
         $cart->save();
 
         return redirect()->route('order.index', $cart->id)->with('cart', $cart);
@@ -38,6 +39,9 @@ class OrderController extends Controller
             $item->status = 1;
             $item->update();
         }
+
+        $cart->status = 1;
+        $cart->update();
 
         return redirect()->route('receipt', $cart->id)->with('cart', $cart);
     }

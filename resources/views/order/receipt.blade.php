@@ -14,6 +14,8 @@
 		<div class="row">
 			Total Price: {{ $total }}
 		</div>
+		RATINGS<br>
+		SHARE
 	</div>
 </div>
 @stop
