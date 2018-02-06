@@ -31,6 +31,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Menu');
     }
 
+    public function profileAddons(){
+        return $this->hasMany('App\Addon');
+    }
+
     public function profileInvs(){
         return $this->hasMany('App\Inventory');
     }

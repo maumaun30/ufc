@@ -40,7 +40,10 @@ class OrderController extends Controller
             $item->update();
         }
 
+        $total = $cart->cartItems->sum('price');
+
         $cart->status = 1;
+        $cart->total = $total;
         $cart->update();
 
         return redirect()->route('receipt', $cart->id)->with('cart', $cart);

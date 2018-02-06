@@ -3,24 +3,23 @@
 @section('content')
 <div class="panel panel-default">
 	<div class="panel-heading">
-		Menu
+		Add-ons
 	</div>
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-12">
-				@if($user->profileMenus->isEmpty())
-					No Menus created yet. =( <a href="{{ route('menu.create', encrypt($user->id)) }}">Click here to ADD</a>
+				@if($user->profileAddons->isEmpty())
+					No addons created yet. =( <a href="{{ route('addon.create', encrypt($user->id)) }}">Click here to ADD</a>
 				@else
 					<div class="row mgb5">
 						<div class="col-md-12">
-							<a href="{{ route('menu.create', encrypt($user->id)) }}" class="btn btn-default btn-sm pull-right">Add</a>
+							<a href="{{ route('addon.create', encrypt($user->id)) }}" class="btn btn-default btn-sm pull-right">Add</a>
 						</div>
 					</div>
 					<div class="table-responsive">
 						<table class="table table-bordered table-striped table-condensed table-hover">
 							<thead>
 								<tr>
-									<th>Code</th>
 									<th>Name</th>
 									<th>Price</th>
 									<th>Featured</th>
@@ -28,15 +27,14 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($user->profileMenus as $menu)
+								@foreach($user->profileAddons as $addon)
 									<tr>
-										<td>{{ $menu->code }}</td>
-										<td>{{ $menu->name }}</td>
-										<td>{{ $menu->price }}</td>
+										<td>{{ $addon->name }}</td>
+										<td>{{ $addon->price }}</td>
 										<td>
-											@if($user->profileMenus->isEmpty())
+											@if($user->profileAddons->isEmpty())
 											@else
-												@if($menu->featured == 1)
+												@if($addon->featured == 1)
 													Yes
 												@else
 													No
@@ -45,19 +43,19 @@
 										</td>
 										<td>
 											<div class="btn-group">
-												<a href="{{ route('menu.show', [encrypt($user->id), $menu->id]) }}" class="btn btn-default btn-sm" title="View More"><i class="fa fa-eye"></i></a>
-												@if($user->profileMenus->isEmpty())
+												<a href="{{ route('addon.show', [encrypt($user->id), $addon->id]) }}" class="btn btn-default btn-sm" title="View More"><i class="fa fa-eye"></i></a>
+												@if($user->profileAddons->isEmpty())
 												@else
-													<button class="btn btn-warning btn-sm menu-featured-btn" data-toggle="modal" data-target="#featured" data-furl="{{ route('change.featured', [encrypt($user->id), $menu->id]) }}" title="@if($menu->featured == 1) Featured @else Not Featured @endif">
-														@if($menu->featured == 1)
+													<button class="btn btn-warning btn-sm addon-featured-btn" data-toggle="modal" data-target="#featured" data-furl="{{ route('change.featured', [encrypt($user->id), $addon->id]) }}" title="@if($addon->featured == 1) Featured @else Not Featured @endif">
+														@if($addon->featured == 1)
 															<i class="fa fa-star"></i>
 														@else
 															<i class="fa fa-star-o"></i>
 														@endif
 													</button>
 												@endif
-												<a href="{{ route('menu.edit', [encrypt($user->id), $menu->id]) }}" class="btn btn-primary btn-sm" title="Edit"><i class="fa fa-pencil"></i></a>
-												<button class="btn btn-danger btn-sm menu-name-btn" data-toggle="modal" data-target="#delete" data-name="{{ $menu->name }}" data-url="{{ route('menu.destroy', [encrypt($user->id), $menu->id]) }}" title="Delete"><i class="fa fa-trash"></i></button>
+												<a href="{{ route('addon.edit', [encrypt($user->id), $addon->id]) }}" class="btn btn-primary btn-sm" title="Edit"><i class="fa fa-pencil"></i></a>
+												<button class="btn btn-danger btn-sm addon-name-btn" data-toggle="modal" data-target="#delete" data-name="{{ $addon->name }}" data-url="{{ route('addon.destroy', [encrypt($user->id), $addon->id]) }}" title="Delete"><i class="fa fa-trash"></i></button>
 											</div>
 										</td>
 									</tr>
@@ -81,10 +79,10 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>Delete the menu, <b class="menu-name"></b>?</p>
+				<p>Delete the addon, <b class="addon-name"></b>?</p>
 			</div>
 			<div class="modal-footer">
-				<form method="post" action="" class="menu-url">
+				<form method="post" action="" class="addon-url">
 					{{ csrf_field() }}
 					{{ method_field('delete') }}
 					<button type="submit" class="btn btn-danger btn-sm">Yes</button>
@@ -105,9 +103,9 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 			<div class="modal-body">
-				@if($user->profileMenus->isEmpty())
+				@if($user->profileAddons->isEmpty())
 				@else
-					@if($menu->featured == 1)
+					@if($addon->featured == 1)
 						Remove as Featured?
 					@else
 						Mark as Featured?
@@ -132,14 +130,14 @@
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 
 <script>
-	$('.menu-name-btn').on('click', function(){
-		var menuName = $(this).data('name');
-		var menuUrl = $(this).data('url');
-		$('.menu-name').text(menuName);
-		$('.menu-url').attr('action', menuUrl);
+	$('.addon-name-btn').on('click', function(){
+		var addonName = $(this).data('name');
+		var addonUrl = $(this).data('url');
+		$('.addon-name').text(addonName);
+		$('.addon-url').attr('action', addonUrl);
 	});
 
-	$('.menu-featured-btn').on('click', function(){
+	$('.addon-featured-btn').on('click', function(){
 		var featuredUrl = $(this).data('furl');
 		$('.featured-url').attr('action', featuredUrl);
 	});

@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'UFC') }}</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -33,7 +33,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                        {{ config('app.name', 'UFC') }}
                     </a>
                 </div>
 
@@ -90,17 +90,18 @@
                 <div class="col-md-3">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            My Tabs
+                            Tabs
                         </div>
                         <div class="panel-body">
                             <ul class="nav nav-pills nav-stacked">
-                                <li><a href="{{ route('home') }}">Dashboard</a></li>
-                                <li><a href="{{ route('current.orders', Auth::user()->id) }}">Current Orders</a></li>
-                                <li><a href="{{ route('profile', Auth::user()->id) }}">My Profile</a></li>
-                                <li><a href="{{ route('menu.index', Auth::user()->id) }}">Menus</a></li>
-                                <li><a href="{{ route('inventory.index', Auth::user()->id) }}">Inventory</a></li>
-                                <li><a href="#">Sales</a></li>
-                                <li><a href="{{ route('settings', Auth::user()->id) }}">Settings</a></li>
+                                <li><a href="{{ route('dashboard') }}"><i class="fa fa-tachometer"></i> Dashboard</a></li>
+                                <li><a href="{{ route('current.orders', encrypt(Auth::user()->id)) }}"><i class="fa fa-book"></i> Orders</a></li>
+                                <li><a href="{{ route('menu.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-cutlery"></i> Menus</a></li>
+                                <li><a href="{{ route('addon.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-beer"></i> Add-ons</a></li>
+                                <li><a href="{{ route('inventory.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-barcode"></i> Inventory</a></li>
+                                <li><a href="#"><i class="fa fa-money"></i> Sales</a></li>
+                                <li><a href="{{ route('profile', encrypt(Auth::user()->id)) }}"><i class="fa fa-user"></i> Profile</a></li>
+                                <li><a href="{{ route('settings', encrypt(Auth::user()->id)) }}"><i class="fa fa-cog"></i> Settings</a></li>
                             </ul>
                         </div>
                     </div>

@@ -18,9 +18,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('company')->nullable();            
-            $table->longText('address')->nullable();
-            $table->string('logo')->nullable();            
+            $table->string('company');            
+            $table->longText('address');
+            $table->string('logo')->nullable()->default('img/uploads/logo/default.jpg');            
             $table->rememberToken();
             $table->timestamps();
         });

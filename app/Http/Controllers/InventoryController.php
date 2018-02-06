@@ -8,6 +8,11 @@ use App\User;
 
 class InventoryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +20,7 @@ class InventoryController extends Controller
      */
     public function index($user_id)
     {
-        $user = User::find($user_id);
+        $user = User::find(decrypt($user_id));
         $inventories = Inventory::all();
 
         return view('inventory.index')->with('user', $user)->with('inventories', $inventories);
@@ -28,7 +33,7 @@ class InventoryController extends Controller
      */
     public function create($user_id)
     {
-        $user = User::find($user_id);
+        $user = User::find(decrypt($user_id));
         return view('inventory.create')->with('user', $user);
     }
 
@@ -40,30 +45,27 @@ class InventoryController extends Controller
      */
     public function store(Request $request, $user_id)
     {
-        $user = User::find($user_id);
+        $user = User::find(decrypt($user_id));
 
         $this->validate($request,[
-            'inv_id' => 'required|unique:inventories|max:255',
             'name' => 'required|max:255',
             'price' => 'required|integer',
             'qty' => 'required|integer',
             'vom' => 'required|max:255',
             'date_reorder' => 'required|date|date_format:M-d-Y',
-            'value' => 'required|integer'
         ]);
 
         $inventory = new Inventory;
-        $inventory->inv_id = $request->inv_id;
         $inventory->user_id = $user->id;
         $inventory->name = $request->name;
         $inventory->price = $request->price;
         $inventory->qty = $request->qty;
         $inventory->vom = $request->vom;
         $inventory->date_reorder = $request->date_reorder;
-        $inventory->value = $request->value;
+        $inventory->value = $request->qty * $request->price;
         $inventory->save();
 
-        return redirect()->route('inventory.show', [$user->id, $inventory->id]);
+        return redirect()->route('inventory.show', [encrypt($user->id), $inventory->id]);
     }
 
     /**
@@ -74,9 +76,9 @@ class InventoryController extends Controller
      */
     public function show($user_id, $id)
     {
-        $user = User::find($user_id);
+        $user = User::find(decrypt($user_id));
         $inventory = Inventory::find($id);
-        return view('inventory.show', [$user->id, $inventory->id])->with('inventory', $inventory);
+        return view('inventory.show', [encrypt($user->id), $inventory->id])->with('inventory', $inventory)->with('user', $user);
     }
 
     /**
@@ -85,9 +87,11 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($user_id, $id)
     {
-        //
+        $user = User::find(decrypt($user_id));
+        $inventory = Inventory::find($id);
+        return view('inventory.edit', [encrypt($user->id), $inventory->id])->with('inventory', $inventory)->with('user', $user);
     }
 
     /**
@@ -97,9 +101,28 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $user_id, $id)
     {
-        //
+        $user = User::find(decrypt($user_id));
+        $inventory = Inventory::find($id);
+
+        $this->validate($request,[
+            'name' => 'required|max:255',
+            'price' => 'required|integer',
+            'qty' => 'required|integer',
+            'vom' => 'required|max:255',
+            'date_reorder' => 'required|date|date_format:M-d-Y',
+        ]);
+
+        $inventory->name = $request->name;
+        $inventory->price = $request->price;
+        $inventory->qty = $request->qty;
+        $inventory->vom = $request->vom;
+        $inventory->date_reorder = $request->date_reorder;
+        $inventory->value = $request->qty * $request->price;
+        $inventory->update();
+
+        return redirect()->route('inventory.show', [encrypt($user->id), $inventory->id]);
     }
 
     /**
@@ -108,8 +131,11 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user_id, $id)
     {
-        //
+        $user = User::find(decrypt($user_id));
+        $inventory = Inventory::find($id)->delete();
+
+        return redirect()->route('inventory.show', encrypt($user->id));
     }
 }

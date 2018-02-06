@@ -6,7 +6,7 @@
 		Edit Menu
 	</div>
 	<div class="panel-body">
-		<form method="post" action="{{ route('menu.update', [$user->id, $menu->id]) }}" enctype="form-data/multipart">
+		<form method="post" action="{{ route('menu.update', [encrypt($user->id), $menu->id]) }}">
 			{{ csrf_field() }}
 			{{ method_field('patch') }}
 			<div class="form-group{{ $errors->has('code') ? ' has-error' : '' }}">

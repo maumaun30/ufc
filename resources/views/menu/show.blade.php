@@ -7,7 +7,11 @@
 			<div class="col-md-12">
 				Menu
 				<div class="pull-right">
-					<a href="{{ route('menu.edit', [$user->id, $menu->id]) }}" class="btn btn-primary btn-sm"><i class="fa fa-pencil"></i></a>
+					<div class="btn-group">
+						<a href="{{ route('menu.create', encrypt($user->id)) }}" class="btn btn-default btn-sm" title="Add Again"><i class="fa fa-plus"></i></a>
+						<a href="{{ route('menu.edit', [encrypt($user->id), $menu->id]) }}" class="btn btn-primary btn-sm" title="Edit"><i class="fa fa-pencil"></i></a>
+						<button class="btn btn-danger btn-sm menu-name-btn" data-toggle="modal" data-target="#delete" data-name="{{ $menu->name }}" data-url="{{ route('menu.destroy', [encrypt($user->id), $menu->id]) }}" title="Delete"><i class="fa fa-trash"></i></button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -18,7 +22,7 @@
 				<div class="form-group">
 					<img src="{{ asset($menu->image) }}" class="img-rounded img-thumbnail">								
 				</div>
-				<form action="{{ route('change.menu.photo', [$user->id, $menu->id]) }}" method="post" enctype="multipart/form-data">
+				<form action="{{ route('change.menu.photo', [encrypt($user->id), $menu->id]) }}" method="post" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					{{ method_field('patch') }}
 		            <div class="form-group{{ $errors->has('image') ? ' has-error' : '' }}">
@@ -34,7 +38,7 @@
 			</div>
 			<div class="col-md-6">
 				<div class="form-group">
-					<form action="{{ route('change.featured', [$user->id, $menu->id]) }}" method="post">
+					<form action="{{ route('change.featured', [encrypt($user->id), $menu->id]) }}" method="post">
 						<label>Featured:</label>
 						@if($menu->featured == 1)
 							Yes
@@ -67,4 +71,42 @@
 		</div>
 	</div>
 </div>
+
+<!-- Modal -->
+<div id="delete" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-sm">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p>Delete the menu, <b class="menu-name"></b>?</p>
+			</div>
+			<div class="modal-footer">
+				<form method="post" action="" class="menu-url">
+					{{ csrf_field() }}
+					{{ method_field('delete') }}
+					<button type="submit" class="btn btn-danger">Yes</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>
+@stop
+
+@section('scripts')
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script>
+	$('.menu-name-btn').on('click', function(){
+		var menuName = $(this).data('name');
+		var menuUrl = $(this).data('url');
+		$('.menu-name').text(menuName);
+		$('.menu-url').attr('action', menuUrl);
+	});
+</script>
 @stop

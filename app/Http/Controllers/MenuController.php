@@ -19,8 +19,8 @@ class MenuController extends Controller
      */
     public function index($user_id)
     {
-        $user = User::find($user_id);
-        $menus = Menu::all();
+        $user = User::find(decrypt($user_id));
+        $menus = Menu::latest();
         return view('menu.index')->with('user', $user)->with('menus', $menus);
     }
 
@@ -31,7 +31,7 @@ class MenuController extends Controller
      */
     public function create($user_id)
     {
-        $user = User::find($user_id);
+        $user = User::find(decrypt($user_id));
         return view('menu.create')->with('user', $user);
     }
 
@@ -43,7 +43,7 @@ class MenuController extends Controller
      */
     public function store(Request $request, $user_id)
     {
-        $user = User::find($user_id);
+        $user = User::find(decrypt($user_id));
 
         $this->validate($request, [
             'code' => 'required|max:10',
@@ -69,7 +69,7 @@ class MenuController extends Controller
 
         $menu->save();
 
-        return redirect()->route('menu.show', [$user->id, $menu->id]);
+        return redirect()->route('menu.show', [encrypt($user->id), $menu->id]);
     }
 
     /**
@@ -80,7 +80,7 @@ class MenuController extends Controller
      */
     public function show($user_id, $id)
     {
-        $user = User::find($user_id);
+        $user = User::find(decrypt($user_id));
         $menu = Menu::find($id);
         return view('menu.show', [$user->id, $menu->id])->with('user', $user)->with('menu', $menu);
     }
@@ -93,7 +93,7 @@ class MenuController extends Controller
      */
     public function edit($user_id, $id)
     {
-        $user = User::find($user_id);
+        $user = User::find(decrypt($user_id));
         $menu = Menu::find($id);
         return view('menu.edit', [$user->id, $menu->id])->with('menu', $menu)->with('user', $user);
     }
@@ -107,7 +107,7 @@ class MenuController extends Controller
      */
     public function update(Request $request, $user_id, $id)
     {
-        $user = User::find($user_id);
+        $user = User::find(decrypt($user_id));
         $menu = Menu::find($id);
 
         $this->validate($request, [
@@ -115,7 +115,6 @@ class MenuController extends Controller
             'name' => 'required|max:255',
             'price' => 'required|integer',
             'description' => 'required|max:10000',
-            'image' => 'image|mimes:jpeg,jpg,png,gif',
         ]);
 
         $menu->code = $request->code;
@@ -124,12 +123,16 @@ class MenuController extends Controller
         $menu->description = $request->description;
         $menu->update();
 
-        return redirect()->route('menu.show', [$user->id, $menu->id]);
+        return redirect()->route('menu.show', [encrypt($user->id), $menu->id]);
     }
 
     public function changeMenuPhoto(Request $request, $user_id, $id){
-        $user = User::find($user_id);
+        $user = User::find(decrypt($user_id));
         $menu = Menu::find($id);
+
+        $this->validate($request, [
+            'image' => 'image|mimes:jpeg,jpg,png,gif',
+        ]);
 
         if ($request->hasFile('image')) {
             $fileName = time() . '.' . $request->file('image')->getClientOriginalExtension();
@@ -138,11 +141,11 @@ class MenuController extends Controller
             $menu->update();
         }
 
-        return redirect()->route('menu.show', [$user->id, $menu->id]);
+        return redirect()->route('menu.show', [encrypt($user->id), $menu->id]);
     }
 
     public function changeFeatured($user_id, $id){
-        $user = User::find($user_id);
+        $user = User::find(decrypt($user_id));
         $menu = Menu::find($id);
 
         if ($menu->featured == 1) {
@@ -154,7 +157,7 @@ class MenuController extends Controller
 
         $menu->update();
 
-        return redirect()->route('menu.show', [$user->id, $menu->id]);
+        return redirect()->route('menu.show', [encrypt($user->id), $menu->id]);
     }
     /**
      * Remove the specified resource from storage.
@@ -164,9 +167,9 @@ class MenuController extends Controller
      */
     public function destroy($user_id, $id)
     {
-        $user = User::find($user_id);
+        $user = User::find(decrypt($user_id));
         $menu = Menu::find($id)->delete();
 
-        return redirect()->route('menu.index', $user->id);
+        return redirect()->route('menu.index', encrypt($user->id));
     }
 }

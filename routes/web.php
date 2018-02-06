@@ -11,36 +11,39 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@welcome');
 
 Auth::routes();
 
-Route::get('dashboard', 'HomeController@index')->name('home');
+Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
 
+// Profile
 Route::get('{user_id}/profile', 'HomeController@profile')->name('profile');
+Route::get('{user_id}/profile/edit', 'HomeController@profileEdit')->name('profile.edit');
+Route::patch('{user_id}/profile/update', 'HomeController@profileUpdate')->name('profile.update');
+Route::patch('{user_id}/profile/logo', 'HomeController@profileLogo')->name('profile.logo');
+Route::get('{user_id}/profile/change_password', 'HomeController@changePassword')->name('change.password');
+Route::patch('{user_id}/profile/change_password_update', 'HomeController@changePasswordUpdate')->name('change.password.update');
 
 Route::get('{user_id}/settings', 'HomeController@settings')->name('settings');
 
+// Cart and Order
 Route::get('create/cart', 'OrderController@createCartView')->name('create.cart');
-
 Route::post('create/cart', 'OrderController@createCartPost')->name('post.cart');
-
 Route::get('{cart_id}/cart', 'OrderController@cartView')->name('view.cart');
-
 Route::patch('{cart_id}/place_order', 'OrderController@placeOrder')->name('place.order');
-
 Route::get('{cart_id}/receipt', 'OrderController@receipt')->name('receipt');
-
 Route::get('{user_id}/orders', 'HomeController@currentOrders')->name('current.orders');
-
 Route::resource('{cart_id}/order', 'OrderController');
 
-Route::resource('profile/{user_id}/menu', 'MenuController');
+// Menu
+Route::resource('{user_id}/menu', 'MenuController');
+Route::patch('{user_id}/menu/{id}/update_photo', 'MenuController@changeMenuPhoto')->name('change.menu.photo');
+Route::patch('{user_id}/menu/{id}/change_featured', 'MenuController@changeFeatured')->name('change.featured');
 
-Route::patch('profile/{user_id}/menu/{id}/update_photo', 'MenuController@changeMenuPhoto')->name('change.menu.photo');
+// Addon
+Route::resource('{user_id}/addon', 'AddonController');
+Route::patch('{user_id}/addon/{id}/change_featured', 'AddonController@changeFeatured')->name('change.featured');
 
-Route::patch('profile/{user_id}/menu/{id}/change_featured', 'MenuController@changeFeatured')->name('change.featured');
-
-Route::resource('profile/{user_id}/inventory', 'InventoryController');
+// inventory
+Route::resource('{user_id}/inventory', 'InventoryController');
