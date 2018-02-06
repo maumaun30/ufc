@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('item');
             $table->integer('price');
             $table->integer('qty');
+            $table->string('image')->default('img/uploads/default.jpg');
             $table->longText('remarks')->nullable();
             $table->integer('status');
             $table->timestamps();

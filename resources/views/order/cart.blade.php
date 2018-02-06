@@ -3,25 +3,46 @@
 @section('content')
 <div class="panel panel-default">
 	<div class="panel-heading">
-		Cart
-		<form action="{{ route('place.order', $cart->id) }}" method="post">
-			{{ csrf_field() }}
-			{{ method_field('patch') }}
-			<button type="submit" class="btn btn-default">Place Order</button>
-		</form>
-		Total Price: {{ $total }}
+		<div class="row">
+			<div class="col-md-12">
+				Your Cart
+				<div class="pull-right">
+					<form action="{{ route('place.order', $cart->id) }}" method="post">
+						{{ csrf_field() }}
+						{{ method_field('patch') }}
+						Total Price: {{ $total }}
+					</form>					
+				</div>	
+			</div>
+		</div>
+		<div class="row mgb5">
+			<div class="col-md-12">
+				<button class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i> Menu</button>
+				<button type="submit" class="btn btn-success btn-sm pull-right"><i class="fa fa-check"></i> Place Order</button>
+			</div>
+		</div>
 	</div>
 	<div class="panel-body">
 		<div class="row">
 			@foreach($cart->cartItems as $item)
-        	<div class="col-md-4">
+        	<div class="col-md-2">
 	        	<div class="panel panel-default">
-	        		<div class="panel-heading">
-	        			{{ $item->item }}
+	        		<div class="panel-heading text-center">
+	        			{{ $item->item }} x {{ $item->qty }}
 	        		</div>
-	        		<div class="panel-body">
-	        			Ulam Image<br>
-	        			{{ $item->price }}<br>
+	        		<div class="panel-body text-center">
+	        			<div class="form-group">
+		        			<img src="{{ asset($item->image) }}" class="img-rounded img-thumbnail">
+	        			</div>
+	        			<div class="form-group">
+		        			<label>Price:</label> {{ $item->price }}
+	        			</div>
+	        			<div class="form-group">
+	        				<button class="btn btn-default btn-sm form-control input-sm">Edit Quantity</button>
+	        			</div>
+	        			<div class="form-group">
+	        				<button class="btn btn-danger btn-sm form-control input-sm">Discard</button>
+	        			</div>
 	        		</div>
 	        	</div>
         	</div>

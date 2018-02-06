@@ -6,27 +6,41 @@
 		Orders in Queue
 	</div>
 	<div class="panel-body">
-		<div class="panel-group" id="accordion">
-			@foreach($user->cartQueue->where('status', 1) as $cart)
+		@foreach($user->cartQueue->where('status', 1) as $cart)
+			<div class="panel-group" id="accordion{{ $cart->id }}">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a data-toggle="collapse" data-parent="#accordion" href="#collapse1">{{ $cart->cx }}  {{ $cart->cartItems->sum('price') }}</a>
-						</h4>
+						<div class="row">
+							<div class="col-md-12">
+								<a data-toggle="collapse" data-parent="#accordion{{ $cart->id }}" href="#collapse{{ $cart->id }}">{{ $cart->cx }}</a>
+								<div class="pull-right">
+									<label>Total Price:</label> {{ $cart->cartItems->sum('price') }}
+									<div class="btn-group">
+										<button class="btn btn-success btn-sm" title="Finish"><i class="fa fa-check"></i></button>
+										<button class="btn btn-danger btn-sm" title="Discard"><i class="fa fa-times"></i></button>
+									</div>
+								</div>								
+							</div>
+						</div>
 					</div>
-					<div id="collapse1" class="panel-collapse collapse in">
+					<div id="collapse{{ $cart->id }}" class="panel-collapse collapse in">
 						<div class="panel-body">
 							<ul>
 								@foreach($cart->cartItems as $item)
-									<li>{{ $item->qty }} {{ $item->item }} {{ $item->price }}</li>
+									<li>
+										{{ $item->qty }} x {{ $item->item }}, <label>Price:</label> {{ $item->price }}
+										<div class="btn-group">
+											<button class="btn btn-success btn-sm" title="Finish"><i class="fa fa-check"></i></button>
+											<button class="btn btn-danger btn-sm" title="Discard"><i class="fa fa-times"></i></button>
+										</div>
+									</li>
 								@endforeach
 							</ul>
 						</div>
 					</div>
 				</div>
-			@endforeach
-
-		</div>
+			</div>
+		@endforeach
 	</div>
 </div>
 @stop

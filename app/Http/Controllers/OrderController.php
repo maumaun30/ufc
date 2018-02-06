@@ -90,12 +90,12 @@ class OrderController extends Controller
         $cart = Cart::find($cart_id);
 
         $order = new Order;
-        $order->user_id = Auth::user()->id;
         $order->cart_id = $cart->id;
         $order->cx = $request->cx;
         $order->item = $request->name;
         $order->price = $request->price * $request->qty;
         $order->qty = $request->qty;
+        $order->image = $request->image;
         $order->status = 0;
         $order->save();
 
