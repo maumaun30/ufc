@@ -7,18 +7,18 @@
 			<div class="col-md-12">
 				Your Cart
 				<div class="pull-right">
-					<form action="{{ route('place.order', $cart->id) }}" method="post">
-						{{ csrf_field() }}
-						{{ method_field('patch') }}
-						Total Price: {{ $total }}
-					</form>					
+						Total Price: {{ $total }}		
 				</div>	
 			</div>
 		</div>
 		<div class="row mgb5">
-			<div class="col-md-12">
-				<button class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i> Menu</button>
-				<button type="submit" class="btn btn-success btn-sm pull-right"><i class="fa fa-check"></i> Place Order</button>
+			<div class="col-md-12">				
+				<form action="{{ route('place.order', $cart->id) }}" method="post">
+					{{ csrf_field() }}
+					{{ method_field('patch') }}
+					<a href="{{ url()->previous() }}" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i> Menu</a>
+					<button type="submit" class="btn btn-success btn-sm pull-right"><i class="fa fa-check"></i> Place Order</button>
+				</form>
 			</div>
 		</div>
 	</div>

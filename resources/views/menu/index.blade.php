@@ -3,68 +3,81 @@
 @section('content')
 <div class="panel panel-default">
 	<div class="panel-heading">
-		Menu
+		<div class="row">
+			<div class="col-md-12">
+				Menu
+				<div class="pull-right">
+					<a href="{{ route('category.index', encrypt($user->id)) }}" class="btn btn-default btn-sm">Categories</a>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-12">
-				@if($user->profileMenus->isEmpty())
-					No Menus created yet. =( <a href="{{ route('menu.create', encrypt($user->id)) }}">Click here to ADD</a>
+				@if($categories->isEmpty())
+					No Categories created yet. =( <a href="{{ route('category.create', encrypt($user->id)) }}">Click here to ADD</a>
 				@else
-					<div class="row mgb5">
-						<div class="col-md-12">
-							<a href="{{ route('menu.create', encrypt($user->id)) }}" class="btn btn-default btn-sm pull-right">Add</a>
+					@if($user->profileMenus->isEmpty())
+						No Menus created yet. =( <a href="{{ route('menu.create', encrypt($user->id)) }}">Click here to ADD</a>
+					@else
+						<div class="row mgb5">
+							<div class="col-md-12">
+								<a href="{{ route('menu.create', encrypt($user->id)) }}" class="btn btn-default btn-sm pull-right">Add</a>
+							</div>
 						</div>
-					</div>
-					<div class="table-responsive">
-						<table class="table table-bordered table-striped table-condensed table-hover">
-							<thead>
-								<tr>
-									<th>Code</th>
-									<th>Name</th>
-									<th>Price</th>
-									<th>Featured</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach($user->profileMenus as $menu)
+						<div class="table-responsive">
+							<table class="table table-bordered table-striped table-condensed table-hover">
+								<thead>
 									<tr>
-										<td>{{ $menu->code }}</td>
-										<td>{{ $menu->name }}</td>
-										<td>{{ $menu->price }}</td>
-										<td>
-											@if($user->profileMenus->isEmpty())
-											@else
-												@if($menu->featured == 1)
-													Yes
-												@else
-													No
-												@endif
-											@endif
-										</td>
-										<td>
-											<div class="btn-group">
-												<a href="{{ route('menu.show', [encrypt($user->id), $menu->id]) }}" class="btn btn-default btn-sm" title="View More"><i class="fa fa-eye"></i></a>
+										<th>Code</th>
+										<th>Category</th>
+										<th>Name</th>
+										<th>Price</th>
+										<th>Featured</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach($user->profileMenus as $menu)
+										<tr>
+											<td>{{ $menu->code }}</td>
+											<td>{{ $menu->categoryMenu->name }}</td>
+											<td>{{ $menu->name }}</td>
+											<td>{{ $menu->price }}</td>
+											<td>
 												@if($user->profileMenus->isEmpty())
 												@else
-													<button class="btn btn-warning btn-sm menu-featured-btn" data-toggle="modal" data-target="#featured" data-furl="{{ route('change.featured', [encrypt($user->id), $menu->id]) }}" title="@if($menu->featured == 1) Featured @else Not Featured @endif">
-														@if($menu->featured == 1)
-															<i class="fa fa-star"></i>
-														@else
-															<i class="fa fa-star-o"></i>
-														@endif
-													</button>
+													@if($menu->featured == 1)
+														Yes
+													@else
+														No
+													@endif
 												@endif
-												<a href="{{ route('menu.edit', [encrypt($user->id), $menu->id]) }}" class="btn btn-primary btn-sm" title="Edit"><i class="fa fa-pencil"></i></a>
-												<button class="btn btn-danger btn-sm menu-name-btn" data-toggle="modal" data-target="#delete" data-name="{{ $menu->name }}" data-url="{{ route('menu.destroy', [encrypt($user->id), $menu->id]) }}" title="Delete"><i class="fa fa-trash"></i></button>
-											</div>
-										</td>
-									</tr>
-								@endforeach
-							</tbody>
-						</table>
-					</div>
+											</td>
+											<td>
+												<div class="btn-group">
+													<a href="{{ route('menu.show', [encrypt($user->id), $menu->id]) }}" class="btn btn-default btn-sm" title="View More"><i class="fa fa-eye"></i></a>
+													@if($user->profileMenus->isEmpty())
+													@else
+														<button class="btn btn-warning btn-sm menu-featured-btn" data-toggle="modal" data-target="#featured" data-furl="{{ route('change.featured', [encrypt($user->id), $menu->id]) }}" title="@if($menu->featured == 1) Featured @else Not Featured @endif">
+															@if($menu->featured == 1)
+																<i class="fa fa-star"></i>
+															@else
+																<i class="fa fa-star-o"></i>
+															@endif
+														</button>
+													@endif
+													<a href="{{ route('menu.edit', [encrypt($user->id), $menu->id]) }}" class="btn btn-primary btn-sm" title="Edit"><i class="fa fa-pencil"></i></a>
+													<button class="btn btn-danger btn-sm menu-name-btn" data-toggle="modal" data-target="#delete" data-name="{{ $menu->name }}" data-url="{{ route('menu.destroy', [encrypt($user->id), $menu->id]) }}" title="Delete"><i class="fa fa-trash"></i></button>
+												</div>
+											</td>
+										</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+					@endif
 				@endif
 			</div>
 		</div>

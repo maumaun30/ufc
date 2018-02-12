@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Menu;
+use App\Category;
 use App\User;
 use Image;
 
@@ -20,8 +21,9 @@ class MenuController extends Controller
     public function index($user_id)
     {
         $user = User::find(decrypt($user_id));
+        $categories = Category::all();
         $menus = Menu::latest();
-        return view('menu.index')->with('user', $user)->with('menus', $menus);
+        return view('menu.index')->with('user', $user)->with('menus', $menus)->with('categories', $categories);
     }
 
     /**
@@ -32,7 +34,8 @@ class MenuController extends Controller
     public function create($user_id)
     {
         $user = User::find(decrypt($user_id));
-        return view('menu.create')->with('user', $user);
+        $categories = Category::all();
+        return view('menu.create')->with('user', $user)->with('categories', $categories);
     }
 
     /**
@@ -55,6 +58,7 @@ class MenuController extends Controller
 
         $menu = new Menu;
         $menu->user_id = $user->id;
+        $menu->category_id = $request->category;
         $menu->code = $request->code;
         $menu->name = $request->name;
         $menu->price = $request->price;

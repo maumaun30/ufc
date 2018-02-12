@@ -37,6 +37,7 @@ Route::get('{user_id}/orders', 'HomeController@currentOrders')->name('current.or
 Route::resource('{cart_id}/order', 'OrderController');
 
 // Menu
+Route::resource('{user_id}/category', 'CategoryController');
 Route::resource('{user_id}/menu', 'MenuController');
 Route::patch('{user_id}/menu/{id}/update_photo', 'MenuController@changeMenuPhoto')->name('change.menu.photo');
 Route::patch('{user_id}/menu/{id}/change_featured', 'MenuController@changeFeatured')->name('change.featured');

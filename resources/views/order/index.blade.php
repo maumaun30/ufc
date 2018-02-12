@@ -6,7 +6,7 @@
     	<div class="row">
     		<div class="col-md-12">
 		    	Menu 
-	    		<button class="btn btn-default btn-sm">Add-ons</button>
+	    		<button class="btn btn-default btn-sm" data-toggle="modal" data-target="#addons">Add-ons</button>
 		    	<div class="pull-right">
 		    		Cart Price: {{ $cart->cartItems->sum('price') }}
 					<a href="{{ route('view.cart', $cart->id) }}" class="btn btn-default btn-sm">Cart</a>
@@ -60,5 +60,47 @@
         	@endforeach
         </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div id="addons" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-sm">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				Add-ons
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<form action="" method="post">
+				<div class="modal-body">
+					{{ csrf_field() }}
+					<select class="form-control input-sm mgb5" name="addon">
+						@foreach($addons as $addon)
+							<option value="{{ $addon->name }}">{{ $addon->name }}</option>
+						@endforeach
+					</select>
+					<select class="form-control input-sm" name="qty">
+						<option disabled selected>Quantity</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+						<option value="9">9</option>
+						<option value="10">10</option>
+						<option value="11">11</option>
+						<option value="12">12</option>
+					</select>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-default btn-sm">Add to Cart</button>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 @endsection

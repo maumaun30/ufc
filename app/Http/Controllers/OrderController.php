@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Order;
 use App\Menu;
+use App\Addon;
 use App\Cart;
 use Auth;
 
@@ -65,8 +66,9 @@ class OrderController extends Controller
     {
         $cart = Cart::find($cart_id);
         $menus = Menu::all();
+        $addons = Addon::all();
 
-        return view('order.index')->with('menus', $menus)->with('cart', $cart);
+        return view('order.index')->with('menus', $menus)->with('addons', $addons)->with('cart', $cart);
     }
 
     /**
