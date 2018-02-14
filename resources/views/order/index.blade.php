@@ -72,29 +72,38 @@
 				Add-ons
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
-			<form action="" method="post">
+			<form action="{{ route('order.store', $cart->id) }}" method="post">
 				<div class="modal-body">
 					{{ csrf_field() }}
-					<select class="form-control input-sm mgb5" name="addon">
+					<input type="hidden" name="cx" value="{{ $cart->cx }}">
 						@foreach($addons as $addon)
-							<option value="{{ $addon->name }}">{{ $addon->name }}</option>
+						<div class="row">
+							<div class="col-xs-8">
+								<div class="checkbox">
+									<label><input type="checkbox" name="addon" value="{{ $addon->name }}">{{ $addon->name }}</label>
+								</div>
+							</div>
+							<div class="col-xs-4">
+								<div class="checkbox">									
+									<select class="form-control input-sm" name="qty">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+										<option value="8">8</option>
+										<option value="9">9</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="12">12</option>
+									</select>
+								</div>
+							</div>
+						</div>
 						@endforeach
-					</select>
-					<select class="form-control input-sm" name="qty">
-						<option disabled selected>Quantity</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
-					</select>
+					
 				</div>
 				<div class="modal-footer">
 					<button type="submit" class="btn btn-default btn-sm">Add to Cart</button>

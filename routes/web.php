@@ -34,6 +34,10 @@ Route::get('{cart_id}/cart', 'OrderController@cartView')->name('view.cart');
 Route::patch('{cart_id}/place_order', 'OrderController@placeOrder')->name('place.order');
 Route::get('{cart_id}/receipt', 'OrderController@receipt')->name('receipt');
 Route::get('{user_id}/orders', 'HomeController@currentOrders')->name('current.orders');
+Route::patch('{user_id}/finish_order/{id}', 'HomeController@finishOrder')->name('finish.order');
+Route::patch('{user_id}/discard_order/{id}', 'HomeController@discardOrder')->name('discard.order');
+Route::patch('{user_id}/finish_cart/{id}', 'HomeController@finishCart')->name('finish.cart');
+Route::patch('{user_id}/discard_cart/{id}', 'HomeController@discardCart')->name('discard.cart');
 Route::resource('{cart_id}/order', 'OrderController');
 
 // Menu

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Cart;
+use App\Order;
 use Auth;
 use Image;
 
@@ -115,5 +116,61 @@ class HomeController extends Controller
         $user = User::find(decrypt($user_id));
 
         return view('auth.current_orders')->with('user', $user);
+    }
+
+    public function finishOrder($user_id, $id)
+    {
+        $user = User::find(decrypt($user_id));
+        $order = Order::find($id);
+        // status 2 = finish
+        $order->status = 2;
+        $order->update();
+
+        return redirect()->route('current.orders', encrypt($user->id))->with('user', $user);
+    }
+
+    public function discardOrder($user_id, $id)
+    {
+        $user = User::find(decrypt($user_id));
+        $order = Order::find($id);
+
+        $order->status = 0;
+        $order->update();
+
+        return redirect()->route('current.orders', encrypt($user->id))->with('user', $user);
+    }
+
+    public function finishCart($user_id, $id)
+    {
+        $user = User::find(decrypt($user_id));
+        $cart = Cart::find($id);
+        // status 2 = finish
+        $cart->status = 2;
+
+        foreach($cart->cartItems as $order){
+            $order->status = 2;
+            $order->update();
+        }
+        
+        $cart->update();
+
+        return redirect()->route('current.orders', encrypt($user->id))->with('user', $user);
+    }
+
+    public function discardCart($user_id, $id)
+    {
+        $user = User::find(decrypt($user_id));
+        $cart = Cart::find($id);
+
+        $cart->status = 0;
+
+        foreach($cart->cartItems as $order){
+            $order->status = 0;
+            $order->update();
+        }
+
+        $cart->update();
+
+        return redirect()->route('current.orders', encrypt($user->id))->with('user', $user);
     }
 }
