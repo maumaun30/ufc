@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Addon;
 use App\AddonCategory;
 
-class AddonController extends Controller
+class AddonCategoryController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
@@ -20,9 +19,8 @@ class AddonController extends Controller
     public function index($user_id)
     {
         $user = User::find(decrypt($user_id));
-        $addons = Addon::all();
         $addon_categories = AddonCategory::all();
-        return view('addon.index')->with('user', $user)->with('addons', $addons)->with('addon_categories', $addon_categories);
+        return view('addon.addon_category.index')->with('user', $user)->with('addon_categories', $addon_categories);
     }
 
     /**
@@ -33,7 +31,7 @@ class AddonController extends Controller
     public function create($user_id)
     {
         $user = User::find(decrypt($user_id));
-        return view('addon.create')->with('user', $user);
+        return view('addon.addon_category.create')->with('user', $user);
     }
 
     /**
@@ -48,18 +46,14 @@ class AddonController extends Controller
 
         $this->validate($request, [
             'name' => 'required|max:255',
-            'price' => 'required|integer',
         ]);
 
-        $addon = new addon;
-        $addon->user_id = $user->id;
-        $addon->name = $request->name;
-        $addon->price = $request->price;
-        $addon->featured = $request->featured;
+        $addon_category = new AddonCategory;
+        $addon_category->name = $request->name;
 
-        $addon->save();
+        $addon_category->save();
 
-        return redirect()->route('addon.show', [encrypt($user->id), $addon->id]);
+        return redirect()->route('addon_category.index', encrypt($user->id));
     }
 
     /**
@@ -68,11 +62,9 @@ class AddonController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($user_id, $id)
+    public function show()
     {
-        $user = User::find(decrypt($user_id));
-        $addon = Addon::find($id);
-        return view('addon.show', [$user->id, $addon->id])->with('user', $user)->with('addon', $addon);
+
     }
 
     /**
@@ -84,8 +76,8 @@ class AddonController extends Controller
     public function edit($user_id, $id)
     {
         $user = User::find(decrypt($user_id));
-        $addon = Addon::find($id);
-        return view('addon.edit', [$user->id, $addon->id])->with('addon', $addon)->with('user', $user);
+        $addon_category = AddonCategory::find($id);
+        return view('addon.addon_category.edit', [$user->id, $addon_category->id])->with('addon_category', $addon_category)->with('user', $user);
     }
 
     /**
@@ -98,35 +90,18 @@ class AddonController extends Controller
     public function update(Request $request, $user_id, $id)
     {
         $user = User::find(decrypt($user_id));
-        $addon = Addon::find($id);
+        $addon_category = AddonCategory::find($id);
 
         $this->validate($request, [
             'name' => 'required|max:255',
-            'price' => 'required|integer',
         ]);
 
-        $addon->name = $request->name;
-        $addon->price = $request->price;
-        $addon->update();
+        $addon_category->name = $request->name;
+        $addon_category->update();
 
-        return redirect()->route('addon.show', [encrypt($user->id), $addon->id]);
+        return redirect()->route('addon_category.index', encrypt($user->id));
     }
 
-    public function changeFeatured($user_id, $id){
-        $user = User::find(decrypt($user_id));
-        $addon = Addon::find($id);
-
-        if ($addon->featured == 1) {
-            $addon->featured = 0;
-        }
-        else {
-            $addon->featured = 1;
-        }
-
-        $addon->update();
-
-        return redirect()->route('addon.show', [encrypt($user->id), $addon->id]);
-    }
     /**
      * Remove the specified resource from storage.
      *
@@ -136,8 +111,8 @@ class AddonController extends Controller
     public function destroy($user_id, $id)
     {
         $user = User::find(decrypt($user_id));
-        $addon = Addon::find($id)->delete();
+        $addon_category = AddonCategory::find($id)->delete();
 
-        return redirect()->route('addon.index', encrypt($user->id));
+        return redirect()->route('addon_category.index', encrypt($user->id));
     }
 }

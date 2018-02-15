@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Cart;
 use App\Order;
+use App\Sales;
 use Auth;
 use Image;
 
@@ -144,15 +145,25 @@ class HomeController extends Controller
     {
         $user = User::find(decrypt($user_id));
         $cart = Cart::find($id);
+
+        $cartItems = '';
+
         // status 2 = finish
         $cart->status = 2;
 
         foreach($cart->cartItems as $order){
+            $cartItems .= $order->item . ' x ' . $order->qty . ',';
             $order->status = 2;
             $order->update();
         }
         
         $cart->update();
+
+        $sales = new Sales;
+        $sales->cx = $cart->cx;
+        $sales->price = $cart->price;
+        $sales->items = $cartItems;
+        $sales->save(); 
 
         return redirect()->route('current.orders', encrypt($user->id))->with('user', $user);
     }

@@ -20,7 +20,7 @@
 										@if($cart->status == 2)
 											<s>Cart Price: <b>{{ $cart->cartItems->sum('price') }}</b></s>
 										@else
-											Cart Price: <b>{ $cart->cartItems->sum('price') }}</b>
+											Cart Price: <b>{{ $cart->cartItems->sum('price') }}</b>
 											<div class="btn-group">
 												<button type="submit" class="btn btn-success btn-sm" title="Finish"><i class="fa fa-check"></i></button>
 												<a href="#" class="btn btn-danger btn-sm cart-name-btn" title="Discard" data-toggle="modal" data-target="#discardCart" data-name="{{ $cart->cx }}" data-url="{{ route('discard.cart', [encrypt($user->id), $cart->id]) }}"><i class="fa fa-times"></i></a>

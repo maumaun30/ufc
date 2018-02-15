@@ -17,6 +17,8 @@ class CreateAddonsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('category_id')->unsigned();
+            $table->foreign('category_id')->references('id')->on('addon_categories')->onDelete('cascade');
             $table->string('name');
             $table->integer('price');
             $table->integer('featured')->default(0);

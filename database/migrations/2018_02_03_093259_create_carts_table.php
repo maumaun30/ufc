@@ -20,6 +20,7 @@ class CreateCartsTable extends Migration
             $table->integer('status')->default(0);
             $table->string('cx');
             $table->integer('total')->default(0);
+            $table->string('table_number');
             $table->timestamps();
         });
     }

@@ -47,6 +47,7 @@ Route::patch('{user_id}/menu/{id}/update_photo', 'MenuController@changeMenuPhoto
 Route::patch('{user_id}/menu/{id}/change_featured', 'MenuController@changeFeatured')->name('change.featured');
 
 // Addon
+Route::resource('{user_id}/addon_category', 'AddonCategoryController');
 Route::resource('{user_id}/addon', 'AddonController');
 Route::patch('{user_id}/addon/{id}/change_featured', 'AddonController@changeFeatured')->name('change.featured');
 
