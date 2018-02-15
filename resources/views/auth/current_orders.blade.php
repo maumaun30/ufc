@@ -14,13 +14,29 @@
 							<div class="col-md-12">
 								<button data-toggle="collapse" data-parent="#accordion{{ $cart->id }}" href="#collapse{{ $cart->id }}" class="btn btn-primary btn-sm">{{ $cart->cx }} <span class="caret"></span></button>
 								<div class="pull-right">
+									<b>Table Number: {{ $cart->table_number }}</b>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="pull-right">
+									@if($cart->status == 2)
+										<s>Cart Price: <b>{{ $cart->cartItems->sum('price') }}</b></s>
+									@else
+										Cart Price: <b>{{ $cart->cartItems->sum('price') }}</b>
+									@endif
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="pull-right">
 									<form action="{{ route('finish.cart', [encrypt($user->id), $cart->id]) }}" method="post">
 										{{ csrf_field() }}
 										{{ method_field('patch') }}
 										@if($cart->status == 2)
-											<s>Cart Price: <b>{{ $cart->cartItems->sum('price') }}</b></s>
 										@else
-											Cart Price: <b>{{ $cart->cartItems->sum('price') }}</b>
 											<div class="btn-group">
 												<button type="submit" class="btn btn-success btn-sm" title="Finish"><i class="fa fa-check"></i></button>
 												<a href="#" class="btn btn-danger btn-sm cart-name-btn" title="Discard" data-toggle="modal" data-target="#discardCart" data-name="{{ $cart->cx }}" data-url="{{ route('discard.cart', [encrypt($user->id), $cart->id]) }}"><i class="fa fa-times"></i></a>
@@ -37,7 +53,7 @@
 								@foreach($cart->cartItems as $item)
 									@if($item->status == 0)
 									@else
-										<li>
+										<li class="mgb5">
 											<form action="{{ route('finish.order', [encrypt($user->id), $item->id]) }}" method="post">
 												{{ csrf_field() }}
 												{{ method_field('patch') }}

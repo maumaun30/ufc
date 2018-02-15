@@ -156,14 +156,15 @@ class HomeController extends Controller
             $order->status = 2;
             $order->update();
         }
-        
-        $cart->update();
 
         $sales = new Sales;
+        $sales->user_id = $user->id;
         $sales->cx = $cart->cx;
         $sales->price = $cart->price;
         $sales->items = $cartItems;
         $sales->save(); 
+
+        $cart->update();
 
         return redirect()->route('current.orders', encrypt($user->id))->with('user', $user);
     }

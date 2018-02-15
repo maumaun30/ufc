@@ -18,6 +18,7 @@ class OrderController extends Controller
     public function createCartPost(Request $request){
         $cart = new Cart; 
         $cart->cx = $request->cx;
+        $cart->table_number = $request->table_number;
         $cart->user_id = Auth::user()->id;
         $cart->save();
 

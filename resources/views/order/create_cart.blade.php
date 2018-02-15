@@ -15,6 +15,7 @@
                         <strong>{{ $errors->first('cx') }}</strong>
                     </span>
                 @endif
+                <input type="hidden" name="table_number" id="tabelNumber">
             </div>
             <div class="form-group">
             	<button type="submit" class="btn btn-default">Show Menu</button>
@@ -22,4 +23,12 @@
 		</form>
 	</div>
 </div>
+@stop
+
+@section('scripts')
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#tabelNumber').val(sessionStorage.getItem('table_number'));
+	});
+</script>
 @stop
