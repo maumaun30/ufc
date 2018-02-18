@@ -109,7 +109,7 @@
 	    g = parseInt(hex.substring(2,4), 16);
 	    b = parseInt(hex.substring(4,6), 16);
 
-	    result = '+r+','+g+','+b+','+opacity/100+';
+	    result = 'rgba('+r+','+g+','+b+','+opacity/100+')';
 	    return result;
 	}
 

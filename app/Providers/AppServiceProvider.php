@@ -19,10 +19,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        View::composer('layouts.home', function ($view) {
-            $user = User::find(Auth::user()->id);
-            $theme = $user->profileThemes->where('selected', 1)->first();
-            $view->with('selected_theme', Auth::check() ? $theme : '');
+        view()->composer('layouts.home', function ($view)
+        {
+            if (Auth::user()) {
+                $user = User::find(Auth::user()->id);
+                $theme = $user->profileThemes->where('selected', 1)->first();
+                $view->with('selected_theme', Auth::check() ? $theme : '');
+            }
         });
 
     }
