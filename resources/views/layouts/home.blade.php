@@ -15,6 +15,19 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <script src="https://use.fontawesome.com/45876f6f9c.js"></script>
 
+    <style type="text/css">
+        body{
+            background-image: ;
+            font-family: {{ $selected_theme->ft_family }};
+            font-size: {{ $selected_theme->ft_size }};
+            color: {{ $selected_theme->ft_color }};
+            background-color: {{ $selected_theme->bg_color }};
+        }
+        .panel{
+            background-color: rgba({{ $selected_theme->pnl_color }}, {{ $selected_theme->opacity }});
+        }
+    </style>
+
     @yield('styles')
 </head>
 <body>

@@ -99,8 +99,9 @@
                                 <li><a href="{{ route('menu.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-cutlery"></i> Menus</a></li>
                                 <li><a href="{{ route('addon.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-beer"></i> Add-ons</a></li>
                                 <li><a href="{{ route('inventory.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-barcode"></i> Inventory</a></li>
-                                <li><a href="#"><i class="fa fa-money"></i> Sales</a></li>
+                                <li><a href="{{ route('sales.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-money"></i> Sales</a></li>
                                 <li><a href="{{ route('profile', encrypt(Auth::user()->id)) }}"><i class="fa fa-user"></i> Profile</a></li>
+                                <li><a href="{{ route('themes.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-paint-brush"></i> Themes</a></li>
                                 <li><a href="{{ route('settings', encrypt(Auth::user()->id)) }}"><i class="fa fa-cog"></i> Settings</a></li>
                             </ul>
                         </div>

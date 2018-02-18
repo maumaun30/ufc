@@ -3,7 +3,14 @@
 @section('content')
 <div class="panel panel-default">
 	<div class="panel-heading">
-		Cart
+		<div class="row">
+			<div class="col-md-12">
+				Cart
+				<div class="pull-right">
+					<b class="setTableText"></b>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="panel-body">
 		<form action="{{ route('post.cart') }}" method="post">
@@ -15,7 +22,7 @@
                         <strong>{{ $errors->first('cx') }}</strong>
                     </span>
                 @endif
-                <input type="hidden" name="table_number" id="tabelNumber">
+                <input type="hidden" name="table_number" id="tableNumber">
             </div>
             <div class="form-group">
             	<button type="submit" class="btn btn-default">Show Menu</button>
@@ -28,7 +35,9 @@
 @section('scripts')
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#tabelNumber').val(sessionStorage.getItem('table_number'));
+		var tableNumber = localStorage.getItem('table_number');
+		$('#tableNumber').val(tableNumber);
+		$('#setTableText').html(tableNumber);
 	});
 </script>
 @stop

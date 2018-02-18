@@ -15,8 +15,13 @@
 	</div>
 
     <div class="panel-body">
-        May I have your order please?<br>
-        <a href="{{ route('create.cart') }}" class="btn btn-default">Order Now!</a>
+    	<div id="orderBtn">
+	        May I have your order please?<br>
+	        <a href="{{ route('create.cart') }}" class="btn btn-default">Order Now!</a>
+    	</div>
+    	<div id="orderText">
+        	Table number not yet set. Please contact management.
+        </div>
     </div>
 </div>
 
@@ -48,9 +53,13 @@
 <script>
 	$(document).ready(function(){
 		// alert(sessionStorage.getItem("table_number"));
-		if (sessionStorage.getItem("table_number") !== null) {
+		if (localStorage.getItem("table_number") !== null) {
+			$('#orderText').hide();
 			$('#setTableBtn').hide();
-		    $('#setTableText').html('Table Number: ' + sessionStorage.getItem("table_number"));
+		    $('#setTableText').html('Table Number: ' + localStorage.getItem("table_number"));
+		}
+		else {
+			$('#orderBtn').hide();
 		}
 
 		$('#setTableSubmit').on('click', function(){
@@ -58,12 +67,14 @@
 			if (typeof(Storage) !== "undefined") {
 				var setTableValue = $('#setTableInput').val();
 			    // Store
-			    sessionStorage.setItem("table_number", setTableValue);
+			    localStorage.setItem("table_number", setTableValue);
 			    // Retrieve
-			    $('#setTableText').html('Table Number: ' + sessionStorage.getItem("table_number"));
+			    $('#setTableText').html('Table Number: ' + localStorage.getItem("table_number"));
 
 			    $('#setTableModal').modal('hide');
 			    $('#setTableBtn').hide();
+			    $('#orderText').hide();
+			    $('#orderBtn').show();
 			} else {
 			    $('#setTableText').html('Sorry, your browser does not support Web Storage...');
 			}

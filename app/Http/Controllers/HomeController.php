@@ -152,7 +152,7 @@ class HomeController extends Controller
         $cart->status = 2;
 
         foreach($cart->cartItems as $order){
-            $cartItems .= $order->item . ' x ' . $order->qty . ',';
+            $cartItems .= $order->item . ' x ' . $order->qty . ' = ' . $order->price .  ',';
             $order->status = 2;
             $order->update();
         }
@@ -160,8 +160,8 @@ class HomeController extends Controller
         $sales = new Sales;
         $sales->user_id = $user->id;
         $sales->cx = $cart->cx;
-        $sales->price = $cart->price;
-        $sales->items = $cartItems;
+        $sales->price = $cart->total;
+        $sales->items = rtrim($cartItems,', ');
         $sales->save(); 
 
         $cart->update();

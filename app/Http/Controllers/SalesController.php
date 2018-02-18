@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Sales;
+use App\Inventory;
 
 class SalesController extends Controller
 {
@@ -16,9 +19,11 @@ class SalesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
-        //
+        $user = User::find(decrypt($user_id));
+
+        return view('sales.index')->with('user', $user);
     }
 
     /**
@@ -59,9 +64,11 @@ class SalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($user_id, $id)
     {
-        //
+        $user = User::find(decrypt($user_id));
+        $sale = Sales::find($id);
+        return view('sales.edit', [$user->id, $sale->id])->with('sale', $sale)->with('user', $user);
     }
 
     /**
@@ -71,9 +78,23 @@ class SalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($user_id, Request $request, $id)
     {
-        //
+        $user = User::find(decrypt($user_id));
+        $sale = Sales::find($id);
+
+        $this->validate($request, [
+            'cx' => 'required|max:255',
+            'items' => 'required',
+            'price' => 'required|integer',
+        ]);
+
+        $sale->cx = $request->cx;
+        $sale->items = $request->items;
+        $sale->price = $request->price;
+        $sale->update();
+
+        return redirect()->route('sales.index', encrypt($user->id));
     }
 
     /**
@@ -82,8 +103,11 @@ class SalesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($user_id, $id)
     {
-        //
+        $user = User::find(decrypt($user_id));
+        $sale = Sales::find($id)->delete();
+
+        return redirect()->route('sales.index', encrypt($user->id));
     }
 }

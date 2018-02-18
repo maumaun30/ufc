@@ -28,18 +28,26 @@ class User extends Authenticatable
     ];
 
     public function profileMenus(){
-        return $this->hasMany('App\Menu');
+        return $this->hasMany('App\Menu')->latest();
     }
 
     public function profileAddons(){
-        return $this->hasMany('App\Addon');
+        return $this->hasMany('App\Addon')->latest();
     }
 
     public function profileInvs(){
-        return $this->hasMany('App\Inventory');
+        return $this->hasMany('App\Inventory')->latest();
+    }
+
+    public function profileSales(){
+        return $this->hasMany('App\Sales')->latest();
+    }
+
+    public function profileThemes(){
+        return $this->hasMany('App\Theme')->latest();
     }
 
     public function cartQueue(){
-        return $this->hasMany('App\Cart');
+        return $this->hasMany('App\Cart')->latest();
     }
 }
