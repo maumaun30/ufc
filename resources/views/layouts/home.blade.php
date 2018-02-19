@@ -19,18 +19,22 @@
         @if(Auth::user()->profileThemes->isEmpty())
         @else
         <style type="text/css">
+            html{
+                min-height: 100% !important;
+            }
             body{
                 background-image: url({{ asset($selected_theme->bg_image)  }});
                 background-color: {{ $selected_theme->bg_color }} !important;
                 background-repeat: no-repeat, repeat;
                 background-size: cover;
+                height: 100%;
             }
 
             *{
                 font-family: {{ $selected_theme->ft_family }} !important;
-                color: {{ $selected_theme->ft_color }} !important;
                 font-size: {{ $selected_theme->ft_size }}px !important;
                 border-radius: 0 !important;
+                color: {{ $selected_theme->ft_color }} !important;
             }
 
             .panel{
@@ -45,8 +49,12 @@
                 background-color: rgba({{ $selected_theme->pnl_color }}, {{ $selected_theme->pnl_opacity }}) !important;
             }
 
-            .btn{
+            .btn-default{
                 background-color: {{ $selected_theme->btn_color }} !important;
+            }
+
+            .btn-success, .btn-danger{
+                color: #fff !important;
             }
         </style>
         @endif

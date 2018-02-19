@@ -86,7 +86,7 @@
 
 		<!-- Modal content-->
 		<div class="modal-content">
-			<div class="modal-header">
+			<div class="modal-header text-center">
 				<span id="orderName1"></span>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>

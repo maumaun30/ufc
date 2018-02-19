@@ -78,7 +78,7 @@ class OrderController extends Controller
         $cart = Cart::find($cart_id);
         $user = User::find(Auth::user()->id);
 
-        $category = Category::find($id);
+        $category = $user->profileCategoryMenus->where('id', $id)->first();
 
         return view('order.category')->with('user', $user)->with('cart', $cart)->with('category', $category);
     }

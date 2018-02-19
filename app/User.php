@@ -28,7 +28,7 @@ class User extends Authenticatable
     ];
 
     public function profileCategoryMenus(){
-        return $this->hasMany('App\Category')->latest();
+        return $this->hasMany('App\Category');
     }
 
     public function profileCategoryAddons(){

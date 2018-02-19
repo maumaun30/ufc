@@ -83,8 +83,8 @@
             </div>
             <div class="form-group{{ $errors->has('pnl_color') ? ' has-error' : '' }}">
             	<label>Color</label>
-				<input type="color" class="form-control input-sm" placeholder="Font Color" id="panelColor">
-				<input type="hidden" name="pnl_color" id="panelColorInput" value="#ffffff">
+				<input type="color" class="form-control input-sm" placeholder="Font Color" id="panelColor" value="#ffffff">
+				<input type="hidden" name="pnl_color" id="panelColorInput" value="255,255,255">
 				@if ($errors->has('pnl_color'))
                     <span class="help-block">
                         <strong>{{ $errors->first('pnl_color') }}</strong>

@@ -67,28 +67,7 @@
 					        			<label>Price:</label> {{ $menu->price }}
 				        			</div>
 				        			<div class="form-group text-center">
-					        			<form action="{{ route('order.store', $cart->id) }}" method="post">
-					        				{{ csrf_field() }}
-					        				<input type="hidden" name="cx" value="{{ $cart->cx }}">
-					        				<input type="hidden" name="name" value="{{ $menu->name }}">
-					        				<input type="hidden" name="price" value="{{ $menu->price }}">
-					        				<input type="hidden" name="image" value="{{ $menu->image }}">
-					        				<select class="form-control input-sm mgb5" name="qty">
-					        					<option value="1">1</option>
-					        					<option value="2">2</option>
-					        					<option value="3">3</option>
-					        					<option value="4">4</option>
-					        					<option value="5">5</option>
-					        					<option value="6">6</option>
-					        					<option value="7">7</option>
-					        					<option value="8">8</option>
-					        					<option value="9">9</option>
-					        					<option value="10">10</option>
-					        					<option value="11">11</option>
-					        					<option value="12">12</option>
-					        				</select>
-						        			<button type="submit" class="form-control input-sm btn btn-default btn-sm">Add to Cart</button>
-					        			</form>
+					        			<button class="btn btn-default btn-sm form-control order-btn" data-toggle="modal" data-target="#orderModal" data-url="{{ route('order.store', $cart->id) }}" data-cx="{{ $cart->cx }}" data-name="{{ $menu->name }}" data-price="{{ $menu->price }}" data-image="{{ asset($menu->image) }}" data-description="{{ $menu->description }}" >Order</button>
 				        			</div>
 				        		</div>
 				        	</div>
@@ -101,6 +80,59 @@
 	</div>
 </div>
 
+<!-- Modal -->
+<div id="orderModal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header text-center">
+				<span id="orderName1"></span>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<form action="" method="post" id="orderUrl">
+				<div class="modal-body">
+					{{ csrf_field() }}
+    				<input type="hidden" name="cx" id="orderCx">
+    				<input type="hidden" name="name" id="orderName">
+    				<input type="hidden" name="price" id="orderPrice">
+    				<input type="hidden" name="image" id="orderImage">
+					<div class="form-group text-center">
+	        			<img src="" class="img-rounded img-thumbnail" id="orderImage1">	
+        			</div>
+        			<div class="form-group text-center">
+	        			<label>Price:</label> <span id="orderPrice1"></span>
+        			</div>
+        			<div class="form-group">
+        				<p class="text-center" id="orderDescription"></p>
+        			</div>
+        			<div class="row">
+        				<div class="col-md-offset-5 col-md-2">
+		    				<select class="form-control input-sm mgb5" name="qty" required>
+		    					<option disabled selected>Qty</option>
+		    					<option value="1">1</option>
+		    					<option value="2">2</option>
+		    					<option value="3">3</option>
+		    					<option value="4">4</option>
+		    					<option value="5">5</option>
+		    					<option value="6">6</option>
+		    					<option value="7">7</option>
+		    					<option value="8">8</option>
+		    					<option value="9">9</option>
+		    					<option value="10">10</option>
+		    					<option value="11">11</option>
+		    					<option value="12">12</option>
+		    				</select>
+    					</div>
+        			</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-default btn-sm form-control input-sm">Add to Cart</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 <!-- Modal -->
 <div id="addons" class="modal fade" role="dialog">
@@ -127,7 +159,7 @@
 							</div>
 							<div class="col-xs-4">
 								<div class="checkbox">									
-									<select class="form-control input-sm" name="qty">
+									<select class="form-control input-sm" name="qty" required>
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -148,10 +180,35 @@
 					@endif
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-default btn-sm">Add to Cart</button>
+					<button type="submit" class="btn btn-default btn-sm form-control input-sm">Add to Cart</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
 @endsection
+
+@section('scripts')
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.order-btn').on('click', function(){
+			var orderUrl = $(this).data('url');
+			var orderCx = $(this).data('cx');
+			var orderName = $(this).data('name');
+			var orderPrice = $(this).data('price');
+			var orderImage = $(this).data('image');
+			var orderDescription = $(this).data('description');
+
+			$('#orderUrl').val(orderUrl);
+			$('#orderCx').val(orderCx);
+			$('#orderName').val(orderName);
+			$('#orderName1').html(orderName);
+			$('#orderPrice').val(orderPrice);
+			$('#orderPrice1').html(orderPrice);
+			$('#orderImage').val(orderImage);
+			$('#orderImage1').attr('src', orderImage);
+			$('#orderDescription').html(orderDescription);
+		});
+	});
+</script>
+@stop
