@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use App\User;
 use App\Theme;
+use Image;
 
 class ThemeController extends Controller
 {
@@ -50,6 +51,13 @@ class ThemeController extends Controller
         $theme = new Theme;
         $theme->user_id = $user->id;
         $theme->name = $request->name;
+
+        if ($request->hasFile('bg_image')) {
+            $fileName = time() . '.' . $request->file('bg_image')->getClientOriginalExtension();
+            Image::make($request->file('bg_image'))->save(public_path('img/uploads/' . $fileName));
+            $theme->bg_image = 'img/uploads/' . $fileName;
+        }
+
         $theme->bg_color = $request->bg_color;
         $theme->ft_family = $request->ft_family;
         $theme->ft_size = $request->ft_size;

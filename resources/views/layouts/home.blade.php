@@ -20,8 +20,10 @@
         @else
         <style type="text/css">
             body{
-                background-image: ;
+                background-image: url({{ asset($selected_theme->bg_image)  }});
                 background-color: {{ $selected_theme->bg_color }} !important;
+                background-repeat: no-repeat, repeat;
+                background-size: cover;
             }
 
             *{
@@ -29,6 +31,10 @@
                 color: {{ $selected_theme->ft_color }} !important;
                 font-size: {{ $selected_theme->ft_size }}px !important;
                 border-radius: 0 !important;
+            }
+
+            .panel{
+                background-color: rgba(255,255,255,0) !important;
             }
 
             .panel-body{

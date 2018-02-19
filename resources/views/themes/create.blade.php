@@ -6,7 +6,7 @@
 		Add Theme
 	</div>
 	<div class="panel-body">
-		<form method="post" action="{{ route('themes.store', encrypt($user->id)) }}">
+		<form method="post" action="{{ route('themes.store', encrypt($user->id)) }}" enctype="multipart/form-data">
 			{{ csrf_field() }}
 			<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
 				<input type="text" name="name" class="form-control input-sm" placeholder="Name" value="{{ old('name') }}" required autofocus>
@@ -19,9 +19,18 @@
             <div class="form-group">
             	<label>Front Page</label>
             </div>
+            <div class="form-group{{ $errors->has('bg_image') ? ' has-error' : '' }}">
+				<label>Background Image</label>
+				<input type="file" name="bg_image" class="form-control input-sm" placeholder="Background Image" value="{{ old('bg_image') }}">
+				@if ($errors->has('bg_image'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('bg_image') }}</strong>
+                    </span>
+                @endif
+            </div>
 			<div class="form-group{{ $errors->has('bg_color') ? ' has-error' : '' }}">
 				<label>Background Color</label>
-				<input type="color" name="bg_color" class="form-control input-sm" placeholder="Background Color" value="{{ old('bg_color') }}">
+				<input type="color" name="bg_color" class="form-control input-sm" placeholder="Background Color" value="#ffffff">
 				@if ($errors->has('bg_color'))
                     <span class="help-block">
                         <strong>{{ $errors->first('bg_color') }}</strong>
@@ -74,8 +83,8 @@
             </div>
             <div class="form-group{{ $errors->has('pnl_color') ? ' has-error' : '' }}">
             	<label>Color</label>
-				<input type="color" class="form-control input-sm" placeholder="Font Color" value="{{ old('pnl_color') }}" id="panelColor">
-				<input type="hidden" name="pnl_color" id="panelColorInput">
+				<input type="color" class="form-control input-sm" placeholder="Font Color" id="panelColor">
+				<input type="hidden" name="pnl_color" id="panelColorInput" value="#ffffff">
 				@if ($errors->has('pnl_color'))
                     <span class="help-block">
                         <strong>{{ $errors->first('pnl_color') }}</strong>
@@ -103,7 +112,7 @@
             </div>
             <div class="form-group{{ $errors->has('btn_color') ? ' has-error' : '' }}">
 				<label>Color</label>
-				<input type="color" name="btn_color" class="form-control input-sm" placeholder="Button Color" value="{{ old('btn_color') }}">
+				<input type="color" name="btn_color" class="form-control input-sm" placeholder="Button Color" value="#ffffff">
 				@if ($errors->has('btn_color'))
                     <span class="help-block">
                         <strong>{{ $errors->first('btn_color') }}</strong>

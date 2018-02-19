@@ -3,10 +3,10 @@
 @section('content')
 <div class="panel panel-default">
 	<div class="panel-heading">
-		Add Theme
+		Update Theme
 	</div>
 	<div class="panel-body">
-		<form method="post" action="{{ route('themes.store', encrypt($user->id)) }}">
+		<form method="post" action="{{ route('themes.update', [encrypt($user->id), $theme->id]) }}" enctype="multipart/form-data">
 			{{ csrf_field() }}
 			<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
 				<input type="text" name="name" class="form-control input-sm" placeholder="Name" value="{{ $theme->name }}" required autofocus>
@@ -18,6 +18,16 @@
             </div>
             <div class="form-group">
             	<label>Front Page</label>
+            </div>
+            <div class="form-group{{ $errors->has('bg_image') ? ' has-error' : '' }}">
+				<label>Background Image</label>
+				<input type="file" class="form-control input-sm" placeholder="Background Image" id="bgImage">
+				<input type="hidden" name="bg_image" id="bgImageInput" value="{{ $theme->bg_image }}">
+				@if ($errors->has('bg_image'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('bg_image') }}</strong>
+                    </span>
+                @endif
             </div>
 			<div class="form-group{{ $errors->has('bg_color') ? ' has-error' : '' }}">
 				<label>Background Color</label>
@@ -110,7 +120,7 @@
                     </span>
                 @endif
             </div>
-			<button type="submit" class="btn btn-default btn-sm">Add</button>
+			<button type="submit" class="btn btn-default btn-sm">Update</button>
 		</form>
 	</div>
 </div>
@@ -143,5 +153,10 @@
 		var pnlVal = $(this).val();
 		$('#panelColorInput').val(convertHex(pnlVal,50));
 	})
+
+	$('#bgImage').on('change', function(){
+		var valText = $(this).val();
+		$('#bgImageInput').val(valText);
+	});
 </script>
 @stop
