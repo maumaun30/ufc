@@ -16,18 +16,34 @@
     <script src="https://use.fontawesome.com/45876f6f9c.js"></script>
 
     @if(Auth::user())
+        @if(Auth::user()->profileThemes->isEmpty())
+        @else
         <style type="text/css">
             body{
                 background-image: ;
-                font-family: {{ $selected_theme->ft_family }} !important;
-                font-size: {{ $selected_theme->ft_size }}px !important;
-                color: {{ $selected_theme->ft_color }} !important;
                 background-color: {{ $selected_theme->bg_color }} !important;
             }
-            .panel{
-                background-color: rgba({{ $selected_theme->pnl_color }}, {{ $selected_theme->opacity }}) !important;
+
+            *{
+                font-family: {{ $selected_theme->ft_family }} !important;
+                color: {{ $selected_theme->ft_color }} !important;
+                font-size: {{ $selected_theme->ft_size }}px !important;
+                border-radius: 0 !important;
+            }
+
+            .panel-body{
+                background-color: rgba({{ $selected_theme->pnl_color }}, {{ $selected_theme->pnl_opacity }}) !important;
+            }
+
+            .panel-heading{
+                background-color: rgba({{ $selected_theme->pnl_color }}, {{ $selected_theme->pnl_opacity }}) !important;
+            }
+
+            .btn{
+                background-color: {{ $selected_theme->btn_color }} !important;
             }
         </style>
+        @endif
     @endif
 
     @yield('styles')

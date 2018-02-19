@@ -24,8 +24,9 @@ class CreateThemesTable extends Migration
             $table->string('ft_family')->nullable();
             $table->string('ft_size')->nullable();
             $table->string('ft_color')->nullable();
-            $table->string('pnl_opacity')->nullable();
-            $table->string('pnl_color')->nullable();
+            $table->string('pnl_opacity')->nullable()->default('1');
+            $table->string('pnl_color')->nullable()->default('255,255,255');
+            $table->string('btn_color')->nullable();
             $table->timestamps();
         });
     }

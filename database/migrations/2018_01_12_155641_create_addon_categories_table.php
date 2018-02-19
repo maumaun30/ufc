@@ -15,6 +15,8 @@ class CreateAddonCategoriesTable extends Migration
     {
         Schema::create('addon_categories', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();

@@ -27,6 +27,14 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function profileCategoryMenus(){
+        return $this->hasMany('App\Category')->latest();
+    }
+
+    public function profileCategoryAddons(){
+        return $this->hasMany('App\AddonCategory')->latest();
+    }
+
     public function profileMenus(){
         return $this->hasMany('App\Menu')->latest();
     }

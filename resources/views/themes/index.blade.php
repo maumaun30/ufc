@@ -26,7 +26,7 @@
 							<div class="form-group">
 								<select class="form-control input-sm" id="themeOption">
 									@foreach($user->profileThemes as $theme)
-										<option value="{{ $theme->name }}" data-apply="{{ route('themes.apply', [encrypt($user->id), $theme->id]) }}" data-delete="{{ route('themes.destroy', [encrypt($user->id), $theme->id]) }}">{{ $theme->name }}</option>
+										<option value="{{ $theme->name }}" data-apply="{{ route('themes.apply', [encrypt($user->id), $theme->id]) }}" data-delete="{{ route('themes.destroy', [encrypt($user->id), $theme->id]) }}" data-edit="{{ route('themes.edit', [encrypt($user->id), $theme->id]) }}">{{ $theme->name }}</option>
 									@endforeach
 								</select>
 							</div>
@@ -37,6 +37,7 @@
 								{{ method_field('patch') }}
 								<div class="btn-group btn-group-sm">
 									<button type="submit" class="btn btn-success theme-apply-btn" title="Apply"><i class="fa fa-check"></i></button>
+									<a href="" class="btn btn-primary theme-edit-btn" title="Edit"><i class="fa fa-pencil"></i></a>
 									<button type="button" class="btn btn-danger theme-delete-btn" data-toggle="modal" data-target="#delete" title="Delete"><i class="fa fa-times"></i></button>
 								</div>
 							</form>
@@ -87,6 +88,11 @@
 	$('.theme-apply-btn').on('click', function(){
 		var themeUrl = $('#themeOption').find(':selected').data('apply');
 		$('#themeForm').attr('action', themeUrl);
+	});
+
+	$('.theme-edit-btn').on('click', function(){
+		var themeUrl = $('#themeOption').find(':selected').data('edit');
+		$(this).attr('href', themeUrl);
 	});
 </script>
 @stop

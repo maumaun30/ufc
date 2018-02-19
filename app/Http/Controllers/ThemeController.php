@@ -56,6 +56,7 @@ class ThemeController extends Controller
         $theme->ft_color = $request->ft_color;
         $theme->pnl_opacity = $request->pnl_opacity;
         $theme->pnl_color = $request->pnl_color;
+        $theme->btn_color = $request->btn_color;
         $theme->save();
 
         return redirect()->route('themes.index', encrypt($user->id));
@@ -78,9 +79,12 @@ class ThemeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($user_id, $id)
     {
-        //
+        $user = User::find(decrypt($user_id));
+        $theme = Theme::find($id);
+
+        return view('themes.edit')->with('user', $user)->with('theme', $theme);
     }
 
     /**
@@ -101,6 +105,12 @@ class ThemeController extends Controller
         $theme = Theme::find($id);
         $theme->name = $request->name;
         $theme->bg_color = $request->bg_color;
+        $theme->ft_family = $request->ft_family;
+        $theme->ft_size = $request->ft_size;
+        $theme->ft_color = $request->ft_color;
+        $theme->pnl_opacity = $request->pnl_opacity;
+        $theme->pnl_color = $request->pnl_color;
+        $theme->btn_color = $request->btn_color;
         $theme->save();
 
         return redirect()->route('themes.index', encrypt($user->id));

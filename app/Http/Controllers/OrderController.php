@@ -7,6 +7,8 @@ use App\Order;
 use App\Menu;
 use App\Addon;
 use App\Cart;
+use App\User;
+use App\Category;
 use Auth;
 
 class OrderController extends Controller
@@ -66,10 +68,19 @@ class OrderController extends Controller
     public function index($cart_id)
     {
         $cart = Cart::find($cart_id);
-        $menus = Menu::all();
-        $addons = Addon::all();
+        $user = User::find(Auth::user()->id);
 
-        return view('order.index')->with('menus', $menus)->with('addons', $addons)->with('cart', $cart);
+        return view('order.index')->with('user', $user)->with('cart', $cart);
+    }
+
+    public function indexCategory($cart_id, $id)
+    {
+        $cart = Cart::find($cart_id);
+        $user = User::find(Auth::user()->id);
+
+        $category = Category::find($id);
+
+        return view('order.category')->with('user', $user)->with('cart', $cart)->with('category', $category);
     }
 
     /**

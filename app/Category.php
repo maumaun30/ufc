@@ -9,4 +9,9 @@ class Category extends Model
 {
     use SoftDeletes;
 	protected $dates = ['deleted_at'];
+
+	public function categoryMenus()
+	{
+		return $this->hasMany('App\Menu');
+	}
 }

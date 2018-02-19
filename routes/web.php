@@ -44,6 +44,7 @@ Route::patch('{user_id}/discard_order/{id}', 'HomeController@discardOrder')->nam
 Route::patch('{user_id}/finish_cart/{id}', 'HomeController@finishCart')->name('finish.cart');
 Route::patch('{user_id}/discard_cart/{id}', 'HomeController@discardCart')->name('discard.cart');
 Route::resource('{cart_id}/order', 'OrderController');
+Route::get('{cart_id}/order/{id}/{category}', 'OrderController@indexCategory')->name('order.category');
 
 // Menu
 Route::resource('{user_id}/category', 'CategoryController');

@@ -50,6 +50,7 @@ class AddonCategoryController extends Controller
 
         $addon_category = new AddonCategory;
         $addon_category->name = $request->name;
+        $addon_category->user_id = $user->id;
 
         $addon_category->save();
 

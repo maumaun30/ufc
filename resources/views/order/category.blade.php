@@ -10,8 +10,8 @@
 			<div class="panel-body">
 				<ul class="nav nav-pills nav-stacked">
 					<li><a href="{{ route('order.index', $cart->id) }}">All</a></li>
-					@foreach($user->profileCategoryMenus as $category)
-						<li><a href="{{ route('order.category', [$cart->id, $category->id, $category->name]) }}">{{ $category->name }}</a></li>
+					@foreach($user->profileCategoryMenus as $categori)
+						<li><a href="{{ route('order.category', [$cart->id, $categori->id, $categori->name]) }}">{{ $categori->name }}</a></li>
 					@endforeach
 				</ul>
 			</div>
@@ -53,7 +53,7 @@
 			        		<b>PLEASE CONTACT MANAGEMENT FOR ASSISTANCE</b>
 		        		</div>
 		        	@else
-			        	@foreach($user->profileMenus as $menu)
+			        	@foreach($category->categoryMenus as $menu)
 			        	<div class="col-md-2">
 				        	<div class="panel panel-default">
 				        		<div class="panel-heading text-center">

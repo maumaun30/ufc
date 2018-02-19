@@ -49,6 +49,7 @@ class CategoryController extends Controller
         ]);
 
         $category = new Category;
+        $category->user_id = $user->id;
         $category->name = $request->name;
 
         $category->save();
