@@ -8,7 +8,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'UFC') }}</title>
+    @if(Auth::user())
+        <title>{{ Auth::user()->company }}</title>
+    @else
+        <title>{{ config('app.name', 'UFC') }}</title>
+    @endif
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -30,10 +34,9 @@
                 height: 100%;
             }
 
-            *{
+            .panel, .btn{
                 font-family: {{ $selected_theme->ft_family }} !important;
                 font-size: {{ $selected_theme->ft_size }}px !important;
-                border-radius: 0 !important;
                 color: {{ $selected_theme->ft_color }} !important;
             }
 
@@ -78,7 +81,11 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'UFC') }}
+                        @if(Auth::user())
+                            <div>{{ Auth::user()->company }} <img src="{{ asset(Auth::user()->logo) }}" class="img-circle" style="height: 25px;"></div>
+                        @else
+                            {{ config('app.name', 'UFC') }}
+                        @endif
                     </a>
                 </div>
 

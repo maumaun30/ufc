@@ -22,7 +22,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($user->profileSales as $sale)
+								@foreach($sales = $user->profileSales()->paginate(10) as $sale)
 									<tr>
 										<td>{{ $sale->cx }}</td>
 										<td>
@@ -44,6 +44,7 @@
 							</tbody>
 						</table>
 					</div>
+					{{ $sales->links() }}
 				@endif
 			</div>
 		</div>

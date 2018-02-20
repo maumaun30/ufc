@@ -38,7 +38,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($user->profileAddons as $addon)
+									@foreach($addons = $user->profileAddons()->paginate(10) as $addon)
 										<tr>
 											<td>{{ $addon->name }}</td>
 											<td>{{ $addon->categoryAddon->name }}</td>
@@ -75,6 +75,7 @@
 								</tbody>
 							</table>
 						</div>
+						{{ $addons->links() }}
 					@endif
 				@endif
 			</div>

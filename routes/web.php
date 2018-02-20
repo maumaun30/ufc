@@ -25,9 +25,6 @@ Route::patch('{user_id}/profile/logo', 'HomeController@profileLogo')->name('prof
 Route::get('{user_id}/profile/change_password', 'HomeController@changePassword')->name('change.password');
 Route::patch('{user_id}/profile/change_password_update', 'HomeController@changePasswordUpdate')->name('change.password.update');
 
-// Settings
-Route::get('{user_id}/settings', 'HomeController@settings')->name('settings');
-
 // Themes
 Route::resource('{user_id}/themes', 'ThemeController');
 Route::patch('{user_id}/themes/{id}/apply', 'ThemeController@applyTheme')->name('themes.apply');
@@ -63,3 +60,7 @@ Route::resource('{user_id}/inventory', 'InventoryController');
 
 // Sales
 Route::resource('{user_id}/sales', 'SalesController');
+
+// Feedback
+Route::get('{user_id}/feedback/index', 'HomeController@indexFeedback')->name('feedback.index');
+Route::post('{user_id}/feedback/store', 'HomeController@storeFeedback')->name('feedback.store');

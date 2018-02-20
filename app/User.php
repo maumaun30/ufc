@@ -58,4 +58,8 @@ class User extends Authenticatable
     public function cartQueue(){
         return $this->hasMany('App\Cart')->latest();
     }
+
+    public function profileFeedbacks(){
+        return $this->hasMany('App\Feedback')->latest();
+    }
 }

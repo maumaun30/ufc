@@ -28,8 +28,26 @@
 				Your order is now being processed! Please wait for a moment to be served.
 			</div>
 		</div>
-		RATINGS<br>
-		SHARE
+		<div class="row">
+			<div class="col-md-12">
+				<label>Leave a Feedback</label>
+				<form action="{{ route('feedback.store', Auth::user()->id) }}" method="post">
+					{{ csrf_field() }}
+					<input type="hidden" name="cx" value="{{ $cart->cx }}">
+					<div class="form-group">
+						<textarea name="feedback" class="form-control input-sm"></textarea>
+					</div>
+					<div class="form-group">
+						<button class="btn btn-default btn-sm pull-right">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 text-center">
+		<a href="{{ route('create.cart') }}" class="btn btn-default btn-sm">New Order</a>
 	</div>
 </div>
 @stop

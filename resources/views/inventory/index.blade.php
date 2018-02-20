@@ -30,7 +30,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($user->profileInvs as $inventory)
+					@foreach($inventories = $user->profileInvs()->paginate(10) as $inventory)
 						<tr>
 							<td>IN{{ $inventory->id }}</td>
 							<td>{{ $inventory->name }}</td>
@@ -52,6 +52,7 @@
 				</tbody>
 			</table>
 		</div>
+		{{ $inventories->links() }}
 		@endif
 	</div>	
 </div>

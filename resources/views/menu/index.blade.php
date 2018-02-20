@@ -39,7 +39,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($user->profileMenus as $menu)
+									@foreach($menus = $user->profileMenus()->paginate(10) as $menu)
 										<tr>
 											<td>{{ $menu->code }}</td>
 											<td>{{ $menu->categoryMenu->name }}</td>
@@ -77,6 +77,7 @@
 								</tbody>
 							</table>
 						</div>
+						{{ $menus->links() }}
 					@endif
 				@endif
 			</div>

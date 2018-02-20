@@ -7,6 +7,7 @@ use App\User;
 use App\Cart;
 use App\Order;
 use App\Sales;
+use App\Feedback;
 use Auth;
 use Image;
 
@@ -107,12 +108,6 @@ class HomeController extends Controller
         return redirect()->route('profile', encrypt($user->id));
     }
 
-    public function settings($user_id){
-        $user = User::find(decrypt($user_id));
-
-        return view('auth.settings')->with('user', $user);
-    }
-
     public function currentOrders($user_id){
         $user = User::find(decrypt($user_id));
 
@@ -184,5 +179,29 @@ class HomeController extends Controller
         $cart->update();
 
         return redirect()->route('current.orders', encrypt($user->id))->with('user', $user);
+    }
+
+    public function indexFeedback($user_id)
+    {
+        $user = User::find(decrypt($user_id));
+
+        return view('auth.feedback')->with('user', $user);
+    }
+
+    public function storeFeedback(Request $request, $user_id)
+    {
+        $user = User::find($user_id);
+
+        $this->validate($request, [
+            'feedback' => 'required'
+        ]);
+
+        $feedback = new Feedback;
+        $feedback->user_id = $user->id;
+        $feedback->cx = $request->cx;
+        $feedback->feedback = $request->feedback;
+        $feedback->save();
+
+        return back();
     }
 }

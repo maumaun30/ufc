@@ -8,7 +8,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'UFC') }}</title>
+    @if(Auth::user())
+        <title>{{ Auth::user()->company }}</title>
+    @else
+        <title>{{ config('app.name', 'UFC') }}</title>
+    @endif
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -33,7 +37,11 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'UFC') }}
+                        @if(Auth::user())
+                            <div>{{ Auth::user()->company }} <img src="{{ asset(Auth::user()->logo) }}" class="img-circle" style="height: 25px;"></div>
+                        @else
+                            {{ config('app.name', 'UFC') }}
+                        @endif
                     </a>
                 </div>
 
@@ -56,11 +64,12 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
+                                    <li><a href="{{ route('profile', encrypt(Auth::user()->id)) }}"><i class="fa fa-user"></i> Profile</a></li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
+                                            <i class="fa fa-sign-out"></i> Logout
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -100,9 +109,8 @@
                                 <li><a href="{{ route('addon.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-beer"></i> Add-ons</a></li>
                                 <li><a href="{{ route('inventory.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-barcode"></i> Inventory</a></li>
                                 <li><a href="{{ route('sales.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-money"></i> Sales</a></li>
-                                <li><a href="{{ route('profile', encrypt(Auth::user()->id)) }}"><i class="fa fa-user"></i> Profile</a></li>
+                                <li><a href="{{ route('feedback.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-book"></i> Feedbacks</a></li>
                                 <li><a href="{{ route('themes.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-paint-brush"></i> Themes</a></li>
-                                <li><a href="{{ route('settings', encrypt(Auth::user()->id)) }}"><i class="fa fa-cog"></i> Settings</a></li>
                             </ul>
                         </div>
                     </div>
