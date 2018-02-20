@@ -54,7 +54,7 @@
 		        		</div>
 		        	@else
 			        	@foreach($user->profileMenus as $menu)
-			        	<div class="col-md-2">
+			        	<div class="col-md-3">
 				        	<div class="panel panel-default">
 				        		<div class="panel-heading text-center">
 				        			{{ $menu->name }}

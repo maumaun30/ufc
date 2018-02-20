@@ -120,18 +120,23 @@ class OrderController extends Controller
     public function storeAddon(Request $request, $cart_id)
     {
         $cart = Cart::find($cart_id);
-
-        foreach ($request->name1 as $order) {
-            $order = new Order;
-            $order->cart_id = $cart->id;
-            $order->cx = $request->cx1;
-            $order->item = $request->name1;
-            $order->price = $request->price1 * $request->qty1;
-            $order->qty = $request->qty1;
-            $order->image = 'img/uploads/default.jpg';
-            $order->status = 0;
-            $order->save();
+        $count = count($request->name1);
+        for ($i=0; $i < $count; $i++) { 
+            foreach ($request->name1 as $checkbox) {
+                // dd($request->name1);
+                $order = new Order;
+                $order->cart_id = $cart->id;
+                $order->cx = $request->cx1;
+                $order->item = $checkbox;
+                $order->image = 'img/uploads/default.jpg';
+                $order->price = $request->price1[$i] * $request->qty1[$i];
+                $order->qty = $request->qty1[$i];
+                $order->status = 0;
+                $order->save();
+            }
         }
+
+
 
         return back();
     }
