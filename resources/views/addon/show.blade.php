@@ -38,6 +38,10 @@
 					{{ $addon->name }}								
 				</div>
 				<div class="form-group">
+					<label>Category: </label>
+					{{ $addon->categoryAddon->name }}								
+				</div>
+				<div class="form-group">
 					<label>Price: </label>
 					{{ $addon->price }}
 				</div>					

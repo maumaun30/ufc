@@ -144,45 +144,56 @@
 				Add-ons
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
-			<form action="{{ route('order.store', $cart->id) }}" method="post">
+			@if($user->profileAddons->isEmpty())
 				<div class="modal-body">
-					{{ csrf_field() }}
-					@if($user->profileAddons->isEmpty())
-						No Add-ons created yet.
-					@else
-						@foreach($user->profileAddons as $addon)
+					No Add-ons created yet.
+				</div>
+			@else
+				<form action="{{ route('order.store.addon', $cart->id) }}" method="post">
+					<div class="modal-body">
+						{{ csrf_field() }}			
+						<input type="hidden" name="cx1" value="{{ $cart->cx }}">		
+						@foreach($user->profileCategoryAddons as $category_addon)
 						<div class="row">
-							<div class="col-xs-8">
-								<div class="checkbox">
-									<label><input type="checkbox" name="addon" value="{{ $addon->name }}">{{ $addon->name }}</label>
+							<div class="col-md-12">
+								<label>{{ $category_addon->name }}</label>
+								@foreach($category_addon->categoryAddons as $addon)
+								<div class="row">
+									<div class="col-xs-8">
+										<input type="hidden" name="price1[]" value="{{ $addon->price }}">
+										<div class="checkbox">
+											<label><input type="checkbox" name="name1[]" value="{{ $addon->name }}">{{ $addon->name }}</label>
+										</div>
+									</div>
+									<div class="col-xs-4">
+										<div class="checkbox">									
+											<select class="form-control input-sm" name="qty1[]" required>
+												<option value="1">1</option>
+												<option value="2">2</option>
+												<option value="3">3</option>
+												<option value="4">4</option>
+												<option value="5">5</option>
+												<option value="6">6</option>
+												<option value="7">7</option>
+												<option value="8">8</option>
+												<option value="9">9</option>
+												<option value="10">10</option>
+												<option value="11">11</option>
+												<option value="12">12</option>
+											</select>
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="col-xs-4">
-								<div class="checkbox">									
-									<select class="form-control input-sm" name="qty" required>
-										<option value="1">1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-										<option value="6">6</option>
-										<option value="7">7</option>
-										<option value="8">8</option>
-										<option value="9">9</option>
-										<option value="10">10</option>
-										<option value="11">11</option>
-										<option value="12">12</option>
-									</select>
-								</div>
+								@endforeach
 							</div>
 						</div>
 						@endforeach
-					@endif
-				</div>
-				<div class="modal-footer">
-					<button type="submit" class="btn btn-default btn-sm form-control input-sm">Add to Cart</button>
-				</div>
-			</form>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-default btn-sm form-control input-sm">Add to Cart</button>
+					</div>
+				</form>
+			@endif
 		</div>
 	</div>
 </div>
@@ -199,7 +210,7 @@
 			var orderImage = $(this).data('image');
 			var orderDescription = $(this).data('description');
 
-			$('#orderUrl').val(orderUrl);
+			$('#orderUrl').attr('action', orderUrl);
 			$('#orderCx').val(orderCx);
 			$('#orderName').val(orderName);
 			$('#orderName1').html(orderName);

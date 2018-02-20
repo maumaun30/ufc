@@ -20,8 +20,8 @@ class AddonController extends Controller
     public function index($user_id)
     {
         $user = User::find(decrypt($user_id));
-        $addons = Addon::all();
-        $addon_categories = AddonCategory::all();
+        $addons = $user->profileAddons;
+        $addon_categories = $user->profileCategoryAddons;
         return view('addon.index')->with('user', $user)->with('addons', $addons)->with('addon_categories', $addon_categories);
     }
 
@@ -33,7 +33,8 @@ class AddonController extends Controller
     public function create($user_id)
     {
         $user = User::find(decrypt($user_id));
-        return view('addon.create')->with('user', $user);
+        $addon_categories = $user->profileCategoryAddons;
+        return view('addon.create')->with('user', $user)->with('addon_categories', $addon_categories);
     }
 
     /**
@@ -51,8 +52,9 @@ class AddonController extends Controller
             'price' => 'required|integer',
         ]);
 
-        $addon = new addon;
+        $addon = new Addon;
         $addon->user_id = $user->id;
+        $addon->category_id = $request->category;
         $addon->name = $request->name;
         $addon->price = $request->price;
         $addon->featured = $request->featured;
@@ -85,7 +87,8 @@ class AddonController extends Controller
     {
         $user = User::find(decrypt($user_id));
         $addon = Addon::find($id);
-        return view('addon.edit', [$user->id, $addon->id])->with('addon', $addon)->with('user', $user);
+        $addon_categories = $user->profileCategoryAddons;
+        return view('addon.edit', [$user->id, $addon->id])->with('addon', $addon)->with('user', $user)->with('addon_categories', $addon_categories);
     }
 
     /**
@@ -106,6 +109,7 @@ class AddonController extends Controller
         ]);
 
         $addon->name = $request->name;
+        $addon->category_id = $request->category;
         $addon->price = $request->price;
         $addon->update();
 

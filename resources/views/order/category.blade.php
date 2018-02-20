@@ -153,13 +153,16 @@
 						@foreach($user->profileAddons as $addon)
 						<div class="row">
 							<div class="col-xs-8">
+								<input type="hidden" name="cx1" value="">
+			    				<input type="hidden" name="name1" value="{{ $addon->name }}">
+			    				<input type="hidden" name="price1" value="{{ $addon->price}}">
 								<div class="checkbox">
-									<label><input type="checkbox" name="addon" value="{{ $addon->name }}">{{ $addon->name }}</label>
+									<label><input type="checkbox" name="name1[]" value="{{ $addon->name }}">{{ $addon->name }} Price: <b>{{ $addon->price }}</b></label>
 								</div>
 							</div>
 							<div class="col-xs-4">
 								<div class="checkbox">									
-									<select class="form-control input-sm" name="qty" required>
+									<select class="form-control input-sm" name="qt1y[]" required>
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -199,7 +202,7 @@
 			var orderImage = $(this).data('image');
 			var orderDescription = $(this).data('description');
 
-			$('#orderUrl').val(orderUrl);
+			$('#orderUrl').attr('action', orderUrl);
 			$('#orderCx').val(orderCx);
 			$('#orderName').val(orderName);
 			$('#orderName1').html(orderName);

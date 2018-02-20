@@ -31,6 +31,7 @@
 								<thead>
 									<tr>
 										<th>Name</th>
+										<th>Category</th>
 										<th>Price</th>
 										<th>Featured</th>
 										<th>Action</th>
@@ -40,6 +41,7 @@
 									@foreach($user->profileAddons as $addon)
 										<tr>
 											<td>{{ $addon->name }}</td>
+											<td>{{ $addon->categoryAddon->name }}</td>
 											<td>{{ $addon->price }}</td>
 											<td>
 												@if($user->profileAddons->isEmpty())

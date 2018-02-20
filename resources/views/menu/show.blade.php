@@ -56,6 +56,10 @@
 					{{ $menu->code }}								
 				</div>
 				<div class="form-group">
+					<label>Category: </label>
+					{{ $menu->categoryMenu->name }}								
+				</div>
+				<div class="form-group">
 					<label>Name: </label>
 					{{ $menu->name }}								
 				</div>

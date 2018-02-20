@@ -45,6 +45,7 @@ Route::patch('{user_id}/finish_cart/{id}', 'HomeController@finishCart')->name('f
 Route::patch('{user_id}/discard_cart/{id}', 'HomeController@discardCart')->name('discard.cart');
 Route::resource('{cart_id}/order', 'OrderController');
 Route::get('{cart_id}/order/{id}/{category}', 'OrderController@indexCategory')->name('order.category');
+Route::post('{cart_id}/order/addon/store', 'OrderController@storeAddon')->name('order.store.addon');
 
 // Menu
 Route::resource('{user_id}/category', 'CategoryController');

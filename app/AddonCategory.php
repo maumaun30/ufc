@@ -12,6 +12,6 @@ class AddonCategory extends Model
 	
     public function categoryAddons()
 	{
-		return $this->hasMany('App\Addon');
+		return $this->hasMany('App\Addon', 'category_id');
 	}
 }

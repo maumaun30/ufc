@@ -17,6 +17,18 @@
                     </span>
                 @endif
             </div>
+            <div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
+                <select class="form-control input-sm" name="category">
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    @endforeach
+                </select>
+                @if ($errors->has('category'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('category') }}</strong>
+                    </span>
+                @endif
+            </div>
 			<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
 				<input type="text" name="name" class="form-control" placeholder="Name" value="{{ $menu->name }}" required>
 				@if ($errors->has('name'))

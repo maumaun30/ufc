@@ -21,9 +21,9 @@ class MenuController extends Controller
     public function index($user_id)
     {
         $user = User::find(decrypt($user_id));
-        $categories = Category::all();
-        $menus = Menu::latest();
-        return view('menu.index')->with('user', $user)->with('menus', $menus)->with('categories', $categories);
+        $categories = $user->profileCategoryMenus;
+        
+        return view('menu.index')->with('user', $user)->with('categories', $categories);
     }
 
     /**
@@ -34,7 +34,7 @@ class MenuController extends Controller
     public function create($user_id)
     {
         $user = User::find(decrypt($user_id));
-        $categories = Category::all();
+        $categories = $user->profileCategoryMenus;
         return view('menu.create')->with('user', $user)->with('categories', $categories);
     }
 
@@ -99,7 +99,9 @@ class MenuController extends Controller
     {
         $user = User::find(decrypt($user_id));
         $menu = Menu::find($id);
-        return view('menu.edit', [$user->id, $menu->id])->with('menu', $menu)->with('user', $user);
+        $categories = $user->profileCategoryMenus;
+        
+        return view('menu.edit', [$user->id, $menu->id])->with('menu', $menu)->with('user', $user)->with('categories', $categories);
     }
 
     /**
@@ -113,6 +115,7 @@ class MenuController extends Controller
     {
         $user = User::find(decrypt($user_id));
         $menu = Menu::find($id);
+        $categories = $user->profileCategoryMenus;
 
         $this->validate($request, [
             'code' => 'required|max:10',
@@ -122,6 +125,7 @@ class MenuController extends Controller
         ]);
 
         $menu->code = $request->code;
+        $menu->category_id = $request->category;
         $menu->name = $request->name;
         $menu->price = $request->price;
         $menu->description = $request->description;
