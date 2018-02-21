@@ -44,7 +44,7 @@
 		        		</div>
 		        		<div class="panel-body text-center">
 		        			<div class="form-group">
-			        			<img src="{{ asset($item->image) }}" class="img-rounded img-thumbnail">
+			        			<img src="{{ asset($item->image) }}" class="img-rounded img-thumbnail" style="height: 150px;">
 		        			</div>
 		        			<div class="form-group">
 			        			<label>Price:</label> {{ $item->price }}

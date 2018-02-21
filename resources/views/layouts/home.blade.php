@@ -33,7 +33,6 @@
                 background-size: cover;
                 height: 100%;
             }
-
             .panel, .btn{
                 font-family: {{ $selected_theme->ft_family }} !important;
                 font-size: {{ $selected_theme->ft_size }}px !important;
@@ -46,6 +45,10 @@
 
             .panel-body{
                 background-color: rgba({{ $selected_theme->pnl_color }}, {{ $selected_theme->pnl_opacity }}) !important;
+            }
+
+            .panel-body ul li a{
+                color: {{ $selected_theme->ft_color }} !important;
             }
 
             .panel-heading{

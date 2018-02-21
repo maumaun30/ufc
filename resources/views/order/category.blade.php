@@ -61,7 +61,7 @@
 				        		</div>
 				        		<div class="panel-body">
 				        			<div class="form-group text-center">
-					        			<img src="{{ asset($menu->image) }}" class="img-rounded img-thumbnail">	
+					        			<img src="{{ asset($menu->image) }}" class="img-rounded img-thumbnail" style="height: 150px;">	
 				        			</div>
 				        			<div class="form-group text-center">
 					        			<label>Price:</label> {{ $menu->price }}

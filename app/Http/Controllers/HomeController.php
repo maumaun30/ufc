@@ -8,6 +8,7 @@ use App\Cart;
 use App\Order;
 use App\Sales;
 use App\Feedback;
+use App\Rating;
 use Auth;
 use Image;
 
@@ -201,6 +202,21 @@ class HomeController extends Controller
         $feedback->cx = $request->cx;
         $feedback->feedback = $request->feedback;
         $feedback->save();
+
+        return back();
+    }
+
+    public function storeRating(Request $request, $user_id, $id)
+    {
+        $user = User::find($user_id);
+        $cart = Cart::find($id);
+
+        $rating = new Rating;
+        $rating->user_id = $user->id;
+        $rating->cart_id = $cart->id;
+        $rating->cx = $request->cx1;
+        $rating->score = $request->score;
+        $rating->save();
 
         return back();
     }
