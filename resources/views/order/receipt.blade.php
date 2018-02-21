@@ -98,6 +98,12 @@ border-radius: 4px;
 			<div class="panel-body text-center">
 				<div class="row">
 					<div class="col-md-12">
+						<label>Date: </label> {{ date_format($cart->updated_at, 'M-d-Y') }}<br>
+						<label>Time: </label> {{ date_format($cart->updated_at, 'g:i A') }}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
 						<label>You ordered:</label>
 					</div>
 				</div>
@@ -144,7 +150,7 @@ border-radius: 4px;
 							How will you rate us today?
 						</div>
 						<div class="form-group">
-							<form action="{{ route('rating.store', [Auth::user()->id, $cart->id]) }}" method="post" id="ratingForm">
+							<form action="{{ route('rating.store', [Auth::user()->id, encrypt($cart->id)]) }}" method="post" id="ratingForm">
 								{{ csrf_field() }}
 								<input type="hidden" name="cx1" value="{{ $cart->cx }}">
 								<input type="hidden" name="score" id="score">

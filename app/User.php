@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'company', 'address', 'logo'
+        'name', 'email', 'password', 'company', 'address', 'logo', 'contact_number'
     ];
 
     /**
@@ -61,5 +61,9 @@ class User extends Authenticatable
 
     public function profileFeedbacks(){
         return $this->hasMany('App\Feedback')->latest();
+    }
+
+    public function profileRatings(){
+        return $this->hasMany('App\Rating')->latest();
     }
 }

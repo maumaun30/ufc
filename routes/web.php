@@ -43,17 +43,18 @@ Route::patch('{user_id}/discard_cart/{id}', 'HomeController@discardCart')->name(
 Route::resource('{cart_id}/order', 'OrderController');
 Route::get('{cart_id}/order/{id}/{category}', 'OrderController@indexCategory')->name('order.category');
 Route::post('{cart_id}/order/addon/store', 'OrderController@storeAddon')->name('order.store.addon');
+Route::get('{user_id}/{cart_id}/order/print', 'HomeController@print')->name('order.print');
 
 // Menu
 Route::resource('{user_id}/category', 'CategoryController');
 Route::resource('{user_id}/menu', 'MenuController');
 Route::patch('{user_id}/menu/{id}/update_photo', 'MenuController@changeMenuPhoto')->name('change.menu.photo');
-Route::patch('{user_id}/menu/{id}/change_featured', 'MenuController@changeFeatured')->name('change.featured');
+Route::patch('{user_id}/menu/{id}/change_featured', 'MenuController@changeFeatured')->name('change.featured.menu');
 
 // Addon
 Route::resource('{user_id}/addon_category', 'AddonCategoryController');
 Route::resource('{user_id}/addon', 'AddonController');
-Route::patch('{user_id}/addon/{id}/change_featured', 'AddonController@changeFeatured')->name('change.featured');
+Route::patch('{user_id}/addon/{id}/change_featured', 'AddonController@changeFeatured')->name('change.featured.addon');
 
 // inventory
 Route::resource('{user_id}/inventory', 'InventoryController');

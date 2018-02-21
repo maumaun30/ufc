@@ -54,6 +54,9 @@ class CategoryController extends Controller
 
         $category->save();
 
+        flash('Successfully added menu category!');
+
+
         return redirect()->route('category.index', encrypt($user->id));
     }
 
@@ -100,6 +103,8 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->update();
 
+        flash('Successfully updated menu category!');
+
         return redirect()->route('category.index', encrypt($user->id));
     }
 
@@ -113,6 +118,8 @@ class CategoryController extends Controller
     {
         $user = User::find(decrypt($user_id));
         $category = Category::find($id)->delete();
+
+        flash('Successfully deleted menu category!');
 
         return redirect()->route('category.index', encrypt($user->id));
     }

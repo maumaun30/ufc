@@ -94,6 +94,8 @@ class SalesController extends Controller
         $sale->price = $request->price;
         $sale->update();
 
+        flash('Successfully updated sales!');
+
         return redirect()->route('sales.index', encrypt($user->id));
     }
 
@@ -107,6 +109,8 @@ class SalesController extends Controller
     {
         $user = User::find(decrypt($user_id));
         $sale = Sales::find($id)->delete();
+
+        flash('Successfully deleted sales!');
 
         return redirect()->route('sales.index', encrypt($user->id));
     }

@@ -21,6 +21,7 @@
 							<thead>
 								<tr>
 									<th>Name</th>
+									<th>Date/Time</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -28,6 +29,7 @@
 								@foreach($categories as $category)
 									<tr>
 										<td>{{ $category->name }}</td>
+										<td>{{ date_format($category->created_at, 'M-d-Y g:i A') }}</td>
 										<td>
 											<div class="btn-group">
 												<a href="{{ route('category.edit', [encrypt($user->id), $category->id]) }}" class="btn btn-primary btn-sm" title="Edit"><i class="fa fa-pencil"></i></a>

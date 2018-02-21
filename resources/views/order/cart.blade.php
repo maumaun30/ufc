@@ -17,7 +17,9 @@
 					{{ csrf_field() }}
 					{{ method_field('patch') }}
 					<a href="{{ url()->previous() }}" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i> Menu</a>
+					@if(!$cart->cartItems->isEmpty())
 					<button type="submit" class="btn btn-success btn-sm pull-right"><i class="fa fa-check"></i> Place Order</button>
+					@endif
 				</form>
 			</div>
 		</div>

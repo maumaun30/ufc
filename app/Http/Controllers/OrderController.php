@@ -24,11 +24,11 @@ class OrderController extends Controller
         $cart->user_id = Auth::user()->id;
         $cart->save();
 
-        return redirect()->route('order.index', $cart->id)->with('cart', $cart);
+        return redirect()->route('order.index', encrypt($cart->id))->with('cart', $cart);
     }
 
     public function cartView($cart_id){
-        $cart = Cart::find($cart_id);
+        $cart = Cart::find(decrypt($cart_id));
 
         $total = $cart->cartItems->sum('price');
 
@@ -36,7 +36,7 @@ class OrderController extends Controller
     }
 
     public function placeOrder($cart_id){
-        $cart = Cart::find($cart_id);
+        $cart = Cart::find(decrypt($cart_id));
 
         // status 1 = in process
         foreach($cart->cartItems as $item){
@@ -54,7 +54,7 @@ class OrderController extends Controller
     }
 
     public function receipt($cart_id){
-        $cart = Cart::find($cart_id);
+        $cart = Cart::find(decrypt($cart_id));
         $total = $cart->cartItems->sum('price');
 
         return view('order.receipt')->with('cart', $cart)->with('total', $total);
@@ -67,7 +67,7 @@ class OrderController extends Controller
      */
     public function index($cart_id)
     {
-        $cart = Cart::find($cart_id);
+        $cart = Cart::find(decrypt($cart_id));
         $user = User::find(Auth::user()->id);
 
         return view('order.index')->with('user', $user)->with('cart', $cart);
@@ -75,7 +75,7 @@ class OrderController extends Controller
 
     public function indexCategory($cart_id, $id)
     {
-        $cart = Cart::find($cart_id);
+        $cart = Cart::find(decrypt($cart_id));
         $user = User::find(Auth::user()->id);
 
         $category = $user->profileCategoryMenus->where('id', $id)->first();
@@ -101,7 +101,7 @@ class OrderController extends Controller
      */
     public function store(Request $request, $cart_id)
     {
-        $cart = Cart::find($cart_id);
+        $cart = Cart::find(decrypt($cart_id));
 
         $order = new Order;
         $order->cart_id = $cart->id;
@@ -113,13 +113,15 @@ class OrderController extends Controller
         $order->status = 0;
         $order->save();
 
+        flash('Successfully added an item into cart!');
+
         // return redirect()->route('order.index', $cart->id)->with('cart', $cart);
         return back();
     }
 
     public function storeAddon(Request $request, $cart_id)
     {
-        $cart = Cart::find($cart_id);
+        $cart = Cart::find(decrypt($cart_id));
         $count = count($request->name1);
         for ($i=0; $i < $count; $i++) { 
             foreach ($request->name1 as $checkbox) {
@@ -136,7 +138,7 @@ class OrderController extends Controller
             }
         }
 
-
+        flash('Successfully added an item into cart!');
 
         return back();
     }

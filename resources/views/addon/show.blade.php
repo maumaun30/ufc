@@ -20,7 +20,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group">
-					<form action="{{ route('change.featured', [encrypt($user->id), $addon->id]) }}" method="post">
+					<form action="{{ route('change.featured.addon', [encrypt($user->id), $addon->id]) }}" method="post">
 						<label>Featured:</label>
 						@if($addon->featured == 1)
 							Yes
@@ -44,6 +44,10 @@
 				<div class="form-group">
 					<label>Price: </label>
 					{{ $addon->price }}
+				</div>
+				<div class="form-group">
+					<label>Created on: </label>
+					{{ date_format($addon->created_at, 'M-d-Y g:i A') }}
 				</div>					
 			</div>
 		</div>

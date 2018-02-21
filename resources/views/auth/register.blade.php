@@ -59,6 +59,15 @@
                         @endif
                     </div>
 
+                    <div class="form-group{{ $errors->has('contact_number') ? ' has-error' : '' }}">
+                        <input type="text" name="contact_number" class="form-control" value="{{ old('contact_number') }}" placeholder="Contact Number" required>
+                        @if ($errors->has('contact_number'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('contact_number') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
                     <div class="form-group">
                         <button type="submit" class="btn btn-default btn-sm">Register</button>
                     </div>

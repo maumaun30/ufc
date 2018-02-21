@@ -58,7 +58,7 @@
 													<a href="{{ route('addon.show', [encrypt($user->id), $addon->id]) }}" class="btn btn-default btn-sm" title="View More"><i class="fa fa-eye"></i></a>
 													@if($user->profileAddons->isEmpty())
 													@else
-														<button class="btn btn-warning btn-sm addon-featured-btn" data-toggle="modal" data-target="#featured" data-furl="{{ route('change.featured', [encrypt($user->id), $addon->id]) }}" title="@if($addon->featured == 1) Featured @else Not Featured @endif">
+														<button class="btn btn-warning btn-sm addon-featured-btn" data-toggle="modal" data-target="#featured" data-furl="{{ route('change.featured.addon', [encrypt($user->id), $addon->id]) }}" title="@if($addon->featured == 1) Featured @else Not Featured @endif">
 															@if($addon->featured == 1)
 																<i class="fa fa-star"></i>
 															@else

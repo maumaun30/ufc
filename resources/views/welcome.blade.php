@@ -1,28 +1,66 @@
 @extends('layouts.home')
 
-@section('content')
-<div class="panel panel-default">
-    <div class="panel-heading">
-    	<div class="row">
-    		<div class="col-md-12">
-				Welcome
-				<div class="pull-right">
-					<b id="setTableText"></b>
-	    			<button class="btn btn-default btn-sm pull-right" id="setTableBtn" data-toggle="modal" data-target="#setTableModal">Set Table</button>
-				</div>
-    		</div>
-    	</div>
-	</div>
+@section('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.1.6/css/swiper.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.1.6/css/swiper.min.css">
+<style type="text/css">
+	.swiper-container {
+	    width: 100%;
+	    height: 350px;
+	}
+</style>
+@stop
 
-    <div class="panel-body">
-    	<div id="orderBtn">
-	        May I have your order please?<br>
-	        <a href="{{ route('create.cart') }}" class="btn btn-default">Order Now!</a>
-    	</div>
-    	<div id="orderText">
-        	Table number not yet set. Please contact management.
-        </div>
-    </div>
+@section('content')
+<div class="row">
+	<div class="col-md-9">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<!-- Slider main container -->
+				<div class="swiper-container">
+				    <!-- Additional required wrapper -->
+				    <div class="swiper-wrapper">
+				        <!-- Slides -->
+				        <div class="swiper-slide">Slide 1</div>
+				        <div class="swiper-slide">Slide 2</div>
+				        <div class="swiper-slide">Slide 3</div>
+				        ...
+				    </div>
+				    <!-- If we need pagination -->
+				    <div class="swiper-pagination"></div>
+				 
+				    <!-- If we need navigation buttons -->
+				    <div class="swiper-button-prev"></div>
+				    <div class="swiper-button-next"></div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+		    <div class="panel-heading">
+		    	<div class="row">
+		    		<div class="col-md-12">
+						Welcome
+						<div class="pull-right">
+							<b id="setTableText"></b>
+			    			<button class="btn btn-default btn-sm pull-right" id="setTableBtn" data-toggle="modal" data-target="#setTableModal">Set Table</button>
+						</div>
+		    		</div>
+		    	</div>
+			</div>
+
+		    <div class="panel-body text-center">
+		    	<div id="orderBtn">
+			        <a href="{{ route('create.cart') }}" class="btn btn-default">Order Now!</a>
+		    	</div>
+		    	<div id="orderText">
+		        	Table number not yet set. Please contact management.
+		        </div>
+		    </div>
+		</div>
+	</div>
 </div>
 
 <!-- Modal -->
@@ -50,6 +88,11 @@
 
 
 @section('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.1.6/js/swiper.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.1.6/js/swiper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.1.6/js/swiper.esm.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.1.6/js/swiper.esm.bundle.js"></script>
+
 <script>
 	$(document).ready(function(){
 		// alert(sessionStorage.getItem("table_number"));
@@ -81,4 +124,24 @@
 		});
 	});
 </script>
+
+<script>
+  var mySwiper = new Swiper ('.swiper-container', {
+    // Optional parameters
+    direction: 'horizontal',
+    loop: true,
+
+    // If we need pagination
+    pagination: {
+      el: '.swiper-pagination',
+    },
+
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+
+  })
+  </script>
 @stop

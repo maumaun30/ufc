@@ -9,9 +9,9 @@
 			</div>
 			<div class="panel-body">
 				<ul class="nav nav-pills nav-stacked">
-					<li><a href="{{ route('order.index', $cart->id) }}">All</a></li>
+					<li><a href="{{ route('order.index', encrypt($cart->id)) }}">All</a></li>
 					@foreach($user->profileCategoryMenus as $categori)
-						<li><a href="{{ route('order.category', [$cart->id, $categori->id, $categori->name]) }}">{{ $categori->name }}</a></li>
+						<li><a href="{{ route('order.category', [encrypt($cart->id), $categori->id, $categori->name]) }}">{{ $categori->name }}</a></li>
 					@endforeach
 				</ul>
 			</div>
@@ -30,9 +30,9 @@
 		    	</div>
 		    	<div class="row">
 		    		<div class="col-md-12">
-			    		<button class="btn btn-default btn-sm" data-toggle="modal" data-target="#addons">Add-ons</button>
+			    		<button class="btn btn-default btn-sm" data-toggle="modal" data-target="#addons"><i class="fa fa-beer"></i> Add-ons</button>
 			    		<div class="pull-right">
-							<a href="{{ route('view.cart', $cart->id) }}" class="btn btn-default btn-sm">Cart</a>
+							<a href="{{ route('view.cart', encrypt($cart->id)) }}" class="btn btn-default btn-sm"><i class="fa fa-shopping-cart"></i> Cart</a>
 			    		</div>
 		    		</div>
 		    	</div>
@@ -67,7 +67,7 @@
 					        			<label>Price:</label> {{ $menu->price }}
 				        			</div>
 				        			<div class="form-group text-center">
-					        			<button class="btn btn-default btn-sm form-control order-btn" data-toggle="modal" data-target="#orderModal" data-url="{{ route('order.store', $cart->id) }}" data-cx="{{ $cart->cx }}" data-name="{{ $menu->name }}" data-price="{{ $menu->price }}" data-image="{{ asset($menu->image) }}" data-description="{{ $menu->description }}" >Order</button>
+					        			<button class="btn btn-default btn-sm form-control order-btn" data-toggle="modal" data-target="#orderModal" data-url="{{ route('order.store', encrypt($cart->id)) }}" data-cx="{{ $cart->cx }}" data-name="{{ $menu->name }}" data-price="{{ $menu->price }}" data-image="{{ asset($menu->image) }}" data-description="{{ $menu->description }}" >Order</button>
 				        			</div>
 				        		</div>
 				        	</div>
@@ -144,7 +144,7 @@
 				Add-ons
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
-			<form action="{{ route('order.store', $cart->id) }}" method="post">
+			<form action="{{ route('order.store', encrypt($cart->id)) }}" method="post">
 				<div class="modal-body">
 					{{ csrf_field() }}
 					@if($user->profileAddons->isEmpty())

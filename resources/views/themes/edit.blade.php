@@ -108,18 +108,6 @@
                     </span>
                 @endif
             </div>
-            <div class="form-group">
-            	<label>Button</label>
-            </div>
-            <div class="form-group{{ $errors->has('btn_color') ? ' has-error' : '' }}">
-				<label>Color</label>
-				<input type="color" name="btn_color" class="form-control input-sm" placeholder="Button Color" value="{{ $theme->btn_color }}">
-				@if ($errors->has('btn_color'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('btn_color') }}</strong>
-                    </span>
-                @endif
-            </div>
 			<button type="submit" class="btn btn-default btn-sm">Update</button>
 		</form>
 	</div>

@@ -24,6 +24,7 @@
         @else
         <style type="text/css">
             html{
+                position: relative;
                 min-height: 100% !important;
             }
             body{
@@ -31,20 +32,23 @@
                 background-color: {{ $selected_theme->bg_color }} !important;
                 background-repeat: no-repeat, repeat;
                 background-size: cover;
+                background-attachment: fixed;
                 height: 100%;
+                margin-bottom: 200px; /* Margin bottom by footer height */
             }
-            .panel, .btn{
-                font-family: {{ $selected_theme->ft_family }} !important;
+            .btn{
                 font-size: {{ $selected_theme->ft_size }}px !important;
-                color: {{ $selected_theme->ft_color }} !important;
             }
 
             .panel{
+                font-family: {{ $selected_theme->ft_family }} !important;
+                color: {{ $selected_theme->ft_color }} !important;
                 background-color: rgba(255,255,255,0) !important;
             }
 
             .panel-body{
                 background-color: rgba({{ $selected_theme->pnl_color }}, {{ $selected_theme->pnl_opacity }}) !important;
+                color: {{ $selected_theme->ft_color }} !important;
             }
 
             .panel-body ul li a{
@@ -53,14 +57,33 @@
 
             .panel-heading{
                 background-color: rgba({{ $selected_theme->pnl_color }}, {{ $selected_theme->pnl_opacity }}) !important;
+                color: {{ $selected_theme->ft_color }} !important;
             }
 
-            .btn-default{
-                background-color: {{ $selected_theme->btn_color }} !important;
+            .navbar-default{
+                background-color: rgba({{ $selected_theme->pnl_color }}, {{ $selected_theme->pnl_opacity }}) !important;
             }
 
-            .btn-success, .btn-danger{
-                color: #fff !important;
+            .navbar-header {
+                float: left;
+                padding: 0px;
+                text-align: center;
+                width: 100%;
+            }
+            .navbar-brand {
+                float:none;
+                color: {{ $selected_theme->ft_color }} !important;
+            }
+
+            .footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 200px; /* Set the fixed height of the footer here */
+                background-color: rgba({{ $selected_theme->pnl_color }}, {{ $selected_theme->pnl_opacity }}) !important;
+                border: none;
+                border-top: 1px solid #d3e0e9;
+                color: {{ $selected_theme->ft_color }} !important;
             }
         </style>
         @endif
@@ -73,7 +96,7 @@
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
-
+                    @guest
                     <!-- Collapsed Hamburger -->
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse" aria-expanded="false">
                         <span class="sr-only">Toggle Navigation</span>
@@ -81,6 +104,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+                    @endguest
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
@@ -92,6 +116,7 @@
                     </a>
                 </div>
 
+                @guest
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
@@ -101,44 +126,15 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
-                        @guest
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
-                        @else
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Logout
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endguest
                     </ul>
                 </div>
+                @endguest
             </div>
         </nav>
 
-        @if (session('status'))
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-success">
-                        {{ session('status') }}
-                    </div>
-                </div>
-            </div>
-        @endif
+        @include('flash::message')
 
         <div class="container-fluid">
             <div class="row">
@@ -147,6 +143,26 @@
                 </div>
             </div>
         </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="row" style="margin-top: 30px;">
+                    <div class="col-md-6 text-left">
+                        <ul class="list-unstyled" style="margin-bottom: 0;">
+                            <li><div>{{ Auth::user()->company }} <img src="{{ asset(Auth::user()->logo) }}" class="img-circle" style="height: 25px;"></div></li>
+                            <li><i class="fa fa-address-book"></i> {{ Auth::user()->address }}</li>
+                        </ul>
+                        <hr>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <ul class="list-unstyled" style="margin-bottom: 0;">
+                            <li><i class="fa fa-envelope"></i> {{ Auth::user()->email }}</li>
+                            <li><i class="fa fa-phone"></i> {{ Auth::user()->contact_number }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
 
     </div>
 

@@ -61,6 +61,8 @@ class AddonController extends Controller
 
         $addon->save();
 
+        flash('Successfully added add-on!');
+
         return redirect()->route('addon.show', [encrypt($user->id), $addon->id]);
     }
 
@@ -113,6 +115,8 @@ class AddonController extends Controller
         $addon->price = $request->price;
         $addon->update();
 
+        flash('Successfully updated add-on!');
+
         return redirect()->route('addon.show', [encrypt($user->id), $addon->id]);
     }
 
@@ -129,6 +133,8 @@ class AddonController extends Controller
 
         $addon->update();
 
+        flash('Successfully changed featured add-on!');
+
         return redirect()->route('addon.show', [encrypt($user->id), $addon->id]);
     }
     /**
@@ -141,6 +147,8 @@ class AddonController extends Controller
     {
         $user = User::find(decrypt($user_id));
         $addon = Addon::find($id)->delete();
+
+        flash('Successfully deleted add-on!');
 
         return redirect()->route('addon.index', encrypt($user->id));
     }

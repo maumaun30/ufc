@@ -38,7 +38,7 @@
 			</div>
 			<div class="col-md-6">
 				<div class="form-group">
-					<form action="{{ route('change.featured', [encrypt($user->id), $menu->id]) }}" method="post">
+					<form action="{{ route('change.featured.menu', [encrypt($user->id), $menu->id]) }}" method="post">
 						<label>Featured:</label>
 						@if($menu->featured == 1)
 							Yes
@@ -70,7 +70,11 @@
 				<div class="form-group">
 					<label>Description: </label>
 					{{ $menu->description }}
-				</div>						
+				</div>
+				<div class="form-group">
+					<label>Created on: </label>
+					{{ date_format($menu->created_at, 'M-d-Y g:i A') }}
+				</div>							
 			</div>
 		</div>
 	</div>

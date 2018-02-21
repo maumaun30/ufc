@@ -18,7 +18,12 @@
 					</div>
 					<div id="collapse{{ $feedback->id }}" class="panel-collapse collapse in">
 						<div class="panel-body">
-							<p>{{ $feedback->feedback }}</p>
+							<div class="mgb5">
+								<p>{{ $feedback->feedback }}</p>
+							</div>
+							<div class="text-muted">
+								Submitted on: {{ date_format($feedback->created_at, 'M-d-Y g:i A') }}
+							</div>
 						</div>
 					</div>
 				</div>

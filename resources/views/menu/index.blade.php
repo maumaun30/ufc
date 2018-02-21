@@ -60,7 +60,7 @@
 													<a href="{{ route('menu.show', [encrypt($user->id), $menu->id]) }}" class="btn btn-default btn-sm" title="View More"><i class="fa fa-eye"></i></a>
 													@if($user->profileMenus->isEmpty())
 													@else
-														<button class="btn btn-warning btn-sm menu-featured-btn" data-toggle="modal" data-target="#featured" data-furl="{{ route('change.featured', [encrypt($user->id), $menu->id]) }}" title="@if($menu->featured == 1) Featured @else Not Featured @endif">
+														<button class="btn btn-warning btn-sm menu-featured-btn" data-toggle="modal" data-target="#featured" data-furl="{{ route('change.featured.menu', [encrypt($user->id), $menu->id]) }}" title="@if($menu->featured == 1) Featured @else Not Featured @endif">
 															@if($menu->featured == 1)
 																<i class="fa fa-star"></i>
 															@else

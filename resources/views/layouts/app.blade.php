@@ -84,15 +84,7 @@
             </div>
         </nav>
 
-        @if (session('status'))
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-success">
-                        {{ session('status') }}
-                    </div>
-                </div>
-            </div>
-        @endif
+        @include('flash::message')
 
         <div class="container-fluid">
             <div class="row">
@@ -109,6 +101,7 @@
                                 <li><a href="{{ route('addon.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-beer"></i> Add-ons</a></li>
                                 <li><a href="{{ route('inventory.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-barcode"></i> Inventory</a></li>
                                 <li><a href="{{ route('sales.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-money"></i> Sales</a></li>
+                                <li><a href="{{ route('rating.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-star"></i> Ratings</a></li>
                                 <li><a href="{{ route('feedback.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-book"></i> Feedbacks</a></li>
                                 <li><a href="{{ route('themes.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-paint-brush"></i> Themes</a></li>
                             </ul>

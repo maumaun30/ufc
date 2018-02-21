@@ -20,6 +20,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12">
+								<label>Date: </label> {{ date_format($cart->updated_at, 'M-d-Y') }}
 								<div class="pull-right">
 									@if($cart->status == 2)
 										<s>Cart Price: <b>{{ $cart->cartItems->sum('price') }}</b></s>
@@ -31,6 +32,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12">
+								<label>Time: </label> {{ date_format($cart->updated_at, 'g:i A') }}
 								<div class="pull-right">
 									<form action="{{ route('finish.cart', [encrypt($user->id), $cart->id]) }}" method="post">
 										{{ csrf_field() }}
@@ -40,6 +42,7 @@
 											<div class="btn-group">
 												<button type="submit" class="btn btn-success btn-sm" title="Finish"><i class="fa fa-check"></i></button>
 												<a href="#" class="btn btn-danger btn-sm cart-name-btn" title="Discard" data-toggle="modal" data-target="#discardCart" data-name="{{ $cart->cx }}" data-url="{{ route('discard.cart', [encrypt($user->id), $cart->id]) }}"><i class="fa fa-times"></i></a>
+												<a href="{{ route('order.print', [encrypt($user->id), $cart->id]) }}" class="btn btn-primary btn-sm" title="Print Receipt"><i class="fa fa-file"></i></a>
 											</div>
 										@endif
 									</form>

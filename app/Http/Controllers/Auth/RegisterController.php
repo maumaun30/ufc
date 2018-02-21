@@ -53,7 +53,7 @@ class RegisterController extends Controller
             'password' => 'required|string|min:6|confirmed',
             'company' => 'required|string|max:255',
             'address' => 'required|string',
-            // 'logo' => 'required',
+            'contact_number' => 'required',
         ]);
     }
 
@@ -71,7 +71,7 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'company' => $data['company'],
             'address' => $data['address'],
-            // 'logo' => $data['logo'],
+            'contact_number' => $data['contact_number'],
         ]);
     }
 }

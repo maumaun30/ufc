@@ -69,6 +69,8 @@ class HomeController extends Controller
         $user->address = $request->address;
         $user->update();
 
+        flash('Successfully updated profile!');
+
         return redirect()->route('profile', encrypt($user->id));
     }
 
@@ -86,6 +88,8 @@ class HomeController extends Controller
         }
 
         $user->update();
+
+        flash('Successfully changed logo!');
 
         return redirect()->route('profile', encrypt($user->id));
     }
@@ -105,6 +109,8 @@ class HomeController extends Controller
 
         $user->password = bcrypt($request->password);
         $user->update();
+
+        flash('Successfully changed password!');
 
         return redirect()->route('profile', encrypt($user->id));
     }
@@ -203,7 +209,16 @@ class HomeController extends Controller
         $feedback->feedback = $request->feedback;
         $feedback->save();
 
+        flash('Successfully submitted feedback!');
+
         return back();
+    }
+
+    public function indexRating($user_id)
+    {
+        $user = User::find(decrypt($user_id));
+
+        return view('auth.rating')->with('user', $user);
     }
 
     public function storeRating(Request $request, $user_id, $id)
@@ -218,6 +233,17 @@ class HomeController extends Controller
         $rating->score = $request->score;
         $rating->save();
 
+        flash('Successfully rated!');
+
         return back();
+    }
+
+
+    public function print($user_id, $id)
+    {
+        $user = User::find(decrypt($user_id));
+        $cart = Cart::find($id);
+
+        return view('order.print')->with('user', $user)->with('cart', $cart);
     }
 }

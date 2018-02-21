@@ -65,6 +65,8 @@ class InventoryController extends Controller
         $inventory->value = $request->qty * $request->price;
         $inventory->save();
 
+        flash('Successfully added inventory!');
+
         return redirect()->route('inventory.show', [encrypt($user->id), $inventory->id]);
     }
 
@@ -122,6 +124,8 @@ class InventoryController extends Controller
         $inventory->value = $request->qty * $request->price;
         $inventory->update();
 
+        flash('Successfully updated inventory!');
+
         return redirect()->route('inventory.show', [encrypt($user->id), $inventory->id]);
     }
 
@@ -135,6 +139,8 @@ class InventoryController extends Controller
     {
         $user = User::find(decrypt($user_id));
         $inventory = Inventory::find($id)->delete();
+
+        flash('Successfully deleted inventory!');
 
         return redirect()->route('inventory.show', encrypt($user->id));
     }

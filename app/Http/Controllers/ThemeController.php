@@ -64,8 +64,9 @@ class ThemeController extends Controller
         $theme->ft_color = $request->ft_color;
         $theme->pnl_opacity = $request->pnl_opacity;
         $theme->pnl_color = $request->pnl_color;
-        $theme->btn_color = $request->btn_color;
         $theme->save();
+
+        flash('Successfully added theme!');
 
         return redirect()->route('themes.index', encrypt($user->id));
     }
@@ -118,8 +119,9 @@ class ThemeController extends Controller
         $theme->ft_color = $request->ft_color;
         $theme->pnl_opacity = $request->pnl_opacity;
         $theme->pnl_color = $request->pnl_color;
-        $theme->btn_color = $request->btn_color;
         $theme->save();
+
+        flash('Successfully updated theme!');
 
         return redirect()->route('themes.index', encrypt($user->id));
     }
@@ -134,6 +136,8 @@ class ThemeController extends Controller
     {
         $user = User::find(decrypt($user_id));
         $theme = Theme::find($id)->delete();
+
+        flash('Successfully deleted theme!');
 
         return redirect()->route('themes.index', encrypt($user->id));
     }
@@ -150,6 +154,8 @@ class ThemeController extends Controller
 
         $theme->selected = 1;
         $theme->update();
+
+        flash('Successfully applied theme!');
 
         return redirect()->route('themes.index', encrypt($user->id));
     }

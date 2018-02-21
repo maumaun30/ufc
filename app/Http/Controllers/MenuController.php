@@ -73,6 +73,8 @@ class MenuController extends Controller
 
         $menu->save();
 
+        flash('Successfully added menu!');
+
         return redirect()->route('menu.show', [encrypt($user->id), $menu->id]);
     }
 
@@ -131,6 +133,8 @@ class MenuController extends Controller
         $menu->description = $request->description;
         $menu->update();
 
+        flash('Successfully updated menu!');
+
         return redirect()->route('menu.show', [encrypt($user->id), $menu->id]);
     }
 
@@ -149,6 +153,9 @@ class MenuController extends Controller
             $menu->update();
         }
 
+        flash('Successfully updated photo!');
+
+
         return redirect()->route('menu.show', [encrypt($user->id), $menu->id]);
     }
 
@@ -165,6 +172,8 @@ class MenuController extends Controller
 
         $menu->update();
 
+        flash('Successfully changed featured menu!');
+
         return redirect()->route('menu.show', [encrypt($user->id), $menu->id]);
     }
     /**
@@ -177,6 +186,8 @@ class MenuController extends Controller
     {
         $user = User::find(decrypt($user_id));
         $menu = Menu::find($id)->delete();
+
+        flash('Successfully deleted menu!');
 
         return redirect()->route('menu.index', encrypt($user->id));
     }

@@ -54,6 +54,8 @@ class AddonCategoryController extends Controller
 
         $addon_category->save();
 
+        flash('Successfully added add-on category!');
+
         return redirect()->route('addon_category.index', encrypt($user->id));
     }
 
@@ -100,6 +102,8 @@ class AddonCategoryController extends Controller
         $addon_category->name = $request->name;
         $addon_category->update();
 
+        flash('Successfully updated menu category!');
+
         return redirect()->route('addon_category.index', encrypt($user->id));
     }
 
@@ -113,6 +117,8 @@ class AddonCategoryController extends Controller
     {
         $user = User::find(decrypt($user_id));
         $addon_category = AddonCategory::find($id)->delete();
+
+        flash('Successfully deleted menu category!');
 
         return redirect()->route('addon_category.index', encrypt($user->id));
     }
