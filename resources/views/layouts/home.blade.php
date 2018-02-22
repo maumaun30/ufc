@@ -144,6 +144,7 @@
             </div>
         </div>
 
+        @if(Auth::user())
         <footer class="footer">
             <div class="container">
                 <div class="row" style="margin-top: 30px;">
@@ -163,6 +164,7 @@
                 </div>
             </div>
         </footer>
+        @endif
 
     </div>
 
