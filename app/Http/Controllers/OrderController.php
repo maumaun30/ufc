@@ -60,7 +60,7 @@ class OrderController extends Controller
             }
 
             $cart->status = 1;
-            $cart->total = $total;
+            $cart->total = $cart->cartItems->sum('price');
             $cart->update();
         }
 
