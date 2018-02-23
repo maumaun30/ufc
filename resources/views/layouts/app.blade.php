@@ -104,6 +104,7 @@
                                 <li><a href="{{ route('rating.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-star"></i> Ratings</a></li>
                                 <li><a href="{{ route('feedback.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-book"></i> Feedbacks</a></li>
                                 <li><a href="{{ route('themes.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-paint-brush"></i> Themes</a></li>
+                                <li><a href="{{ route('swiper.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-image"></i> Swiper</a></li>
                             </ul>
                         </div>
                     </div>

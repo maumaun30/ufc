@@ -33,8 +33,8 @@
                 background-repeat: no-repeat, repeat;
                 background-size: cover;
                 background-attachment: fixed;
+                background-position: center;
                 height: 100%;
-                margin-bottom: 200px; /* Margin bottom by footer height */
             }
             .btn{
                 font-size: {{ $selected_theme->ft_size }}px !important;
@@ -75,15 +75,16 @@
                 color: {{ $selected_theme->ft_color }} !important;
             }
 
-            .footer {
-                position: absolute;
-                bottom: 0;
+            .content-wrapper {
                 width: 100%;
-                height: 200px; /* Set the fixed height of the footer here */
-                background-color: rgba({{ $selected_theme->pnl_color }}, {{ $selected_theme->pnl_opacity }}) !important;
-                border: none;
-                border-top: 1px solid #d3e0e9;
-                color: {{ $selected_theme->ft_color }} !important;
+                height: 100vh;
+                padding: 0;
+                margin: 0;
+                z-index: 0;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
             }
         </style>
         @endif
@@ -92,7 +93,7 @@
     @yield('styles')
 </head>
 <body>
-    <div id="app">
+    <div class="content-wrapper">
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -136,6 +137,8 @@
 
         @include('flash::message')
 
+
+        @yield('swiper')
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -143,30 +146,9 @@
                 </div>
             </div>
         </div>
-
-        @if(Auth::user())
-        <footer class="footer">
-            <div class="container">
-                <div class="row" style="margin-top: 30px;">
-                    <div class="col-md-6 text-left">
-                        <ul class="list-unstyled" style="margin-bottom: 0;">
-                            <li><div>{{ Auth::user()->company }} <img src="{{ asset(Auth::user()->logo) }}" class="img-circle" style="height: 25px;"></div></li>
-                            <li><i class="fa fa-address-book"></i> {{ Auth::user()->address }}</li>
-                        </ul>
-                        <hr>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <ul class="list-unstyled" style="margin-bottom: 0;">
-                            <li><i class="fa fa-envelope"></i> {{ Auth::user()->email }}</li>
-                            <li><i class="fa fa-phone"></i> {{ Auth::user()->contact_number }}</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        @endif
-
     </div>
+
+    @yield('footer')
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>

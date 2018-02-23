@@ -16,7 +16,7 @@
 		<form action="{{ route('post.cart') }}" method="post">
 			{{ csrf_field() }}
 			 <div class="form-group{{ $errors->has('cx') ? ' has-error' : '' }}">
-				<input type="text" name="cx" class="form-control" placeholder="Your Name" required autofocus>
+				<input type="text" name="cx" class="form-control input-sm" placeholder="Your Name" required autofocus>
 				@if ($errors->has('cx'))
                     <span class="help-block">
                         <strong>{{ $errors->first('cx') }}</strong>
@@ -25,7 +25,7 @@
                 <input type="hidden" name="table_number" id="tableNumber">
             </div>
             <div class="form-group">
-            	<button type="submit" class="btn btn-default">Show Menu</button>
+            	<button type="submit" class="btn btn-default btn-sm form-control input-sm">Order Now</button>
             </div>
 		</form>
 	</div>

@@ -64,10 +64,10 @@
 					        			<img src="{{ asset($menu->image) }}" class="img-rounded img-thumbnail" style="height: 150px;">	
 				        			</div>
 				        			<div class="form-group text-center">
-					        			<label>Price:</label> {{ $menu->price }}
+					        			<label>Price:</label> <span id="menuPrice{{ $menu->id }}">{{ $menu->price }}</span>
 				        			</div>
 				        			<div class="form-group text-center">
-					        			<button class="btn btn-default btn-sm form-control order-btn" data-toggle="modal" data-target="#orderModal" data-url="{{ route('order.store', encrypt($cart->id)) }}" data-cx="{{ $cart->cx }}" data-name="{{ $menu->name }}" data-price="{{ $menu->price }}" data-image="{{ asset($menu->image) }}" data-description="{{ $menu->description }}" >Order</button>
+					        			<button class="btn btn-default btn-sm form-control order-btn" data-toggle="modal" data-target="#orderModal" data-id="{{ $menu->id }}" data-url="{{ route('order.store', encrypt($cart->id)) }}" data-cx="{{ $cart->cx }}" data-name="{{ $menu->name }}" data-price="{{ encrypt($menu->price) }}" data-image="{{ asset($menu->image) }}" data-description="{{ $menu->description }}" >Order</button>
 				        			</div>
 				        		</div>
 				        	</div>
@@ -203,6 +203,8 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('.order-btn').on('click', function(){
+			var menuId = $(this).data('id');
+			var menuPrice = $('#menuPrice' + menuId).html();
 			var orderUrl = $(this).data('url');
 			var orderCx = $(this).data('cx');
 			var orderName = $(this).data('name');
@@ -215,7 +217,7 @@
 			$('#orderName').val(orderName);
 			$('#orderName1').html(orderName);
 			$('#orderPrice').val(orderPrice);
-			$('#orderPrice1').html(orderPrice);
+			$('#orderPrice1').html(menuPrice);
 			$('#orderImage').val(orderImage);
 			$('#orderImage1').attr('src', orderImage);
 			$('#orderDescription').html(orderDescription);

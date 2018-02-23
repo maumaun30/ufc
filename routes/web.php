@@ -29,6 +29,11 @@ Route::patch('{user_id}/profile/change_password_update', 'HomeController@changeP
 Route::resource('{user_id}/themes', 'ThemeController');
 Route::patch('{user_id}/themes/{id}/apply', 'ThemeController@applyTheme')->name('themes.apply');
 
+// Swiper
+Route::resource('{user_id}/swiper', 'SwiperController');
+Route::patch('{user_id}/swiper/{id}/change_featured', 'SwiperController@changeFeatured')->name('change.featured.swiper');
+
+
 // Cart and Order
 Route::get('create/cart', 'OrderController@createCartView')->name('create.cart');
 Route::post('create/cart', 'OrderController@createCartPost')->name('post.cart');
@@ -44,6 +49,7 @@ Route::resource('{cart_id}/order', 'OrderController');
 Route::get('{cart_id}/order/{id}/{category}', 'OrderController@indexCategory')->name('order.category');
 Route::post('{cart_id}/order/addon/store', 'OrderController@storeAddon')->name('order.store.addon');
 Route::get('{user_id}/{cart_id}/order/print', 'HomeController@print')->name('order.print');
+Route::patch('{cart_id}/edit/{id}/quantity', 'OrderController@editQty')->name('order.edit.qty');
 
 // Menu
 Route::resource('{user_id}/category', 'CategoryController');

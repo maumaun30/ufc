@@ -13,6 +13,10 @@ use Auth;
 
 class OrderController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
+    
     public function createCartView(){
         return view('order.create_cart');
     }
@@ -30,34 +34,43 @@ class OrderController extends Controller
     public function cartView($cart_id){
         $cart = Cart::find(decrypt($cart_id));
 
-        $total = $cart->cartItems->sum('price');
-
-        return view('order.cart')->with('cart', $cart)->with('total', $total);
+        return view('order.cart')->with('cart', $cart);
     }
 
     public function placeOrder($cart_id){
         $cart = Cart::find(decrypt($cart_id));
 
-        // status 1 = in process
-        foreach($cart->cartItems as $item){
-            $item->status = 1;
-            $item->update();
+        if ($cart->status == 1) {
+            flash('Order is already placed and in process')->primary;
+
+            return redirect()->route('create.cart');
         }
 
-        $total = $cart->cartItems->sum('price');
+        else if($cart->status == 2) {
+            flash('Order is already finished')->warning;
 
-        $cart->status = 1;
-        $cart->total = $total;
-        $cart->update();
+            return redirect()->route('create.cart');
+        }
 
-        return redirect()->route('receipt', $cart->id)->with('cart', $cart);
+        else {
+            // status 1 = in process
+            foreach($cart->cartItems as $item){
+                $item->status = 1;
+                $item->update();
+            }
+
+            $cart->status = 1;
+            $cart->total = $total;
+            $cart->update();
+        }
+
+        return redirect()->route('receipt', encrypt($cart->id))->with('cart', $cart);
     }
 
     public function receipt($cart_id){
         $cart = Cart::find(decrypt($cart_id));
-        $total = $cart->cartItems->sum('price');
 
-        return view('order.receipt')->with('cart', $cart)->with('total', $total);
+        return view('order.receipt')->with('cart', $cart);
     }
 
     /**
@@ -107,7 +120,7 @@ class OrderController extends Controller
         $order->cart_id = $cart->id;
         $order->cx = $request->cx;
         $order->item = $request->name;
-        $order->price = $request->price * $request->qty;
+        $order->price = decrypt($request->price) * $request->qty;
         $order->qty = $request->qty;
         $order->image = $request->image;
         $order->status = 0;
@@ -176,6 +189,25 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function editQty(Request $request, $cart_id, $id)
+    {
+        $cart = Cart::find(decrypt($cart_id));
+
+        $this->validate($request, [
+            'qty' => 'integer'
+        ]);
+
+        $order = Order::find($id);
+        $order->qty = $request->qty;
+        $order->price = ($request->price / $request->old_qty) * $request->qty;
+        $order->update();
+
+        flash('Successfully edited quantity of item');
+
+        return back();
+
+    }
     
     /**
      * Remove the specified resource from storage.
@@ -183,8 +215,11 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($cart_id, $id)
     {
-        //
+        $cart = Cart::find(decrypt($cart_id));
+        $order = Order::find($id)->delete();
+
+        return redirect()->route('view.cart', encrypt($cart->id))->with('cart', $cart);
     }
 }

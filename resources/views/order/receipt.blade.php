@@ -117,7 +117,7 @@ border-radius: 4px;
 		    	@endforeach
 				<div class="row">
 					<div class="col-md-12">
-						Total Price: {{ $total }}
+						Total Price: {{ $cart->cartItems->sum('price') }}
 					</div>
 				</div>
 				<div class="row">

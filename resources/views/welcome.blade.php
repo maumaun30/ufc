@@ -6,38 +6,50 @@
 <style type="text/css">
 	.swiper-container {
 	    width: 100%;
-	    height: 350px;
+	    height: 100vh;
+	    padding: 0;
+	    margin: 0;
+	    position: absolute;
+	    z-index: 0;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	}
+	.swiper-slide {
+		background-size: cover;
+		background-repeat: no-repeat, repeat;
+        background-attachment: fixed;
+        background-position: center;
+		height: 100vh;
 	}
 </style>
 @stop
 
+@section('swiper')
+@if(Auth::user())
+	@if(Auth::user()->profileSwipers->isEmpty())
+	@else
+	<!-- Slider main container -->
+	<div class="swiper-container">
+	    <!-- Additional required wrapper -->
+	    <div class="swiper-wrapper">
+	        <!-- Slides -->
+	        @foreach(Auth::user()->profileSwipers as $swiper)
+	        <div class="swiper-slide" style="background-image: url({{ asset($swiper->image) }})"></div>
+	        @endforeach
+	    </div>
+	    <!-- If we need pagination -->
+	    <div class="swiper-pagination"></div>
+
+	</div>
+	@endif
+@endif
+@stop
+
 @section('content')
 <div class="row">
-	<div class="col-md-9">
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<!-- Slider main container -->
-				<div class="swiper-container">
-				    <!-- Additional required wrapper -->
-				    <div class="swiper-wrapper">
-				        <!-- Slides -->
-				        <div class="swiper-slide">Slide 1</div>
-				        <div class="swiper-slide">Slide 2</div>
-				        <div class="swiper-slide">Slide 3</div>
-				        ...
-				    </div>
-				    <!-- If we need pagination -->
-				    <div class="swiper-pagination"></div>
-				 
-				    <!-- If we need navigation buttons -->
-				    <div class="swiper-button-prev"></div>
-				    <div class="swiper-button-next"></div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-3">
+	<div class="col-md-offset-9 col-md-3">
 		<div class="panel panel-default">
 		    <div class="panel-heading">
 		    	<div class="row">
@@ -53,7 +65,21 @@
 
 		    <div class="panel-body text-center">
 		    	<div id="orderBtn">
-			        <a href="{{ route('create.cart') }}" class="btn btn-default">Order Now!</a>
+		    		<form action="{{ route('post.cart') }}" method="post">
+		    			{{ csrf_field() }}
+		    			<div class="form-group{{ $errors->has('cx') ? ' has-error' : '' }}">
+							<input type="text" name="cx" class="form-control" placeholder="Your Name" required>
+							@if ($errors->has('cx'))
+			                    <span class="help-block">
+			                        <strong>{{ $errors->first('cx') }}</strong>
+			                    </span>
+			                @endif
+			                <input type="hidden" name="table_number" id="tableNumber">
+			            </div>
+				        <div class="form-group">
+			            	<button type="submit" class="btn btn-default btn-sm form-control input-sm">Order Now</button>
+			            </div>
+		    		</form>
 		    	</div>
 		    	<div id="orderText">
 		        	Table number not yet set. Please contact management.
@@ -62,6 +88,65 @@
 		</div>
 	</div>
 </div>
+
+@if(Auth::user())
+<div class="row">
+	<div class="col-md-offset-9 col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				Our Ratings
+			</div>
+			<div class="panel-body text-center">
+				<div class="mgb5">
+					@for ($i = 0; $i < Auth::user()->profileRatings->avg('score'); $i++)
+					    <i class="fa fa-star" style="color: orange;"></i>
+					@endfor
+				</div>
+				<label>Score: {{ Auth::user()->profileRatings->avg('score') }}</label>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-offset-9 col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				Recent Feedbacks
+			</div>
+			<div class="panel-body">
+				@foreach(Auth::user()->profileFeedbacks->take(3) as $feedback)
+				<div class="row mgb5">
+					<div class="col-md-12">
+						<p class="mgb5">"{{ $feedback->feedback }}"</p>
+						<div class="text-muted text-center">
+							{{ $feedback->cx }}, {{ date_format($feedback->created_at, 'M-d-Y g:i A') }}
+						</div>
+					</div>
+				</div>
+				@endforeach
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-offset-9 col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading text-center">
+				Contact Us
+			</div>
+			<div class="panel-body">
+				<ul class="list-unstyled">
+                    <li><i class="fa fa-address-book"></i> {{ Auth::user()->address }}</li>
+                    <li><i class="fa fa-envelope"></i> {{ Auth::user()->email }}</li>
+                    <li><i class="fa fa-phone"></i> {{ Auth::user()->contact_number }}</li>
+                </ul>
+			</div>
+		</div>
+	</div>
+</div>
+@endif
 
 <!-- Modal -->
 <div id="setTableModal" class="modal fade" role="dialog">
@@ -84,8 +169,7 @@
 
 	</div>
 </div>
-@endsection
-
+@stop
 
 @section('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.1.6/js/swiper.js"></script>
@@ -100,6 +184,7 @@
 			$('#orderText').hide();
 			$('#setTableBtn').hide();
 		    $('#setTableText').html('Table Number: ' + localStorage.getItem("table_number"));
+		    $('#tableNumber').val(localStorage.getItem("table_number"));
 		}
 		else {
 			$('#orderBtn').hide();
@@ -130,16 +215,13 @@
     // Optional parameters
     direction: 'horizontal',
     loop: true,
+    autoplay: {
+	    delay: 5000,
+	},
 
     // If we need pagination
     pagination: {
       el: '.swiper-pagination',
-    },
-
-    // Navigation arrows
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
     },
 
   })

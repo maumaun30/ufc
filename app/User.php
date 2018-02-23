@@ -66,4 +66,8 @@ class User extends Authenticatable
     public function profileRatings(){
         return $this->hasMany('App\Rating')->latest();
     }
+
+    public function profileSwipers(){
+        return $this->hasMany('App\Swiper')->latest();
+    }
 }
