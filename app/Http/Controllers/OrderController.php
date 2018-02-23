@@ -116,6 +116,10 @@ class OrderController extends Controller
     {
         $cart = Cart::find(decrypt($cart_id));
 
+        $this->validate($request, [
+            'qty' => 'required|integer'
+        ]);
+
         $order = new Order;
         $order->cart_id = $cart->id;
         $order->cx = $request->cx;
@@ -136,6 +140,10 @@ class OrderController extends Controller
     {
         $cart = Cart::find(decrypt($cart_id));
         $count = count($request->name1);
+
+        $this->validate($request, [
+            'qty' => 'required|integer'
+        ]);
 
         $index = 0;
         foreach ($request->name1 as $checkbox) {
