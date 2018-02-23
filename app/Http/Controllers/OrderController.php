@@ -136,19 +136,20 @@ class OrderController extends Controller
     {
         $cart = Cart::find(decrypt($cart_id));
         $count = count($request->name1);
-        for ($i=0; $i < $count; $i++) { 
-            foreach ($request->name1 as $checkbox) {
-                // dd($request->name1);
-                $order = new Order;
-                $order->cart_id = $cart->id;
-                $order->cx = $request->cx1;
-                $order->item = $checkbox;
-                $order->image = 'img/uploads/default.jpg';
-                $order->price = $request->price1[$i] * $request->qty1[$i];
-                $order->qty = $request->qty1[$i];
-                $order->status = 0;
-                $order->save();
-            }
+
+        $index = 0;
+        foreach ($request->name1 as $checkbox) {
+            // dd($request->name1);
+            $order = new Order;
+            $order->cart_id = $cart->id;
+            $order->cx = $request->cx1;
+            $order->item = $checkbox;
+            $order->image = 'img/uploads/default.jpg';
+            $order->price = $request->price1[$index] * $request->qty1[$index];
+            $order->qty = $request->qty1[$index];
+            $order->status = 0;
+            $order->save();
+            $index++;
         }
 
         flash('Successfully added an item into cart!');

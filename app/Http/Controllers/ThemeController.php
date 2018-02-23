@@ -112,7 +112,8 @@ class ThemeController extends Controller
         $user = User::find(decrypt($user_id));
 
         $this->validate($request, [
-            'name' => 'required|max:255'
+            'name' => 'required|max:255',
+            'image' => 'image|mimes:jpeg,jpg,png,gif',
         ]);
 
         $theme = Theme::find($id);
@@ -160,6 +161,28 @@ class ThemeController extends Controller
         $theme->update();
 
         flash('Successfully applied theme!');
+
+        return redirect()->route('themes.index', encrypt($user->id));
+    }
+
+    public function updateBgImage(Request $request, $user_id, $id)
+    {
+        $user = User::find(decrypt($user_id));
+        $theme = Theme::find($id);
+
+        $this->validate($request, [
+            'bg_image' => 'image|mimes:jpeg,jpg,png,gif',
+        ]);
+
+        if ($request->hasFile('bg_image')) {
+            $fileName = time() . '.' . $request->file('bg_image')->getClientOriginalExtension();
+            Image::make($request->file('bg_image'))->save(public_path('img/uploads/' . $fileName));
+            $theme->bg_image = 'img/uploads/' . $fileName;
+        }
+
+        $theme->update();
+
+        flash('Successfully updated background image!');
 
         return redirect()->route('themes.index', encrypt($user->id));
     }

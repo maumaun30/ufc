@@ -19,16 +19,6 @@
             <div class="form-group">
             	<label>Front Page</label>
             </div>
-            <div class="form-group{{ $errors->has('bg_image') ? ' has-error' : '' }}">
-				<label>Background Image</label>
-				<input type="file" class="form-control input-sm" placeholder="Background Image" id="bgImage">
-				<input type="hidden" name="bg_image" id="bgImageInput" value="{{ $theme->bg_image }}">
-				@if ($errors->has('bg_image'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('bg_image') }}</strong>
-                    </span>
-                @endif
-            </div>
 			<div class="form-group{{ $errors->has('bg_color') ? ' has-error' : '' }}">
 				<label>Background Color</label>
 				<input type="color" name="bg_color" class="form-control input-sm" placeholder="Background Color" value="{{ $theme->bg_color }}">

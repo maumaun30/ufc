@@ -98,11 +98,11 @@
 			</div>
 			<div class="panel-body text-center">
 				<div class="mgb5">
-					@for ($i = 0; $i < Auth::user()->profileRatings->avg('score'); $i++)
+					@for ($i = 0; $i < floor(Auth::user()->profileRatings->avg('score')); $i++)
 					    <i class="fa fa-star" style="color: orange;"></i>
 					@endfor
 				</div>
-				<label>Score: {{ Auth::user()->profileRatings->avg('score') }}</label>
+				<label>Score: {{ number_format(Auth::user()->profileRatings->avg('score'), 2, '.', '') }}</label>
 			</div>
 		</div>
 	</div>

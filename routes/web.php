@@ -28,6 +28,7 @@ Route::patch('{user_id}/profile/change_password_update', 'HomeController@changeP
 // Themes
 Route::resource('{user_id}/themes', 'ThemeController');
 Route::patch('{user_id}/themes/{id}/apply', 'ThemeController@applyTheme')->name('themes.apply');
+Route::patch('{user_id}/themes/{id}/update/bgimage', 'ThemeController@updateBgImage')->name('themes.update.bgimage');
 
 // Swiper
 Route::resource('{user_id}/swiper', 'SwiperController');
