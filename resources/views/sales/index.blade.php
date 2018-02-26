@@ -8,6 +8,11 @@
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-12">
+				<canvas id="myChart"></canvas>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
 				@if($user->profileSales->isEmpty())
 					No Sales created yet. =(
 				@else
@@ -103,5 +108,38 @@
 		$('.sale-name').text(saleName);
 		$('.sale-url').attr('action', saleUrl);
 	});
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        datasets: [{
+            label: 'Income',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)'
+            ],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
 </script>
 @stop

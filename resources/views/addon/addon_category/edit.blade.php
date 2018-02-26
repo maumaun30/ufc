@@ -10,7 +10,7 @@
 			{{ csrf_field() }}
 			{{ method_field('patch') }}
 			<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-				<input type="text" name="name" class="form-control" placeholder="Name" value="{{ $addon_category->name }}" required>
+				<input type="text" name="name" class="form-control input-sm" placeholder="Name" value="{{ $addon_category->name }}" required autofocus>
 				@if ($errors->has('name'))
                     <span class="help-block">
                         <strong>{{ $errors->first('name') }}</strong>

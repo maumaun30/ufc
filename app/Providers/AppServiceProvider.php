@@ -22,9 +22,11 @@ class AppServiceProvider extends ServiceProvider
         view()->composer('layouts.home', function ($view)
         {
             if (Auth::user()) {
-                $user = User::find(Auth::user()->id);
-                $theme = $user->profileThemes->where('selected', 1)->first();
-                $view->with('selected_theme', Auth::check() ? $theme : '');
+                if (!Auth::user()->profileThemes->isEmpty()) {
+                    $user = User::find(Auth::user()->id);
+                    $theme = $user->profileThemes->where('selected', 1)->first();
+                    $view->with('selected_theme', Auth::check() ? $theme : '');
+                }
             }
         });
 

@@ -9,7 +9,7 @@
 		<form method="post" action="{{ route('addon.store', encrypt($user->id)) }}">
 			{{ csrf_field() }}
 			<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-				<input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') }}" required autofocus>
+				<input type="text" name="name" class="form-control input-sm" placeholder="Name" value="{{ old('name') }}" required autofocus>
 				@if ($errors->has('name'))
                     <span class="help-block">
                         <strong>{{ $errors->first('name') }}</strong>
@@ -18,7 +18,7 @@
             </div>
             <div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
                 <select class="form-control input-sm" name="category">
-                    @foreach($addon_categories as $category)
+                    @foreach($user->profileCategoryAddons as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
@@ -29,7 +29,7 @@
                 @endif
             </div>
 			<div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
-				<input type="text" name="price" class="form-control" placeholder="Price" value="{{ old('price') }}" required>
+				<input type="text" name="price" class="form-control input-sm" placeholder="Price" value="{{ old('price') }}" required>
 				@if ($errors->has('price'))
                     <span class="help-block">
                         <strong>{{ $errors->first('price') }}</strong>
@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label>Featured</label>
-                <select name="featured" class="form-control">
+                <select name="featured" class="form-control input-sm">
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                 </select>

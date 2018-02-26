@@ -19,8 +19,8 @@ class CategoryController extends Controller
     public function index($user_id)
     {
         $user = User::find(decrypt($user_id));
-        $categories = Category::all();
-        return view('menu.category.index')->with('user', $user)->with('categories', $categories);
+
+        return view('menu.category.index')->with('user', $user);
     }
 
     /**

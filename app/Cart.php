@@ -17,4 +17,8 @@ class Cart extends Model
     public function cartRating(){
     	return $this->hasOne('App\Rating', 'cart_id');
     }
+
+    public function cartFeedback(){
+    	return $this->hasOne('App\Feedback', 'cart_id');
+    }
 }

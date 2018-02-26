@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Sales;
 use App\Inventory;
+use Carbon\Carbon;
 
 class SalesController extends Controller
 {
@@ -22,6 +23,11 @@ class SalesController extends Controller
     public function index($user_id)
     {
         $user = User::find(decrypt($user_id));
+
+        // $current_day = date_format(Carbon::today(), 'Y-m-d G:i:s');
+
+        // $day = $user->profileSales->where('status', 2)->where('updated_at', '>=', $current_day);
+        // dd($day);
 
         return view('sales.index')->with('user', $user);
     }

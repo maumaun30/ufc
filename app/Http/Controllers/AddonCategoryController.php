@@ -19,8 +19,8 @@ class AddonCategoryController extends Controller
     public function index($user_id)
     {
         $user = User::find(decrypt($user_id));
-        $addon_categories = AddonCategory::all();
-        return view('addon.addon_category.index')->with('user', $user)->with('addon_categories', $addon_categories);
+
+        return view('addon.addon_category.index')->with('user', $user);
     }
 
     /**

@@ -13,7 +13,7 @@
 		<form method="post" action="{{ route('inventory.store', encrypt($user->id)) }}">
 			{{ csrf_field() }}
 			<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-				<input type="text" name="name" class="form-control" placeholder="Name" required autofocus>
+				<input type="text" name="name" class="form-control input-sm" placeholder="Name" required autofocus>
 				@if ($errors->has('name'))
                     <span class="help-block">
                         <strong>{{ $errors->first('name') }}</strong>
@@ -21,7 +21,7 @@
                 @endif
             </div>
 			<div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
-				<input type="text" name="price" class="form-control" placeholder="Unit Price" required>
+				<input type="text" name="price" class="form-control input-sm" placeholder="Unit Price" required>
 				@if ($errors->has('price'))
                     <span class="help-block">
                         <strong>{{ $errors->first('price') }}</strong>
@@ -29,7 +29,7 @@
                 @endif
             </div>
             <div class="form-group{{ $errors->has('qty') ? ' has-error' : '' }}">
-				<input type="text" name="qty" class="form-control" placeholder="Quantity" required>
+				<input type="text" name="qty" class="form-control input-sm" placeholder="Quantity" required>
 				@if ($errors->has('qty'))
                     <span class="help-block">
                         <strong>{{ $errors->first('qty') }}</strong>
@@ -37,7 +37,7 @@
                 @endif
             </div>
             <div class="form-group{{ $errors->has('vom') ? ' has-error' : '' }}">
-            	<select name="vom" class="form-control" required>
+            	<select name="vom" class="form-control input-sm" required>
             		<option disabled selected value="">Select Unit</option>
             		<option value="Kilograms">Kilograms</option>
             		<option value="Grams">Grams</option>
@@ -51,7 +51,7 @@
                 @endif
             </div>
             <div class="form-group{{ $errors->has('date_reorder') ? ' has-error' : '' }}">
-				<input type="text" name="date_reorder" class="form-control" placeholder="Date Reordered" id="datepicker" required>
+				<input type="text" name="date_reorder" class="form-control input-sm" placeholder="Date Reordered" id="datepicker" required>
 				@if ($errors->has('date_reorder'))
                     <span class="help-block">
                         <strong>{{ $errors->first('date_reorder') }}</strong>

@@ -9,7 +9,7 @@
 		<form method="post" action="{{ route('category.store', encrypt($user->id)) }}" enctype="multipart/form-data">
 			{{ csrf_field() }}
 			<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-				<input type="text" name="name" class="form-control" placeholder="Name" value="{{ old('name') }}" required>
+				<input type="text" name="name" class="form-control input-sm" placeholder="Name" value="{{ old('name') }}" required autofocus>
 				@if ($errors->has('name'))
                     <span class="help-block">
                         <strong>{{ $errors->first('name') }}</strong>

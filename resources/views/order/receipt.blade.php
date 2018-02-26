@@ -120,11 +120,13 @@ border-radius: 4px;
 						Total Price: {{ $cart->cartItems->sum('price') }}
 					</div>
 				</div>
+				@if($cart->status == 1)
 				<div class="row">
 					<div class="col-md-12">
 						Your order is now being processed! Please wait for a moment to be served.
 					</div>
 				</div>
+				@endif
 				
 			</div>
 		</div>		
@@ -183,17 +185,27 @@ border-radius: 4px;
 				</div>
 				<div class="row">
 					<div class="col-md-12">
+						@if(isset($cart->cartFeedback))
+							<p>Thank you for sending us your feedback!</p>
+							<p>"{{ $cart->cartFeedback->feedback }}"</p>
+						@else
 						<label>Leave a Feedback</label>
-						<form action="{{ route('feedback.store', Auth::user()->id) }}" method="post">
+						<form action="{{ route('feedback.store', [Auth::user()->id, encrypt($cart->id)]) }}" method="post">
 							{{ csrf_field() }}
 							<input type="hidden" name="cx" value="{{ $cart->cx }}">
-							<div class="form-group">
-								<textarea name="feedback" class="form-control input-sm"></textarea>
-							</div>
+							<div class="form-group{{ $errors->has('feedback') ? ' has-error' : '' }}">
+								<textarea name="feedback" class="form-control">{{ old('feedback') }}</textarea>
+								@if ($errors->has('feedback'))
+				                    <span class="help-block">
+				                        <strong>{{ $errors->first('feedback') }}</strong>
+				                    </span>
+				                @endif
+				            </div>
 							<div class="form-group">
 								<button class="btn btn-default btn-sm pull-right">Submit</button>
 							</div>
 						</form>
+						@endif
 					</div>
 				</div>
 			</div>

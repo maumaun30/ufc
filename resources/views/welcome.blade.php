@@ -9,7 +9,7 @@
 	    height: 100vh;
 	    padding: 0;
 	    margin: 0;
-	    position: absolute;
+	    position: fixed;
 	    z-index: 0;
 	    top: 0;
 	    left: 0;
@@ -54,7 +54,7 @@
 		    <div class="panel-heading">
 		    	<div class="row">
 		    		<div class="col-md-12">
-						Welcome
+						Welcome <a href="{{ route('my_profile.index', [Auth::user()->id, str_slug(Auth::user()->company, '-')]) }}">My Profile</a>
 						<div class="pull-right">
 							<b id="setTableText"></b>
 			    			<button class="btn btn-default btn-sm pull-right" id="setTableBtn" data-toggle="modal" data-target="#setTableModal">Set Table</button>
@@ -115,16 +115,30 @@
 				Recent Feedbacks
 			</div>
 			<div class="panel-body">
-				@foreach(Auth::user()->profileFeedbacks->take(3) as $feedback)
+				@if(Auth::user()->profileFeedbacks->where('accept', 1)->isEmpty())
+				<div class="text-center">
+					No Feedbacks yet.
+				</div>
+				@else
+				@foreach(Auth::user()->profileFeedbacks->where('accept', 1)->take(3) as $feedback)
 				<div class="row mgb5">
 					<div class="col-md-12">
 						<p class="mgb5">"{{ $feedback->feedback }}"</p>
+						<div class="mgb5 text-center">
+							@isset(Auth::user()->profileRatings->where('cart_id', $feedback->cart_id)->first()->score)
+							@for ($i = 0; $i < Auth::user()->profileRatings->where('cart_id', $feedback->cart_id)->first()->score; $i++)
+							    <i class="fa fa-star" style="color: orange;"></i>
+							@endfor
+							@endisset
+						</div>
 						<div class="text-muted text-center">
 							{{ $feedback->cx }}, {{ date_format($feedback->created_at, 'M-d-Y g:i A') }}
 						</div>
 					</div>
 				</div>
+				<hr>
 				@endforeach
+				@endif
 			</div>
 		</div>
 	</div>
@@ -198,7 +212,7 @@
 			    localStorage.setItem("table_number", setTableValue);
 			    // Retrieve
 			    $('#setTableText').html('Table Number: ' + localStorage.getItem("table_number"));
-
+			    $('#tableNumber').val(localStorage.getItem("table_number"));
 			    $('#setTableModal').modal('hide');
 			    $('#setTableBtn').hide();
 			    $('#orderText').hide();

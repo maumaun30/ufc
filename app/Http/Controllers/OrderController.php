@@ -41,13 +41,13 @@ class OrderController extends Controller
         $cart = Cart::find(decrypt($cart_id));
 
         if ($cart->status == 1) {
-            flash('Order is already placed and in process')->primary;
+            flash('Order is already placed and in process');
 
             return redirect()->route('create.cart');
         }
 
         else if($cart->status == 2) {
-            flash('Order is already finished')->warning;
+            flash('Order is already finished');
 
             return redirect()->route('create.cart');
         }
@@ -142,12 +142,12 @@ class OrderController extends Controller
         $count = count($request->name1);
 
         $this->validate($request, [
-            'qty' => 'required|integer'
+            'name1' => 'required',
+            'qty1' => 'required'
         ]);
 
         $index = 0;
         foreach ($request->name1 as $checkbox) {
-            // dd($request->name1);
             $order = new Order;
             $order->cart_id = $cart->id;
             $order->cx = $request->cx1;

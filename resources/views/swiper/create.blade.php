@@ -9,7 +9,7 @@
 		<form method="post" action="{{ route('swiper.store', encrypt($user->id)) }}" enctype="multipart/form-data">
 			{{ csrf_field() }}
 			<div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
-				<input type="text" name="title" class="form-control input-sm" placeholder="Title" value="{{ old('title') }}" required>
+				<input type="text" name="title" class="form-control input-sm" placeholder="Title" value="{{ old('title') }}" required autofocus>
 				@if ($errors->has('title'))
                     <span class="help-block">
                         <strong>{{ $errors->first('title') }}</strong>

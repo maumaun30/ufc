@@ -8,7 +8,7 @@
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-12">
-				@if($addon_categories->isEmpty())
+				@if($user->profileCategoryAddons->isEmpty())
 					No Add-ons Categories created yet. =( <a href="{{ route('addon_category.create', encrypt($user->id)) }}">Click here to ADD</a>
 				@else
 					<div class="row mgb5">
@@ -26,7 +26,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($addon_categories as $addon_category)
+								@foreach($user->profileCategoryAddons as $addon_category)
 									<tr>
 										<td>{{ $addon_category->name }}</td>
 										<td>{{ date_format($addon_category->created_at, 'M-d-Y g:i A') }}</td>

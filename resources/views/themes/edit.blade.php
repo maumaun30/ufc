@@ -8,6 +8,7 @@
 	<div class="panel-body">
 		<form method="post" action="{{ route('themes.update', [encrypt($user->id), $theme->id]) }}" enctype="multipart/form-data">
 			{{ csrf_field() }}
+			{{ method_field('patch') }}
 			<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
 				<input type="text" name="name" class="form-control input-sm" placeholder="Name" value="{{ $theme->name }}" required autofocus>
 				@if ($errors->has('name'))

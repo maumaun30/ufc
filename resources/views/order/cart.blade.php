@@ -18,7 +18,9 @@
 					{{ method_field('patch') }}
 					<a href="{{ route('order.index', encrypt($cart->id)) }}" class="btn btn-default btn-sm"><i class="fa fa-chevron-left"></i> Menu</a>
 					@if(!$cart->cartItems->isEmpty())
-					<button type="submit" class="btn btn-success btn-sm pull-right"><i class="fa fa-check"></i> Place Order</button>
+						@if($cart->status == 0)
+						<button type="submit" class="btn btn-success btn-sm pull-right"><i class="fa fa-check"></i> Place Order</button>
+						@endif
 					@endif
 				</form>
 			</div>

@@ -20,30 +20,30 @@
     <script src="https://use.fontawesome.com/45876f6f9c.js"></script>
 
     @if(Auth::user())
-        @if(Auth::user()->profileThemes->isEmpty())
-        @else
         <style type="text/css">
             html{
                 position: relative;
                 min-height: 100% !important;
             }
+            @if(!Auth::user()->profileThemes->where('selected', 1)->isEmpty())
             body{
-                background-image: url({{ asset($selected_theme->bg_image)  }});
-                background-color: {{ $selected_theme->bg_color }} !important;
+                background-image: url("{{ asset($selected_theme->bg_image)  }}");
                 background-repeat: no-repeat, repeat;
                 background-size: cover;
                 background-attachment: fixed;
                 background-position: center;
                 height: 100%;
+                background-color: {{ $selected_theme->bg_color }} !important;
             }
+
             .btn{
                 font-size: {{ $selected_theme->ft_size }}px !important;
             }
 
             .panel{
+                background-color: rgba(255,255,255,0) !important;
                 font-family: {{ $selected_theme->ft_family }} !important;
                 color: {{ $selected_theme->ft_color }} !important;
-                background-color: rgba(255,255,255,0) !important;
             }
 
             .panel-body{
@@ -63,6 +63,7 @@
             .navbar-default{
                 background-color: rgba({{ $selected_theme->pnl_color }}, {{ $selected_theme->pnl_opacity }}) !important;
             }
+            @endif
 
             .navbar-header {
                 float: left;
@@ -72,9 +73,10 @@
             }
             .navbar-brand {
                 float:none;
+                @if(!Auth::user()->profileThemes->where('selected', 1)->isEmpty())
                 color: {{ $selected_theme->ft_color }} !important;
+                @endif
             }
-
             .content-wrapper {
                 width: 100%;
                 height: 100vh;
@@ -87,7 +89,6 @@
                 bottom: 0;
             }
         </style>
-        @endif
     @endif
 
     @yield('styles')

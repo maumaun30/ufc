@@ -13,6 +13,9 @@
 		</div>
 	</div>
 	<div class="panel-body">
+		@if($user->profileRatings->isEmpty())
+		<p>No Ratings yet.</p>
+		@else
 		<div class="table-responsive">
 			<table class="table table-hover table-striped table-bordered">
 				<thead>
@@ -39,6 +42,7 @@
 			</table>
 		</div>
 		{{ $ratings->links() }}
+		@endif
 	</div>
 </div>
 @stop

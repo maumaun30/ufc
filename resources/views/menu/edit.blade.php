@@ -10,7 +10,7 @@
 			{{ csrf_field() }}
 			{{ method_field('patch') }}
 			<div class="form-group{{ $errors->has('code') ? ' has-error' : '' }}">
-				<input type="text" name="code" class="form-control" placeholder="Code" value="{{ $menu->code }}" required autofocus>
+				<input type="text" name="code" class="form-control input-sm" placeholder="Code" value="{{ $menu->code }}" required autofocus>
 				@if ($errors->has('code'))
                     <span class="help-block">
                         <strong>{{ $errors->first('code') }}</strong>
@@ -19,7 +19,8 @@
             </div>
             <div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
                 <select class="form-control input-sm" name="category">
-                    @foreach($categories as $category)
+                        <option value="{{ $menu->categoryMenu->id }}">{{ $menu->categoryMenu->name }}</option>
+                    @foreach($user->profileCategoryMenus as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
@@ -30,7 +31,7 @@
                 @endif
             </div>
 			<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-				<input type="text" name="name" class="form-control" placeholder="Name" value="{{ $menu->name }}" required>
+				<input type="text" name="name" class="form-control input-sm" placeholder="Name" value="{{ $menu->name }}" required>
 				@if ($errors->has('name'))
                     <span class="help-block">
                         <strong>{{ $errors->first('name') }}</strong>
@@ -38,7 +39,7 @@
                 @endif
             </div>
 			<div class="form-group{{ $errors->has('price') ? ' has-error' : '' }}">
-				<input type="text" name="price" class="form-control" placeholder="Price" value="{{ $menu->price }}" required>
+				<input type="text" name="price" class="form-control input-sm" placeholder="Price" value="{{ $menu->price }}" required>
 				@if ($errors->has('price'))
                     <span class="help-block">
                         <strong>{{ $errors->first('price') }}</strong>
@@ -46,7 +47,7 @@
                 @endif
             </div>
 			<div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
-				<textarea name="description" class="form-control" placeholder="Description" required>{{ $menu->description }}</textarea>
+				<textarea name="description" class="form-control input-sm" placeholder="Description" required>{{ $menu->description }}</textarea>
 				@if ($errors->has('description'))
                     <span class="help-block">
                         <strong>{{ $errors->first('description') }}</strong>

@@ -6,6 +6,9 @@
 		Orders in Queue
 	</div>
 	<div class="panel-body">
+		@if($user->cartQueue->where('status', '!=', 0)->isEmpty())
+			No orders yet.
+		@else
 		@foreach($user->cartQueue->where('status', '!=', 0) as $cart)
 			<div class="panel-group" id="accordion{{ $cart->id }}">
 				<div class="panel panel-default">
@@ -79,6 +82,7 @@
 				</div>
 			</div>
 		@endforeach
+		@endif
 	</div>
 </div>
 

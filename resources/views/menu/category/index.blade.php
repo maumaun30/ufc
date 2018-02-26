@@ -8,7 +8,7 @@
 	<div class="panel-body">
 		<div class="row">
 			<div class="col-md-12">
-				@if($categories->isEmpty())
+				@if($user->profileCategoryMenus->isEmpty())
 					No Categories created yet. =( <a href="{{ route('category.create', encrypt($user->id)) }}">Click here to ADD</a>
 				@else
 					<div class="row mgb5">
@@ -26,7 +26,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach($categories as $category)
+								@foreach($user->profileCategoryMenus as $category)
 									<tr>
 										<td>{{ $category->name }}</td>
 										<td>{{ date_format($category->created_at, 'M-d-Y g:i A') }}</td>

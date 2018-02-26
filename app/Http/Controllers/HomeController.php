@@ -21,7 +21,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => 'myProfile']);
     }
 
     public function welcome(){
@@ -59,7 +59,7 @@ class HomeController extends Controller
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'required|max:255|email|unique:users,email,' . $user->id,
-            'company' => 'required|max:255',
+            'company' => 'required|max:255|unique:users,company,' . $user->id,
             'address' => 'required',
         ]);
 
@@ -195,9 +195,10 @@ class HomeController extends Controller
         return view('auth.feedback')->with('user', $user);
     }
 
-    public function storeFeedback(Request $request, $user_id)
+    public function storeFeedback(Request $request, $user_id, $id)
     {
         $user = User::find($user_id);
+        $cart = Cart::find(decrypt($id));
 
         $this->validate($request, [
             'feedback' => 'required'
@@ -205,13 +206,37 @@ class HomeController extends Controller
 
         $feedback = new Feedback;
         $feedback->user_id = $user->id;
+        $feedback->cart_id = $cart->id;
         $feedback->cx = $request->cx;
         $feedback->feedback = $request->feedback;
+        $feedback->accept = 0;
         $feedback->save();
 
         flash('Successfully submitted feedback!');
 
         return back();
+    }
+
+    public function acceptFeedback($user_id, $id)
+    {
+        $user = User::find(decrypt($user_id));
+        $feedback = Feedback::find($id);
+
+        $feedback->accept = 1;
+        $feedback->update();
+
+        return redirect()->route('feedback.index', encrypt($user->id));
+    }
+
+    public function dontacceptFeedback($user_id, $id)
+    {
+        $user = User::find(decrypt($user_id));
+        $feedback = Feedback::find($id);
+
+        $feedback->accept = 0;
+        $feedback->update();
+
+        return redirect()->route('feedback.index', encrypt($user->id));
     }
 
     public function indexRating($user_id)
@@ -246,4 +271,6 @@ class HomeController extends Controller
 
         return view('order.print')->with('user', $user)->with('cart', $cart);
     }
+
+    
 }

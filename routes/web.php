@@ -71,8 +71,13 @@ Route::resource('{user_id}/sales', 'SalesController');
 
 // Feedback
 Route::get('{user_id}/feedback/index', 'HomeController@indexFeedback')->name('feedback.index');
-Route::post('{user_id}/feedback/store', 'HomeController@storeFeedback')->name('feedback.store');
+Route::post('{user_id}/{id}/feedback/store', 'HomeController@storeFeedback')->name('feedback.store');
+Route::patch('{user_id}/{id}/feedback/accept', 'HomeController@acceptFeedback')->name('feedback.accept');
+Route::patch('{user_id}/{id}/feedback/dontaccept', 'HomeController@dontacceptFeedback')->name('feedback.dontaccept');
 
 // Rating
 Route::get('{user_id}/rating/index', 'HomeController@indexRating')->name('rating.index');
 Route::post('{user_id}/{id}/rating/store', 'HomeController@storeRating')->name('rating.store');
+
+// My Profile
+Route::get('{id}-{company}', 'MyProfileController@myProfile')->name('my_profile.index');

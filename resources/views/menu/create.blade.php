@@ -18,7 +18,7 @@
             </div>
             <div class="form-group{{ $errors->has('category') ? ' has-error' : '' }}">
                 <select class="form-control input-sm" name="category">
-                    @foreach($categories as $category)
+                    @foreach($user->profileCategoryMenus as $category)
                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
                 </select>
