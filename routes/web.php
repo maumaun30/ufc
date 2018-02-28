@@ -67,6 +67,8 @@ Route::patch('{user_id}/addon/{id}/change_featured', 'AddonController@changeFeat
 Route::resource('{user_id}/inventory', 'InventoryController');
 
 // Sales
+Route::get('{user_id}/sales/daily', 'SalesController@indexDaily')->name('sales.index.daily');
+Route::get('{user_id}/sales/monthly/range', 'SalesController@indexMonthlyRange')->name('sales.index.monthly.range');
 Route::resource('{user_id}/sales', 'SalesController');
 
 // Feedback

@@ -24,12 +24,46 @@ class SalesController extends Controller
     {
         $user = User::find(decrypt($user_id));
 
-        // $current_day = date_format(Carbon::today(), 'Y-m-d G:i:s');
+        $sales = $user->profileSales()->paginate(10);
 
-        // $day = $user->profileSales->where('status', 2)->where('updated_at', '>=', $current_day);
-        // dd($day);
+        return view('sales.index')->with('user', $user)->with('sales', $sales);
+    }
 
-        return view('sales.index')->with('user', $user);
+    public function indexDaily($user_id)
+    {
+        $user = User::find(decrypt($user_id));
+
+        $start_day = date('Y-m-d', strtotime('today')) . ' 00:00:00';
+        $end_day = date('Y-m-d', strtotime('today')) . ' 23:59:59';
+
+        $today = $user->profileSales()->where('created_at', '>=', $start_day)->where('created_at', '<=', $end_day)->paginate(10);
+
+        return view('sales.daily')->with('user', $user)->with('today', $today);
+    }
+
+    public function indexMonthlyRange(Request $request, $user_id)
+    {
+        $user = User::find(decrypt($user_id));
+
+        $query_date_start = $request->year . $request->start_month . ' 00:00:00';
+
+        $query_date_end = $request->year . $request->end_month . ' 23:59:59';
+
+        if ($query_date_start > $query_date_end) {
+            flash('Date range not valid!');
+
+            return back();
+        }
+
+        // First day of the month.
+        $start_month = date('Y-m-01', strtotime($query_date_start));
+
+        // Last day of the month.
+        $end_month = date('Y-m-t', strtotime($query_date_end));
+
+        $sales = $user->profileSales()->where('created_at', '>=', $start_month)->where('created_at', '<=', $end_month)->paginate(10);
+
+        return view('sales.index')->with('user', $user)->with('sales', $sales);
     }
 
     /**

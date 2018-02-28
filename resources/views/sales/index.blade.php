@@ -6,27 +6,75 @@
 		Sales
 	</div>
 	<div class="panel-body">
-		<div class="row">
+		<div class="row mgb5">
 			<div class="col-md-12">
-				<canvas id="myChart"></canvas>
+				<a href="{{ route('sales.index.daily', encrypt($user->id)) }}" class="btn btn-default btn-sm">Daily</a>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row mgb5">
 			<div class="col-md-12">
-				@if($user->profileSales->isEmpty())
-					No Sales created yet. =(
-				@else
-				<div class="row mgb5">
-					<div class="col-md-12">
-						<form action="" method="">
-							{{ csrf_field() }}
-							<button class="btn btn-default btn-sm">Daily</button>
-							<select class="btn btn-default btn-sm">
-								<option value="">Week 1</option>
-							</select>
-						</form>
+				<form action="{{ route('sales.index.monthly.range', encrypt($user->id)) }}" method="get" class="form-inline">
+					{{ csrf_field() }}
+					<div class="form-group">
+						<label>Year:</label>
+						<select class="form-control input-sm" name="year" required>
+							<option disabled selected>Year</option>
+							<option value="2018">2018</option>
+							<option value="2019">2019</option>
+							<option value="2020">2020</option>
+							<option value="2021">2021</option>
+						</select>
 					</div>
-				</div>
+					<div class="form-group">
+						<label>From:</label>
+						<select class="form-control input-sm" name="start_month" required>
+							<option disabled selected>Month</option>
+							<option value="-01-01">January</option>
+							<option value="-02-01">February</option>
+							<option value="-03-01">March</option>
+							<option value="-04-01">April</option>
+							<option value="-05-01">May</option>
+							<option value="-06-01">June</option>
+							<option value="-07-01">July</option>
+							<option value="-08-01">August</option>
+							<option value="-09-01">September</option>
+							<option value="-10-01">October</option>
+							<option value="-11-01">November</option>
+							<option value="-12-01">December</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>To:</label>								
+						<select class="form-control input-sm" name="end_month" required>
+							<option disabled selected>Month</option>
+							<option value="-01-31">January</option>
+							<option value="-02-29">February</option>
+							<option value="-03-31">March</option>
+							<option value="-04-30">April</option>
+							<option value="-05-31">May</option>
+							<option value="-06-30">June</option>
+							<option value="-07-31">July</option>
+							<option value="-08-31">August</option>
+							<option value="-09-30">September</option>
+							<option value="-10-31">October</option>
+							<option value="-11-30">November</option>
+							<option value="-12-31">December</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-default btn-sm">Search</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row mgb5">
+			<div class="col-md-6">
+				<canvas id="myChart"></canvas>
+			</div>
+			<div class="col-md-6">
+				@if($sales->isEmpty())
+					No Sales created yet for this month. =(
+				@else
 				<div class="row">
 					<div class="col-md-12">
 						<div class="table-responsive">
@@ -41,7 +89,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($sales = $user->profileSales()->paginate(10) as $sale)
+									@foreach($sales as $sale)
 										<tr>
 											<td>{{ $sale->cx }}</td>
 											<td>
@@ -118,10 +166,10 @@ var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ],
         datasets: [{
             label: 'Income',
-            data: [12, 19, 3, 5, 2, 3],
+            data: [12, 19, 3, 5, 2, 3, 4, 5, 6, 1, 10, 12],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)'
             ],

@@ -19,6 +19,19 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <script src="https://use.fontawesome.com/45876f6f9c.js"></script>
 
+    <style type="text/css">
+        .tab-toggle {
+            background-color: #fff;
+            border-color: #ddd;
+            margin: 0;
+            padding: 0 5px;
+        }
+
+        .tab-toggle:hover {
+            background-color: #ddd;
+        }
+    </style>
+
     @yield('styles')
 </head>
 <body>
@@ -92,20 +105,28 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Tabs
+                            <!-- Collapsed Hamburger -->
+                            <button type="button" class="navbar-toggle tab-toggle collapsed" data-toggle="collapse" data-target="#app-tab-collapse" aria-expanded="false">
+                                <span class="sr-only">Toggle Navigation</span>
+                                <span class="caret"></span>
+                            </button>
                         </div>
-                        <div class="panel-body">
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href="{{ route('dashboard') }}"><i class="fa fa-tachometer"></i> Dashboard</a></li>
-                                <li><a href="{{ route('current.orders', encrypt(Auth::user()->id)) }}"><i class="fa fa-book"></i> Orders</a></li>
-                                <li><a href="{{ route('menu.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-cutlery"></i> Menus</a></li>
-                                <li><a href="{{ route('addon.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-beer"></i> Add-ons</a></li>
-                                <li><a href="{{ route('inventory.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-barcode"></i> Inventory</a></li>
-                                <li><a href="{{ route('sales.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-money"></i> Sales</a></li>
-                                <li><a href="{{ route('rating.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-star"></i> Ratings</a></li>
-                                <li><a href="{{ route('feedback.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-book"></i> Feedbacks</a></li>
-                                <li><a href="{{ route('themes.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-paint-brush"></i> Themes</a></li>
-                                <li><a href="{{ route('swiper.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-image"></i> Swiper</a></li>
-                            </ul>
+                        
+                        <div class="collapse navbar-collapse" id="app-tab-collapse">
+                            <div class="panel-body">
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li><a href="{{ route('dashboard') }}"><i class="fa fa-tachometer"></i> Dashboard</a></li>
+                                    <li><a href="{{ route('current.orders', encrypt(Auth::user()->id)) }}"><i class="fa fa-book"></i> Orders</a></li>
+                                    <li><a href="{{ route('menu.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-cutlery"></i> Menus</a></li>
+                                    <li><a href="{{ route('addon.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-beer"></i> Add-ons</a></li>
+                                    <li><a href="{{ route('inventory.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-barcode"></i> Inventory</a></li>
+                                    <li><a href="{{ route('sales.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-money"></i> Sales</a></li>
+                                    <li><a href="{{ route('rating.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-star"></i> Ratings</a></li>
+                                    <li><a href="{{ route('feedback.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-book"></i> Feedbacks</a></li>
+                                    <li><a href="{{ route('themes.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-paint-brush"></i> Themes</a></li>
+                                    <li><a href="{{ route('swiper.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-image"></i> Swiper</a></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

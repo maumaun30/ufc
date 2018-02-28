@@ -3,25 +3,24 @@
 @section('content')
 <div class="panel panel-default">
 	<div class="panel-heading">
-		Sales
+		Sales (Daily)
 	</div>
 	<div class="panel-body">
+		<!-- <div class="row">
+			<div class="col-md-12">
+				<canvas id="myChart"></canvas>
+			</div>
+		</div> -->
 		<div class="row">
 			<div class="col-md-12">
-				@if($user->profileSales->isEmpty())
-					No Sales created yet. =(
-				@else
 				<div class="row mgb5">
 					<div class="col-md-12">
-						<form action="" method="">
-							{{ csrf_field() }}
-							<button class="btn btn-default btn-sm">Daily</button>
-							<select class="btn btn-default btn-sm">
-								<option value="">Week 1</option>
-							</select>
-						</form>
+						<a href="{{ route('sales.index', encrypt($user->id)) }}" class="btn btn-default btn-sm">All</a>
 					</div>
 				</div>
+				@if($today->isEmpty())
+					No Sales created yet for today. =(
+				@else
 				<div class="row">
 					<div class="col-md-12">
 						<div class="table-responsive">
@@ -36,7 +35,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									@foreach($sales = $user->profileSales()->paginate(10) as $sale)
+									@foreach($today as $sale)
 										<tr>
 											<td>{{ $sale->cx }}</td>
 											<td>
@@ -59,7 +58,7 @@
 								</tbody>
 							</table>
 						</div>
-						{{ $sales->links() }}						
+						{{ $today->links() }}						
 					</div>
 				</div>
 				@endif
@@ -103,5 +102,38 @@
 		$('.sale-name').text(saleName);
 		$('.sale-url').attr('action', saleUrl);
 	});
+</script>
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script> -->
+
+<script>
+// var ctx = document.getElementById("myChart").getContext('2d');
+// var myChart = new Chart(ctx, {
+//     type: 'line',
+//     data: {
+//         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+//         datasets: [{
+//             label: 'Income',
+//             data: [12, 19, 3, 5, 2, 3],
+//             backgroundColor: [
+//                 'rgba(255, 99, 132, 0.2)'
+//             ],
+//             borderColor: [
+//                 'rgba(255,99,132,1)'
+//             ],
+//             borderWidth: 2
+//         }]
+//     },
+//     options: {
+//         scales: {
+//             yAxes: [{
+//                 ticks: {
+//                     beginAtZero:true
+//                 }
+//             }]
+//         }
+//     }
+// });
 </script>
 @stop

@@ -17,6 +17,8 @@ class CreateSalesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('weeksales_id')->unsigned();
+            $table->foreign('weeksales_id')->references('id')->on('weeksales')->onDelete('cascade');
             $table->string('cx');
             $table->longText('items');
             $table->integer('price');
