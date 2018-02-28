@@ -6,7 +6,63 @@
 		Inventory
 	</div>
 	<div class="panel-body">
-		@if($user->profileInvs->isEmpty())
+		<div class="row mgb5">
+			<div class="col-md-12">
+				<form action="{{ route('inventory.index.monthly.range', encrypt($user->id)) }}" method="get" class="form-inline">
+					{{ csrf_field() }}
+					<div class="form-group">
+						<label>Year:</label>
+						<select class="form-control input-sm" name="year" required>
+							<option disabled selected>Year</option>
+							<option value="2018">2018</option>
+							<option value="2019">2019</option>
+							<option value="2020">2020</option>
+							<option value="2021">2021</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>From:</label>
+						<select class="form-control input-sm" name="start_month" required>
+							<option disabled selected>Month</option>
+							<option value="Jan-01-">January</option>
+							<option value="Feb-01-">February</option>
+							<option value="Mar-01-">March</option>
+							<option value="Apr-01-">April</option>
+							<option value="May-01-">May</option>
+							<option value="Jun-01-">June</option>
+							<option value="Jul-01-">July</option>
+							<option value="Aug-01-">August</option>
+							<option value="Sep-01-">September</option>
+							<option value="Oct-01-">October</option>
+							<option value="Nov-01-">November</option>
+							<option value="Dec-01-">December</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label>To:</label>								
+						<select class="form-control input-sm" name="end_month" required>
+							<option disabled selected>Month</option>
+							<option value="Jan-31-">January</option>
+							<option value="Feb-28-">February</option>
+							<option value="Mar-31-">March</option>
+							<option value="Apr-30-">April</option>
+							<option value="May-31-">May</option>
+							<option value="Jun-30-">June</option>
+							<option value="Jul-31-">July</option>
+							<option value="Aug-31-">August</option>
+							<option value="Sep-30-">September</option>
+							<option value="Oct-31-">October</option>
+							<option value="Nov-30-">November</option>
+							<option value="Dec-31-">December</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<button type="submit" class="btn btn-default btn-sm">Search</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		@if($inventories->isEmpty())
 			No Items on the Inventory is created yet. =( <a href="{{ route('inventory.create', encrypt($user->id)) }}">Click here to ADD</a>
 		@else
 		<div class="row mgb5">
@@ -30,7 +86,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($inventories = $user->profileInvs()->paginate(10) as $inventory)
+					@foreach($inventories as $inventory)
 						<tr>
 							<td>IN{{ $inventory->id }}</td>
 							<td>{{ $inventory->name }}</td>

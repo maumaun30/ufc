@@ -54,7 +54,7 @@
 		    <div class="panel-heading">
 		    	<div class="row">
 		    		<div class="col-md-12">
-						Welcome <a href="{{ route('my_profile.index', [Auth::user()->id, str_slug(Auth::user()->company, '-')]) }}">My Profile</a>
+						Welcome
 						<div class="pull-right">
 							<b id="setTableText"></b>
 			    			<button class="btn btn-default btn-sm pull-right" id="setTableBtn" data-toggle="modal" data-target="#setTableModal">Set Table</button>
@@ -152,6 +152,7 @@
 			</div>
 			<div class="panel-body">
 				<ul class="list-unstyled">
+					<li><a href="{{ route('my_profile.index', [Auth::user()->id, str_slug(Auth::user()->company, '-')]) }}"><i class="fa fa-user"></i> {{ Auth::user()->company }} Profile</a></li>
                     <li><i class="fa fa-address-book"></i> {{ Auth::user()->address }}</li>
                     <li><i class="fa fa-envelope"></i> {{ Auth::user()->email }}</li>
                     <li><i class="fa fa-phone"></i> {{ Auth::user()->contact_number }}</li>

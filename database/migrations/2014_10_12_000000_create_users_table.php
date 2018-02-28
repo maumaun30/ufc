@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('company');            
             $table->longText('address');
             $table->string('contact_number');
+            $table->longText('about')->nullable();
             $table->string('logo')->nullable()->default('img/uploads/logo/default.jpg');            
             $table->rememberToken();
             $table->timestamps();

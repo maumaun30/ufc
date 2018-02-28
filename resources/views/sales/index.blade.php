@@ -3,14 +3,14 @@
 @section('content')
 <div class="panel panel-default">
 	<div class="panel-heading">
-		Sales
-	</div>
-	<div class="panel-body">
-		<div class="row mgb5">
+		<div class="row">
 			<div class="col-md-12">
-				<a href="{{ route('sales.index.daily', encrypt($user->id)) }}" class="btn btn-default btn-sm">Daily</a>
+				Sales
+				<a href="{{ route('sales.index.daily', encrypt($user->id)) }}" class="btn btn-default btn-sm pull-right">Daily</a>
 			</div>
 		</div>
+	</div>
+	<div class="panel-body">
 		<div class="row mgb5">
 			<div class="col-md-12">
 				<form action="{{ route('sales.index.monthly.range', encrypt($user->id)) }}" method="get" class="form-inline">

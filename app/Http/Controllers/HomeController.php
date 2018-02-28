@@ -61,12 +61,14 @@ class HomeController extends Controller
             'email' => 'required|max:255|email|unique:users,email,' . $user->id,
             'company' => 'required|max:255|unique:users,company,' . $user->id,
             'address' => 'required',
+            'about' => 'required',
         ]);
 
         $user->name = $request->name;
         $user->email = $request->email;
         $user->company = $request->company;
         $user->address = $request->address;
+        $user->about = $request->about;
         $user->update();
 
         flash('Successfully updated profile!');

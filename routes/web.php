@@ -64,6 +64,7 @@ Route::resource('{user_id}/addon', 'AddonController');
 Route::patch('{user_id}/addon/{id}/change_featured', 'AddonController@changeFeatured')->name('change.featured.addon');
 
 // inventory
+Route::get('{user_id}/inventory/monthly/range', 'InventoryController@indexMonthlyRange')->name('inventory.index.monthly.range');
 Route::resource('{user_id}/inventory', 'InventoryController');
 
 // Sales

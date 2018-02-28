@@ -52,6 +52,15 @@
                         @endif
                     </div>
 
+                    <div class="form-group{{ $errors->has('about') ? ' has-error' : '' }}">
+                        <textarea name="about" class="form-control" placeholder="About" required>{{ $user->about }}</textarea>
+                        @if ($errors->has('about'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('about') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+
                     <div class="form-group">
                         <button type="submit" class="btn btn-default btn-sm">Update</button>
                     </div>

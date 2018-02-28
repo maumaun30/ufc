@@ -4,7 +4,11 @@
 <meta property="og:url"           content="{{ Request::url() }}" />
 <meta property="og:type"          content="website" />
 <meta property="og:title"         content="{{ $user->company }}" />
+@if(isset($user->about))
+<meta property="og:description"   content="{{ $user->about }}" />
+@else
 <meta property="og:description"   content="{{ $user->address }}" />
+@endif
 <meta property="og:image"         content="{{ asset($user->logo) }}" />
 <style type="text/css">
 	.cover-container {
@@ -279,6 +283,11 @@
                     <div class="tab-pane fade" id="tab2default">
                     	<div class="row">
                     		<div class="col-md-12">
+                    			@isset($user->about)
+                    			<div class="form-group">
+                    				<label>About:</label> <p>{{ $user->about }}</p>
+                    			</div>
+                    			@endisset
                     			<div class="form-group">
                     				<label>Address:</label> <p>{{ $user->address }}</p>
                     			</div>

@@ -7,11 +7,12 @@
 @section('content')
 <div class="panel panel-default">
 	<div class="panel-heading">
-		Add Item
+		Update Item
 	</div>
 	<div class="panel-body">
 		<form method="post" action="{{ route('inventory.update', [encrypt($user->id), $inventory->id]) }}">
 			{{ csrf_field() }}
+            {{ method_field('patch') }}
 			<div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
 				<input type="text" name="name" class="form-control input-sm" placeholder="Name" required autofocus value="{{ $inventory->name }}">
                 @if ($errors->has('name'))
@@ -58,7 +59,7 @@
                     </span>
                 @endif
             </div>
-			<button type="submit" class="btn btn-default btn-sm">Add</button>
+			<button type="submit" class="btn btn-default btn-sm">Update</button>
 		</form>
 	</div>
 </div>

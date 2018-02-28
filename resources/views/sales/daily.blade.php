@@ -3,7 +3,12 @@
 @section('content')
 <div class="panel panel-default">
 	<div class="panel-heading">
-		Sales (Daily)
+		<div class="row">
+			<div class="col-md-12">
+				Sales (Daily)
+				<a href="{{ route('sales.index', encrypt($user->id)) }}" class="btn btn-default btn-sm pull-right">All</a>
+			</div>
+		</div>
 	</div>
 	<div class="panel-body">
 		<!-- <div class="row">
@@ -13,11 +18,6 @@
 		</div> -->
 		<div class="row">
 			<div class="col-md-12">
-				<div class="row mgb5">
-					<div class="col-md-12">
-						<a href="{{ route('sales.index', encrypt($user->id)) }}" class="btn btn-default btn-sm">All</a>
-					</div>
-				</div>
 				@if($today->isEmpty())
 					No Sales created yet for today. =(
 				@else

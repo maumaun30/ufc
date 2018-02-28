@@ -21,7 +21,36 @@ class InventoryController extends Controller
     public function index($user_id)
     {
         $user = User::find(decrypt($user_id));
-        $inventories = Inventory::all();
+        $inventories = $user->profileInvs()->paginate(10);
+
+        return view('inventory.index')->with('user', $user)->with('inventories', $inventories);
+    }
+
+    public function indexMonthlyRange(Request $request, $user_id)
+    {
+        $user = User::find(decrypt($user_id));
+
+        $query_date_start = $request->start_month . $request->year;
+
+        $query_date_end = $request->end_month . $request->year;
+
+        // dd($query_date_start, $query_date_end);
+
+        if (strtotime($query_date_start) > strtotime($query_date_end)) {
+            flash('Date range not valid!');
+
+            return back();
+        }
+
+        // First day of the month.
+        $start_month = date('M-01-Y', strtotime($query_date_start));
+
+        // Last day of the month.
+        $end_month = date('M-t-Y', strtotime($query_date_end));
+
+        // dd($start_month, $end_month);
+
+        $inventories = $user->profileInvs()->whereBetween('date_reorder', [$start_month, $end_month])->paginate(10);
 
         return view('inventory.index')->with('user', $user)->with('inventories', $inventories);
     }
@@ -61,7 +90,7 @@ class InventoryController extends Controller
         $inventory->price = $request->price;
         $inventory->qty = $request->qty;
         $inventory->vom = $request->vom;
-        $inventory->date_reorder = $request->date_reorder;
+        $inventory->date_reorder = date('M-d-Y', strtotime($request->date_reorder));
         $inventory->value = $request->qty * $request->price;
         $inventory->save();
 
@@ -120,7 +149,7 @@ class InventoryController extends Controller
         $inventory->price = $request->price;
         $inventory->qty = $request->qty;
         $inventory->vom = $request->vom;
-        $inventory->date_reorder = $request->date_reorder;
+        $inventory->date_reorder = date('M-d-Y', strtotime($request->date_reorder));
         $inventory->value = $request->qty * $request->price;
         $inventory->update();
 
@@ -142,6 +171,6 @@ class InventoryController extends Controller
 
         flash('Successfully deleted inventory!');
 
-        return redirect()->route('inventory.show', encrypt($user->id));
+        return redirect()->route('inventory.index', encrypt($user->id));
     }
 }
