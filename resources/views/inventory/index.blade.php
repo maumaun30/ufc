@@ -24,36 +24,36 @@
 						<label>From:</label>
 						<select class="form-control input-sm" name="start_month" required>
 							<option disabled selected>Month</option>
-							<option value="Jan-01-">January</option>
-							<option value="Feb-01-">February</option>
-							<option value="Mar-01-">March</option>
-							<option value="Apr-01-">April</option>
-							<option value="May-01-">May</option>
-							<option value="Jun-01-">June</option>
-							<option value="Jul-01-">July</option>
-							<option value="Aug-01-">August</option>
-							<option value="Sep-01-">September</option>
-							<option value="Oct-01-">October</option>
-							<option value="Nov-01-">November</option>
-							<option value="Dec-01-">December</option>
+							<option value="-01-01">January</option>
+							<option value="-02-01">February</option>
+							<option value="-03-01">March</option>
+							<option value="-04-01">April</option>
+							<option value="-05-01">May</option>
+							<option value="-06-01">June</option>
+							<option value="-07-01">July</option>
+							<option value="-08-01">August</option>
+							<option value="-09-01">September</option>
+							<option value="-10-01">October</option>
+							<option value="-11-01">November</option>
+							<option value="-12-01">December</option>
 						</select>
 					</div>
 					<div class="form-group">
 						<label>To:</label>								
 						<select class="form-control input-sm" name="end_month" required>
 							<option disabled selected>Month</option>
-							<option value="Jan-31-">January</option>
-							<option value="Feb-28-">February</option>
-							<option value="Mar-31-">March</option>
-							<option value="Apr-30-">April</option>
-							<option value="May-31-">May</option>
-							<option value="Jun-30-">June</option>
-							<option value="Jul-31-">July</option>
-							<option value="Aug-31-">August</option>
-							<option value="Sep-30-">September</option>
-							<option value="Oct-31-">October</option>
-							<option value="Nov-30-">November</option>
-							<option value="Dec-31-">December</option>
+							<option value="-01-31">January</option>
+							<option value="-02-29">February</option>
+							<option value="-03-31">March</option>
+							<option value="-04-30">April</option>
+							<option value="-05-31">May</option>
+							<option value="-06-30">June</option>
+							<option value="-07-31">July</option>
+							<option value="-08-31">August</option>
+							<option value="-09-30">September</option>
+							<option value="-10-31">October</option>
+							<option value="-11-30">November</option>
+							<option value="-12-31">December</option>
 						</select>
 					</div>
 					<div class="form-group">

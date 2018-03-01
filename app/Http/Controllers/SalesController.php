@@ -26,7 +26,37 @@ class SalesController extends Controller
 
         $sales = $user->profileSales()->paginate(10);
 
-        return view('sales.index')->with('user', $user)->with('sales', $sales);
+        $months = ''; 
+        for ($i=1; $i < 13; $i++){
+           $months .= date('F', mktime(0, 0, 0, $i, 1)) . ', ';
+        }
+
+        // dd($months);
+
+        $array_months = explode(', ', $months);
+
+        // dd($array_months);
+
+        foreach ($array_months as $array_month) {
+            $sales_price = $user->profileSales->where('created_at', '<=', date('F', strtotime($array_month)) . ' 00:00:00')->sum('price');
+            echo $sales_price;
+        }
+
+        // dd($sales_price);
+
+        $inv_value = $user->profileInvs->where('date_reorder', '<=', date('Y-m-d', strtotime('today')))->sum('value');
+
+        dd($sales_price, $inv_value);
+
+        $array_income = '';
+
+        foreach ($incomes as $income) {
+            $array_income .= $income->value . ',';
+        }
+
+        $array_incomes = rtrim($array_income, ', ');
+
+        return view('sales.index')->with('user', $user)->with('sales', $sales)->with('array_incomes', $array_incomes);
     }
 
     public function indexDaily($user_id)
@@ -61,7 +91,7 @@ class SalesController extends Controller
         // Last day of the month.
         $end_month = date('Y-m-t', strtotime($query_date_end));
 
-        $sales = $user->profileSales()->where('created_at', '>=', $start_month)->where('created_at', '<=', $end_month)->paginate(10);
+        $sales = $user->profileSales()->whereBetween('created_at', [$start_month, $end_month])->paginate(10);
 
         return view('sales.index')->with('user', $user)->with('sales', $sales);
     }

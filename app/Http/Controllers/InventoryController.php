@@ -30,9 +30,9 @@ class InventoryController extends Controller
     {
         $user = User::find(decrypt($user_id));
 
-        $query_date_start = $request->start_month . $request->year;
+        $query_date_start =  $request->year . $request->start_month;
 
-        $query_date_end = $request->end_month . $request->year;
+        $query_date_end =  $request->year . $request->end_month;
 
         // dd($query_date_start, $query_date_end);
 
@@ -43,10 +43,10 @@ class InventoryController extends Controller
         }
 
         // First day of the month.
-        $start_month = date('M-01-Y', strtotime($query_date_start));
+        $start_month = date('Y-m-01', strtotime($query_date_start));
 
         // Last day of the month.
-        $end_month = date('M-t-Y', strtotime($query_date_end));
+        $end_month = date('Y-m-t', strtotime($query_date_end));
 
         // dd($start_month, $end_month);
 
@@ -90,7 +90,7 @@ class InventoryController extends Controller
         $inventory->price = $request->price;
         $inventory->qty = $request->qty;
         $inventory->vom = $request->vom;
-        $inventory->date_reorder = date('M-d-Y', strtotime($request->date_reorder));
+        $inventory->date_reorder = date('Y-m-d', strtotime($request->date_reorder));
         $inventory->value = $request->qty * $request->price;
         $inventory->save();
 
@@ -149,7 +149,7 @@ class InventoryController extends Controller
         $inventory->price = $request->price;
         $inventory->qty = $request->qty;
         $inventory->vom = $request->vom;
-        $inventory->date_reorder = date('M-d-Y', strtotime($request->date_reorder));
+        $inventory->date_reorder = date('Y-m-d', strtotime($request->date_reorder));
         $inventory->value = $request->qty * $request->price;
         $inventory->update();
 

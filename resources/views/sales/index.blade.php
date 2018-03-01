@@ -166,10 +166,14 @@ var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December", ],
+        labels: [
+        	@for ($i=1; $i < 12; $i++)
+        		'{{ date('F', mktime(0, 0, 0, $i, 1)) }}',
+        	@endfor
+        ],
         datasets: [{
             label: 'Income',
-            data: [12, 19, 3, 5, 2, 3, 4, 5, 6, 1, 10, 12],
+            data: [{{ $array_incomes }}],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)'
             ],
