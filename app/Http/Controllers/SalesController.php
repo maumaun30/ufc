@@ -26,37 +26,45 @@ class SalesController extends Controller
 
         $sales = $user->profileSales()->paginate(10);
 
-        $months = ''; 
-        for ($i=1; $i < 13; $i++){
-           $months .= date('F', mktime(0, 0, 0, $i, 1)) . ', ';
-        }
+        // $months = ''; 
+        // for ($i=1; $i < 13; $i++){
+        //    $months .= date('m', mktime(0, 0, 0, $i, 1)) . ', ';
+        // }
+
+        // $months = explode(',', rtrim($months, ', '));
 
         // dd($months);
 
-        $array_months = explode(', ', $months);
+        // $array_months = explode(', ', $months);
 
-        // dd($array_months);
+        // // dd($array_months);
 
-        foreach ($array_months as $array_month) {
-            $sales_price = $user->profileSales->where('created_at', '<=', date('F', strtotime($array_month)) . ' 00:00:00')->sum('price');
-            echo $sales_price;
-        }
+        // foreach ($array_months as $array_month) {
+        //     $sales_price = $user->profileSales->where('created_at', '<=', date('F', strtotime($array_month)) . ' 00:00:00')->sum('price');
+        // }
 
-        // dd($sales_price);
+        // // dd($sales_price);
 
-        $inv_value = $user->profileInvs->where('date_reorder', '<=', date('Y-m-d', strtotime('today')))->sum('value');
+        // $inv_value = $user->profileInvs->where('date_reorder', '<=', date('Y-m-d', strtotime('today')))->sum('value');
 
-        dd($sales_price, $inv_value);
+        // // dd($sales_price, $inv_value);
 
-        $array_income = '';
+        // $array_income = '';
 
-        foreach ($incomes as $income) {
-            $array_income .= $income->value . ',';
-        }
+        // foreach ($incomes as $income) {
+        //     $array_income .= $income->value . ',';
+        // }
 
-        $array_incomes = rtrim($array_income, ', ');
+        // $array_incomes = rtrim($array_income, ', ');
 
-        return view('sales.index')->with('user', $user)->with('sales', $sales)->with('array_incomes', $array_incomes);
+
+        // $inventories = $user->profileInvs;
+
+        // $incomes = [1,2];
+
+        // return view('sales.index')->with('user', $user)->with('sales', $sales)->with('incomes', $incomes)->with('months', $months);
+
+        return view('sales.index')->with('user', $user)->with('sales', $sales);
     }
 
     public function indexDaily($user_id)
@@ -75,9 +83,14 @@ class SalesController extends Controller
     {
         $user = User::find(decrypt($user_id));
 
-        $query_date_start = $request->year . $request->start_month . ' 00:00:00';
+        // $months = ''; 
+        // for ($i=1; $i < 13; $i++){
+        //    $months .= date('m', mktime(0, 0, 0, $i, 1)) . ', ';
+        // }
 
-        $query_date_end = $request->year . $request->end_month . ' 23:59:59';
+        $query_date_start = $request->year . $request->start_month;
+
+        $query_date_end = $request->year . $request->end_month;
 
         if ($query_date_start > $query_date_end) {
             flash('Date range not valid!');
@@ -91,9 +104,45 @@ class SalesController extends Controller
         // Last day of the month.
         $end_month = date('Y-m-t', strtotime($query_date_end));
 
-        $sales = $user->profileSales()->whereBetween('created_at', [$start_month, $end_month])->paginate(10);
+        $sales = $user->profileSales()->whereBetween('created_at', [$start_month . ' 00:00:00', $end_month . ' 23:59:59'])->paginate(10);
 
+        // $inventories = $user->profileInvs()->whereBetween('date_reorder', [$start_month, $end_month])->paginate(10);
+
+        // $income_sales = $user->profileSales()->whereBetween('created_at', [$start_month . ' 00:00:00', $end_month . ' 23:59:59'])->sum('price');
+
+        // $income_invs = $user->profileInvs()->whereBetween('date_reorder', [$start_month, $end_month])->sum('value');
+
+        // $incomes = $income_sales - $income_invs;
+
+        // dd($incomes);
+
+        // return view('sales.index')->with('user', $user)->with('sales', $sales)->with('incomes', $incomes)->with('months', $months);
         return view('sales.index')->with('user', $user)->with('sales', $sales);
+    }
+
+    public function salesPrint($user_id, $year, $start_month, $end_month)
+    {
+        $user = User::find(decrypt($user_id));
+
+        $query_date_start = $year . $start_month;
+
+        $query_date_end = $year . $end_month;
+
+        if ($query_date_start > $query_date_end) {
+            flash('Date range not valid!');
+
+            return back();
+        }
+
+        // First day of the month.
+        $start_month = date('Y-m-01', strtotime($query_date_start));
+
+        // Last day of the month.
+        $end_month = date('Y-m-t', strtotime($query_date_end));
+
+        $sales = $user->profileSales()->whereBetween('created_at', [$start_month . ' 00:00:00', $end_month . ' 23:59:59'])->paginate(10);
+
+        return view('sales.print')->with('user', $user)->with('sales', $sales);
     }
 
     /**

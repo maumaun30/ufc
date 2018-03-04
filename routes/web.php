@@ -70,6 +70,7 @@ Route::resource('{user_id}/inventory', 'InventoryController');
 // Sales
 Route::get('{user_id}/sales/daily', 'SalesController@indexDaily')->name('sales.index.daily');
 Route::get('{user_id}/sales/monthly/range', 'SalesController@indexMonthlyRange')->name('sales.index.monthly.range');
+Route::get('{user_id}/sales/monthly/print/{year}{start_month}{end_month}', 'SalesController@salesPrint')->name('sales.print');
 Route::resource('{user_id}/sales', 'SalesController');
 
 // Feedback

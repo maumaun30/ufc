@@ -5,7 +5,7 @@
 	<div class="panel-heading">
 		<div class="row">
 			<div class="col-md-12">
-				Sales
+				<i class="fa fa-money"></i> Sales
 				<a href="{{ route('sales.index.daily', encrypt($user->id)) }}" class="btn btn-default btn-sm pull-right">Daily</a>
 			</div>
 		</div>
@@ -62,15 +62,16 @@
 						</select>
 					</div>
 					<div class="form-group">
-						<button type="submit" class="btn btn-default btn-sm">Search</button>
+						<button type="submit" class="btn btn-default btn-sm"><i class="fa fa-search"></i> Search</button>&nbsp
+						<!-- <span><a href="{{ route('sales.print', [encrypt($user->id),request()->get('year'),request()->get('start_month'),request()->get('end_month')]) }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-print"></i> Print</a></span> -->
 					</div>
 				</form>
 			</div>
 		</div>
 		<div class="row mgb5">
-			<div class="col-md-6">
+			<!-- <div class="col-md-6">
 				<canvas id="myChart"></canvas>
-			</div>
+			</div> -->
 			<div class="col-md-6">
 				@if($sales->isEmpty())
 					No Sales created yet for this month. =(
@@ -162,36 +163,32 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
 
 <script>
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: [
-        	@for ($i=1; $i < 12; $i++)
-        		'{{ date('F', mktime(0, 0, 0, $i, 1)) }}',
-        	@endfor
-        ],
-        datasets: [{
-            label: 'Income',
-            data: [{{ $array_incomes }}],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)'
-            ],
-            borderWidth: 2
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
-    }
-});
+// var ctx = document.getElementById("myChart").getContext('2d');
+// var myChart = new Chart(ctx, {
+//     type: 'line',
+//     data: {
+//         labels: [],
+//         datasets: [{
+//             label: 'Income',
+//             data: [],
+//             backgroundColor: [
+//                 'rgba(255, 99, 132, 0.2)'
+//             ],
+//             borderColor: [
+//                 'rgba(255,99,132,1)'
+//             ],
+//             borderWidth: 2
+//         }]
+//     },
+//     options: {
+//         scales: {
+//             yAxes: [{
+//                 ticks: {
+//                     beginAtZero:true
+//                 }
+//             }]
+//         }
+//     }
+// });
 </script>
 @stop

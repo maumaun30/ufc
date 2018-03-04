@@ -104,7 +104,7 @@
                 <div class="col-md-2">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Tabs
+                            <i class="fa fa-tasks"></i> Tabs
                             <!-- Collapsed Hamburger -->
                             <button type="button" class="navbar-toggle tab-toggle collapsed" data-toggle="collapse" data-target="#app-tab-collapse" aria-expanded="false">
                                 <span class="sr-only">Toggle Navigation</span>
@@ -116,7 +116,7 @@
                             <div class="panel-body">
                                 <ul class="nav nav-pills nav-stacked">
                                     <li><a href="{{ route('dashboard') }}"><i class="fa fa-tachometer"></i> Dashboard</a></li>
-                                    <li><a href="{{ route('current.orders', encrypt(Auth::user()->id)) }}"><i class="fa fa-book"></i> Orders</a></li>
+                                    <li><a href="{{ route('current.orders', encrypt(Auth::user()->id)) }}"><i class="fa fa-shopping-cart"></i> Orders</a></li>
                                     <li><a href="{{ route('menu.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-cutlery"></i> Menus</a></li>
                                     <li><a href="{{ route('addon.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-beer"></i> Add-ons</a></li>
                                     <li><a href="{{ route('inventory.index', encrypt(Auth::user()->id)) }}"><i class="fa fa-barcode"></i> Inventory</a></li>
